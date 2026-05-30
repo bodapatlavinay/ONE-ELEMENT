@@ -1,12 +1,14 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, forkJoin, map, of, catchError } from 'rxjs';
+import { Observable, map, of, switchMap, tap } from 'rxjs';
 import { Product } from '../models/product.model';
+import { ShopifyService } from './shopify.service';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
   private http = inject(HttpClient);
-  private apiUrl = 'https://fakestoreapi.com/products';
+  private shopify = inject(ShopifyService);
+  private _cache = signal<Product[]>([]);
 
   // One Element brand enrichment data
   private brandData = {
@@ -124,46 +126,62 @@ export class ProductService {
     }
   ];
 
+  private getAll(): Observable<Product[]> {
+    if (this._cache().length) return of(this._cache());
+    return this.shopify.getProducts(50).pipe(
+      map(shopifyProducts => shopifyProducts.length ? shopifyProducts : this.activewearProducts),
+      tap(products => this._cache.set(products))
+    );
+  }
+
   getAllProducts(): Observable<Product[]> {
-    return of(this.activewearProducts);
+    return this.getAll();
   }
 
   getProductById(id: number): Observable<Product | undefined> {
-    return of(this.activewearProducts.find(p => p.id === id));
+    return this.getAll().pipe(map(products => products.find(p => p.id === id)));
   }
 
   getProductsByCategory(category: string): Observable<Product[]> {
-    if (category === 'all') return this.getAllProducts();
-    return of(this.activewearProducts.filter(p =>
-      p.gender.toLowerCase() === category.toLowerCase() ||
-      p.tags.includes(category.toLowerCase())
-    ));
+    return this.getAll().pipe(map(products => {
+      if (category === 'all') return products;
+      return products.filter(p =>
+        p.gender.toLowerCase() === category.toLowerCase() ||
+        p.tags.includes(category.toLowerCase())
+      );
+    }));
   }
 
   getFeaturedProducts(): Observable<Product[]> {
-    return of(this.activewearProducts.filter(p =>
-      p.badge === 'BESTSELLER' || p.badge === 'NEW'
-    ).slice(0, 6));
+    return this.getAll().pipe(map(products =>
+      products.filter(p => p.badge === 'BESTSELLER' || p.badge === 'NEW').slice(0, 6)
+    ));
   }
 
   getNewArrivals(): Observable<Product[]> {
-    return of(this.activewearProducts.filter(p => p.badge === 'NEW').slice(0, 4));
+    return this.getAll().pipe(map(products =>
+      products.filter(p => p.badge === 'NEW').slice(0, 4)
+    ));
   }
 
   searchProducts(query: string): Observable<Product[]> {
     const q = query.toLowerCase();
-    return of(this.activewearProducts.filter(p =>
-      p.title.toLowerCase().includes(q) ||
-      p.description.toLowerCase().includes(q) ||
-      p.tags.some(t => t.includes(q)) ||
-      p.gender.toLowerCase().includes(q)
+    return this.getAll().pipe(map(products =>
+      products.filter(p =>
+        p.title.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q) ||
+        p.tags.some(t => t.includes(q)) ||
+        p.gender.toLowerCase().includes(q)
+      )
     ));
   }
 
   getRelatedProducts(product: Product): Observable<Product[]> {
-    return of(this.activewearProducts.filter(p =>
-      p.id !== product.id &&
-      (p.gender === product.gender || p.tags.some(t => product.tags.includes(t)))
-    ).slice(0, 4));
+    return this.getAll().pipe(map(products =>
+      products.filter(p =>
+        p.id !== product.id &&
+        (p.gender === product.gender || p.tags.some(t => product.tags.includes(t)))
+      ).slice(0, 4)
+    ));
   }
 }

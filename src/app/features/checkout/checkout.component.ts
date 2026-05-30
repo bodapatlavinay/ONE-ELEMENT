@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../core/services/cart.service';
 import { ToastService } from '../../core/services/toast.service';
+import { ShopifyService } from '../../core/services/shopify.service';
 
 @Component({
   selector: 'app-checkout',
@@ -15,6 +16,7 @@ import { ToastService } from '../../core/services/toast.service';
 export class CheckoutComponent {
   cartService = inject(CartService);
   toastService = inject(ToastService);
+  shopifyService = inject(ShopifyService);
   router = inject(Router);
 
   step = signal<1 | 2 | 3>(1);
@@ -38,11 +40,35 @@ export class CheckoutComponent {
 
   placeOrder(): void {
     this.isPlacing.set(true);
+
+    const items = this.cartService.items()
+      .filter(item => item.product.variantId)
+      .map(item => ({
+        variantId: item.product.variantId!,
+        quantity: item.quantity
+      }));
+
+    // If products have Shopify variant IDs, redirect to Shopify checkout
+    if (items.length > 0) {
+      this.shopifyService.createCheckout(items).subscribe(checkoutUrl => {
+        if (checkoutUrl) {
+          window.location.href = checkoutUrl;
+        } else {
+          this.fallbackOrder();
+        }
+      });
+    } else {
+      // Fallback for local/mock products
+      this.fallbackOrder();
+    }
+  }
+
+  private fallbackOrder(): void {
     setTimeout(() => {
       this.orderId.set('OE' + Date.now().toString().slice(-8));
       this.orderPlaced.set(true);
       this.cartService.clearCart();
       this.isPlacing.set(false);
-    }, 2000);
+    }, 1500);
   }
 }

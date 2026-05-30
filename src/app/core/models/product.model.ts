@@ -14,6 +14,8 @@ export interface Product {
   colors: string[];
   gender: 'Men' | 'Women' | 'Unisex';
   tags: string[];
+  variantId?: string;        // Shopify variant GID for checkout
+  shopifyId?: string;        // Full Shopify product GID
 }
 
 export interface Rating {
