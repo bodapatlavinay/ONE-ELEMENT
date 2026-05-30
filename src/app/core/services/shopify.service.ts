@@ -15,7 +15,7 @@ const HEADERS = new HttpHeaders({
 
 const PRODUCTS_QUERY = `
   query GetProducts($first: Int!) {
-    products(first: $first) {
+    products(first: $first, sortKey: TITLE) {
       edges {
         node {
           id
@@ -24,6 +24,7 @@ const PRODUCTS_QUERY = `
           productType
           tags
           vendor
+          availableForSale
           priceRange {
             minVariantPrice { amount currencyCode }
           }
@@ -39,6 +40,7 @@ const PRODUCTS_QUERY = `
                 id
                 title
                 availableForSale
+                quantityAvailable
                 price { amount }
                 compareAtPrice { amount }
                 selectedOptions { name value }
@@ -72,7 +74,11 @@ export class ShopifyService {
       query: PRODUCTS_QUERY,
       variables: { first: count }
     }, { headers: HEADERS }).pipe(
-      map(res => res.data.products.edges.map((e: any) => this.mapProduct(e.node))),
+      map(res => {
+        const edges = res?.data?.products?.edges ?? [];
+        console.log(`Shopify: fetched ${edges.length} products`);
+        return edges.map((e: any) => this.mapProduct(e.node));
+      }),
       catchError(err => {
         console.error('Shopify products fetch failed:', err);
         return of([]);
@@ -129,7 +135,8 @@ export class ShopifyService {
     else if (tags.includes('bestseller')) badge = 'BESTSELLER';
     else if (tags.includes('limited')) badge = 'LIMITED';
 
-    const stock = variants.filter((v: any) => v.availableForSale).length;
+    // Show all products — even 0 stock (customers can still see them)
+    const stock = variants.reduce((sum: number, v: any) => sum + (v.quantityAvailable ?? 0), 0);
 
     return {
       id: numericId,
