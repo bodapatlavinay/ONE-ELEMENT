@@ -1,0 +1,172 @@
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="assets/hero.jpg" alt="ONE ELEMENT Hero" />
+    <div class="hero-overlay"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="eyebrow-line"></span>
+      <span class="eyebrow-text">SS 2025 COLLECTION</span>
+    </div>
+    <h1 class="hero-headline">
+      <span class="headline-line line-1">PUSH</span>
+      <span class="headline-line line-2">EVERY</span>
+      <span class="headline-line line-3 accent-text">LIMIT.</span>
+    </h1>
+    <p class="hero-sub">Premium activewear engineered for India's relentless athletes.</p>
+    <div class="hero-ctas">
+      <a routerLink="/shop" [queryParams]="{gender:'men'}" class="btn-primary">SHOP MEN</a>
+      <a routerLink="/shop" [queryParams]="{gender:'women'}" class="btn-secondary">SHOP WOMEN</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll-indicator">
+    <span>SCROLL</span>
+    <div class="scroll-line"></div>
+  </div>
+
+  <!-- Stats bar -->
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">50K+</span>
+      <span class="stat-label">Athletes</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-num">4.8★</span>
+      <span class="stat-label">Avg Rating</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-num">100%</span>
+      <span class="stat-label">Performance</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-num">INDIA</span>
+      <span class="stat-label">Made for</span>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORY TILES -->
+<section class="categories-section">
+  <div class="section-header">
+    <div class="section-tag">SHOP BY CATEGORY</div>
+    <h2 class="section-title">FIND YOUR FIT</h2>
+  </div>
+
+  <div class="categories-grid">
+    @for (cat of categories; track cat.label) {
+      <a [routerLink]="cat.link" [queryParams]="cat.query" class="category-tile">
+        <div class="tile-img-wrap">
+          <img [src]="cat.img" [alt]="cat.label" loading="lazy" />
+          <div class="tile-overlay"></div>
+        </div>
+        <div class="tile-content">
+          <h3 class="tile-label">{{ cat.label }}</h3>
+          <p class="tile-sub">{{ cat.sub }}</p>
+          <span class="tile-cta">SHOP NOW →</span>
+        </div>
+      </a>
+    }
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="products-section">
+  <div class="section-header">
+    <div class="section-tag">BEST SELLERS</div>
+    <h2 class="section-title">TOP PERFORMERS</h2>
+    <a routerLink="/shop" class="section-link">View All →</a>
+  </div>
+
+  <div class="products-grid">
+    @for (product of featuredProducts(); track product.id) {
+      <app-product-card [product]="product" />
+    }
+  </div>
+</section>
+
+<!-- FULL-WIDTH BANNER -->
+<section class="banner-section">
+  <div class="banner-bg">
+    <img src="assets/banner.jpg" alt="Training Banner" />
+    <div class="banner-overlay"></div>
+  </div>
+  <div class="banner-content">
+    <div class="banner-eyebrow">ENGINEERED FOR INDIA</div>
+    <h2 class="banner-title">THE ALLELEMENT<br><span>HOODIE</span></h2>
+    <p class="banner-desc">400GSM heavyweight fleece. Built for the long haul.</p>
+    <a routerLink="/product/108" class="btn-primary">SHOP NOW</a>
+  </div>
+</section>
+
+<!-- NEW ARRIVALS -->
+<section class="products-section">
+  <div class="section-header">
+    <div class="section-tag">JUST DROPPED</div>
+    <h2 class="section-title">NEW ARRIVALS</h2>
+    <a routerLink="/shop" [queryParams]="{filter:'new'}" class="section-link">View All →</a>
+  </div>
+
+  <div class="products-grid">
+    @for (product of newArrivals(); track product.id) {
+      <app-product-card [product]="product" />
+    }
+  </div>
+</section>
+
+<!-- FEATURES STRIP -->
+<section class="features-section">
+  <div class="features-grid">
+    @for (feat of features; track feat.title) {
+      <div class="feature-card">
+        <div class="feature-icon">{{ feat.icon }}</div>
+        <h4 class="feature-title">{{ feat.title }}</h4>
+        <p class="feature-desc">{{ feat.desc }}</p>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="section-header">
+    <div class="section-tag">COMMUNITY</div>
+    <h2 class="section-title">WHAT ATHLETES SAY</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p>"The FlexStride leggings are unreal. Did a full marathon in them — zero chafing, perfect compression all the way through."</p>
+      <div class="author">— Priya M., Mumbai</div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p>"Finally an Indian brand that understands what athletes actually need. The CoreFlex Tee is my new everyday training shirt."</p>
+      <div class="author">— Arjun S., Bangalore</div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p>"Ordered 3 pieces. Quality rivals international brands at half the price. The AllElement Hoodie is 🔥"</p>
+      <div class="author">— Rahul K., Delhi</div>
+    </div>
+  </div>
+</section>
+
+<!-- EMAIL SIGNUP -->
+<section class="newsletter-section">
+  <div class="newsletter-content">
+    <div class="newsletter-badge"><img src="assets/logo.png" alt="OE" class="badge-logo" /> JOIN THE ELEMENT</div>
+    <h2>GET EARLY ACCESS TO<br>NEW DROPS & EXCLUSIVE OFFERS</h2>
+    <p>Be the first to know about new collections, flash sales, and athlete stories.</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="YOUR EMAIL ADDRESS" />
+      <button class="btn-primary">SUBSCRIBE</button>
+    </div>
+    <span class="newsletter-note">No spam, ever. Unsubscribe anytime.</span>
+  </div>
+</section>

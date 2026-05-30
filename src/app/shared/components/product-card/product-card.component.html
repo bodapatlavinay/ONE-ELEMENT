@@ -1,0 +1,58 @@
+<article class="product-card" (mouseenter)="isHovered.set(true)" (mouseleave)="isHovered.set(false); showSizeSelect.set(false)">
+  <a [routerLink]="['/product', product.id]" class="card-image-wrap">
+    <img [src]="product.image" [alt]="product.title" class="product-img" loading="lazy" />
+
+    @if (product.badge) {
+      <span class="badge" [class]="'badge--' + product.badge.toLowerCase()">{{ product.badge }}</span>
+    }
+
+    <button class="wishlist-btn" (click)="toggleWishlist($event)" [class.active]="isWishlisted">
+      <svg width="18" height="18" viewBox="0 0 24 24" [attr.fill]="isWishlisted ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+    </button>
+
+    <div class="quick-add-wrap" [class.visible]="isHovered()">
+      @if (!showSizeSelect()) {
+        <button class="quick-add-btn" (click)="quickAdd($event)">
+          QUICK ADD
+        </button>
+      } @else {
+        <div class="size-select-bar">
+          @for (size of product.sizes; track size) {
+            <button class="size-chip" (click)="selectSizeAndAdd(size, $event)">{{ size }}</button>
+          }
+        </div>
+      }
+    </div>
+  </a>
+
+  <div class="card-info">
+    <div class="card-meta">
+      <span class="product-gender">{{ product.gender }}</span>
+      <div class="rating">
+        <span class="stars">★ {{ product.rating.rate }}</span>
+        <span class="count">({{ product.rating.count }})</span>
+      </div>
+    </div>
+
+    <a [routerLink]="['/product', product.id]" class="product-title">{{ product.title }}</a>
+
+    <div class="price-row">
+      <span class="price">₹{{ product.price | number:'1.0-0' }}</span>
+      @if (product.originalPrice) {
+        <span class="original-price">₹{{ product.originalPrice | number:'1.0-0' }}</span>
+        <span class="discount">{{ discountPercent }}% OFF</span>
+      }
+    </div>
+
+    <div class="color-dots">
+      @for (color of product.colors.slice(0, 4); track color) {
+        <span class="color-dot" [title]="color"></span>
+      }
+      @if (product.colors.length > 4) {
+        <span class="more-colors">+{{ product.colors.length - 4 }}</span>
+      }
+    </div>
+  </div>
+</article>

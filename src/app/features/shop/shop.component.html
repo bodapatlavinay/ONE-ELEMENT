@@ -1,0 +1,125 @@
+<div class="shop-page">
+  <!-- Page Header -->
+  <div class="shop-header">
+    <div class="shop-header-content">
+      <div class="breadcrumb">
+        <a routerLink="/">Home</a> <span>/</span>
+        <span>Shop</span>
+      </div>
+      <h1 class="shop-title">ALL PRODUCTS</h1>
+      <p class="shop-sub">{{ filteredProducts().length }} styles found</p>
+    </div>
+  </div>
+
+  <div class="shop-body">
+    <!-- Sidebar Toggle (mobile) -->
+    <div class="toolbar">
+      <button class="filter-toggle-btn" (click)="isSidebarOpen.set(true)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="12" y1="18" x2="20" y2="18"/>
+        </svg>
+        FILTER
+        @if (activeFilterCount > 0) {
+          <span class="filter-badge">{{ activeFilterCount }}</span>
+        }
+      </button>
+
+      <div class="sort-wrap">
+        <label>SORT BY</label>
+        <select [(ngModel)]="selectedSort" class="sort-select">
+          @for (s of sorts; track s.value) {
+            <option [value]="s.value">{{ s.label }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <div class="shop-layout">
+      <!-- SIDEBAR -->
+      <aside class="filter-sidebar" [class.open]="isSidebarOpen()">
+        <div class="sidebar-header">
+          <h3>FILTERS</h3>
+          <button class="sidebar-close" (click)="isSidebarOpen.set(false)">✕</button>
+        </div>
+
+        <!-- Search -->
+        <div class="filter-group">
+          <label class="filter-label">SEARCH</label>
+          <input type="text" [(ngModel)]="searchQuery" placeholder="Search styles..." class="search-input" />
+        </div>
+
+        <!-- Gender -->
+        <div class="filter-group">
+          <label class="filter-label">CATEGORY</label>
+          <div class="filter-chips">
+            @for (g of genders; track g) {
+              <button class="chip" [class.active]="selectedGender() === g"
+                (click)="selectedGender.set(g)">
+                {{ g === 'all' ? 'All' : g }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <!-- Badge -->
+        <div class="filter-group">
+          <label class="filter-label">COLLECTION</label>
+          <div class="filter-chips">
+            @for (b of badges; track b) {
+              <button class="chip" [class.active]="selectedBadge() === b"
+                (click)="selectedBadge.set(b)">
+                {{ b === 'all' ? 'All' : b }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <!-- Price -->
+        <div class="filter-group">
+          <label class="filter-label">MAX PRICE: ₹{{ priceMax() | number:'1.0-0' }}</label>
+          <input type="range" [(ngModel)]="priceMax" min="500" max="10000" step="100"
+            class="price-range" />
+          <div class="price-range-labels">
+            <span>₹500</span><span>₹10,000</span>
+          </div>
+        </div>
+
+        <div class="filter-actions">
+          <button class="btn-reset" (click)="resetFilters()">Reset All</button>
+          <button class="btn-apply" (click)="isSidebarOpen.set(false)">Apply ({{ filteredProducts().length }})</button>
+        </div>
+      </aside>
+
+      <!-- Sidebar Overlay -->
+      <div class="sidebar-overlay" [class.show]="isSidebarOpen()" (click)="isSidebarOpen.set(false)"></div>
+
+      <!-- PRODUCT GRID -->
+      <main class="products-main">
+        @if (isLoading()) {
+          <div class="loading-grid">
+            @for (i of [1,2,3,4,5,6,7,8]; track i) {
+              <div class="skeleton-card">
+                <div class="skeleton-img"></div>
+                <div class="skeleton-text"></div>
+                <div class="skeleton-text short"></div>
+              </div>
+            }
+          </div>
+        } @else if (filteredProducts().length === 0) {
+          <div class="empty-state">
+            <div class="empty-icon">🔍</div>
+            <h3>No products found</h3>
+            <p>Try adjusting your filters or search query.</p>
+            <button class="btn-apply" (click)="resetFilters()">Clear Filters</button>
+          </div>
+        } @else {
+          <div class="products-grid">
+            @for (product of filteredProducts(); track product.id) {
+              <app-product-card [product]="product" />
+            }
+          </div>
+        }
+      </main>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+<div class="cart-overlay" [class.visible]="cartService.isOpen()" (click)="cartService.closeCart()"></div>
+
+<aside class="cart-drawer" [class.open]="cartService.isOpen()">
+  <div class="cart-header">
+    <div class="cart-title">
+      <h2>YOUR BAG</h2>
+      @if (cartService.totalItems() > 0) {
+        <span class="item-count">{{ cartService.totalItems() }} item{{ cartService.totalItems() > 1 ? 's' : '' }}</span>
+      }
+    </div>
+    <button class="close-btn" (click)="cartService.closeCart()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  @if (cartService.subtotal() < 2999 && cartService.totalItems() > 0) {
+    <div class="free-shipping-bar">
+      <span>Add ₹{{ (2999 - cartService.subtotal()) | number:'1.0-0' }} more for FREE shipping</span>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="(cartService.subtotal() / 2999) * 100"></div>
+      </div>
+    </div>
+  }
+  @if (cartService.subtotal() >= 2999) {
+    <div class="free-shipping-bar achieved">
+      <span>🎉 You've unlocked FREE shipping!</span>
+    </div>
+  }
+
+  <div class="cart-items">
+    @if (cartService.items().length === 0) {
+      <div class="empty-cart">
+        <div class="empty-icon">🛍️</div>
+        <h3>Your bag is empty</h3>
+        <p>Add some activewear to get started</p>
+        <a routerLink="/shop" class="shop-btn" (click)="cartService.closeCart()">SHOP NOW</a>
+      </div>
+    }
+
+    @for (item of cartService.items(); track item.product.id + item.selectedSize + item.selectedColor) {
+      <div class="cart-item">
+        <img [src]="item.product.image" [alt]="item.product.title" class="item-img" />
+        <div class="item-details">
+          <p class="item-name">{{ item.product.title }}</p>
+          <div class="item-meta">
+            <span>{{ item.selectedSize }}</span>
+            <span class="divider">·</span>
+            <span>{{ item.selectedColor }}</span>
+          </div>
+          <div class="item-controls">
+            <div class="qty-ctrl">
+              <button (click)="cartService.updateQuantity(item.product.id, item.selectedSize, item.selectedColor, item.quantity - 1)">−</button>
+              <span>{{ item.quantity }}</span>
+              <button (click)="cartService.updateQuantity(item.product.id, item.selectedSize, item.selectedColor, item.quantity + 1)">+</button>
+            </div>
+            <span class="item-price">₹{{ (item.product.price * item.quantity) | number:'1.0-0' }}</span>
+          </div>
+        </div>
+        <button class="remove-btn" (click)="cartService.removeFromCart(item.product.id, item.selectedSize, item.selectedColor)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    }
+  </div>
+
+  @if (cartService.items().length > 0) {
+    <div class="cart-footer">
+      <div class="order-summary">
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>₹{{ cartService.subtotal() | number:'1.0-0' }}</span>
+        </div>
+        @if (cartService.savings() > 0) {
+          <div class="summary-row savings">
+            <span>You save</span>
+            <span>−₹{{ cartService.savings() | number:'1.0-0' }}</span>
+          </div>
+        }
+        <div class="summary-row">
+          <span>Shipping</span>
+          <span>{{ shipping === 0 ? 'FREE' : '₹' + shipping }}</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <span>₹{{ total | number:'1.0-0' }}</span>
+        </div>
+      </div>
+
+      <a routerLink="/checkout" class="checkout-btn" (click)="cartService.closeCart()">
+        PROCEED TO CHECKOUT
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+      <a routerLink="/shop" class="continue-link" (click)="cartService.closeCart()">Continue Shopping</a>
+    </div>
+  }
+</aside>

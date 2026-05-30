@@ -1,0 +1,182 @@
+<div class="checkout-page">
+  @if (orderPlaced()) {
+    <div class="order-success">
+      <div class="success-icon"><img src="assets/logo.png" alt="One Element" /></div>
+      <h2>ORDER CONFIRMED!</h2>
+      <p class="order-id">Order #{{ orderId() }}</p>
+      <p>Thank you for shopping with ONE ELEMENT. You'll receive a confirmation email shortly.</p>
+      <div class="success-actions">
+        <a routerLink="/shop" class="btn-primary">CONTINUE SHOPPING</a>
+        <a routerLink="/" class="btn-ghost">Back to Home</a>
+      </div>
+    </div>
+  } @else {
+    <div class="checkout-header">
+      <a routerLink="/" class="checkout-logo">
+        <img src="assets/logo.png" alt="One Element Active Wear" />
+      </a>
+    </div>
+
+    <!-- Progress Steps -->
+    <div class="steps-bar">
+      <div class="step" [class.active]="step() >= 1" [class.done]="step() > 1">
+        <div class="step-num">1</div><span>Shipping</span>
+      </div>
+      <div class="step-line" [class.done]="step() > 1"></div>
+      <div class="step" [class.active]="step() >= 2" [class.done]="step() > 2">
+        <div class="step-num">2</div><span>Payment</span>
+      </div>
+      <div class="step-line" [class.done]="step() > 2"></div>
+      <div class="step" [class.active]="step() >= 3">
+        <div class="step-num">3</div><span>Review</span>
+      </div>
+    </div>
+
+    <div class="checkout-layout">
+      <!-- FORM PANEL -->
+      <div class="checkout-form">
+        @if (step() === 1) {
+          <div class="form-section">
+            <h3>SHIPPING INFORMATION</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label>First Name</label>
+                <input type="text" [(ngModel)]="form.firstName" placeholder="Rahul" />
+              </div>
+              <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" [(ngModel)]="form.lastName" placeholder="Kumar" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" [(ngModel)]="form.email" placeholder="rahul@example.com" />
+            </div>
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" [(ngModel)]="form.phone" placeholder="+91 98765 43210" />
+            </div>
+            <div class="form-group">
+              <label>Address</label>
+              <input type="text" [(ngModel)]="form.address" placeholder="Flat/House No., Street, Area" />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>City</label>
+                <input type="text" [(ngModel)]="form.city" placeholder="Mumbai" />
+              </div>
+              <div class="form-group">
+                <label>Pincode</label>
+                <input type="text" [(ngModel)]="form.pincode" placeholder="400001" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>State</label>
+              <select [(ngModel)]="form.state">
+                <option value="">Select State</option>
+                @for (s of states; track s) {
+                  <option [value]="s">{{ s }}</option>
+                }
+              </select>
+            </div>
+            <button class="btn-next" (click)="nextStep()">CONTINUE TO PAYMENT →</button>
+          </div>
+        }
+
+        @if (step() === 2) {
+          <div class="form-section">
+            <h3>PAYMENT METHOD</h3>
+            <div class="payment-options">
+              <label class="payment-option" [class.selected]="form.paymentMethod === 'upi'">
+                <input type="radio" [(ngModel)]="form.paymentMethod" value="upi" />
+                <div class="payment-content">
+                  <span class="payment-icon">📱</span>
+                  <div><strong>UPI</strong><p>Google Pay, PhonePe, Paytm, BHIM</p></div>
+                </div>
+              </label>
+              <label class="payment-option" [class.selected]="form.paymentMethod === 'card'">
+                <input type="radio" [(ngModel)]="form.paymentMethod" value="card" />
+                <div class="payment-content">
+                  <span class="payment-icon">💳</span>
+                  <div><strong>Credit / Debit Card</strong><p>Visa, Mastercard, RuPay</p></div>
+                </div>
+              </label>
+              <label class="payment-option" [class.selected]="form.paymentMethod === 'netbanking'">
+                <input type="radio" [(ngModel)]="form.paymentMethod" value="netbanking" />
+                <div class="payment-content">
+                  <span class="payment-icon">🏦</span>
+                  <div><strong>Net Banking</strong><p>All major Indian banks</p></div>
+                </div>
+              </label>
+              <label class="payment-option" [class.selected]="form.paymentMethod === 'cod'">
+                <input type="radio" [(ngModel)]="form.paymentMethod" value="cod" />
+                <div class="payment-content">
+                  <span class="payment-icon">💵</span>
+                  <div><strong>Cash on Delivery</strong><p>Pay when your order arrives</p></div>
+                </div>
+              </label>
+            </div>
+            <div class="btn-row">
+              <button class="btn-back" (click)="prevStep()">← Back</button>
+              <button class="btn-next" (click)="nextStep()">REVIEW ORDER →</button>
+            </div>
+          </div>
+        }
+
+        @if (step() === 3) {
+          <div class="form-section">
+            <h3>REVIEW YOUR ORDER</h3>
+            <div class="review-address">
+              <p class="review-label">SHIPPING TO</p>
+              <p>{{ form.firstName }} {{ form.lastName }}</p>
+              <p>{{ form.address }}, {{ form.city }}, {{ form.state }} — {{ form.pincode }}</p>
+              <p>{{ form.phone }}</p>
+            </div>
+            <div class="review-items">
+              @for (item of cartService.items(); track item.product.id) {
+                <div class="review-item">
+                  <img [src]="item.product.image" [alt]="item.product.title" />
+                  <div>
+                    <p class="review-item-name">{{ item.product.title }}</p>
+                    <p class="review-item-meta">{{ item.selectedSize }} · {{ item.selectedColor }} · Qty: {{ item.quantity }}</p>
+                  </div>
+                  <span class="review-item-price">₹{{ (item.product.price * item.quantity) | number:'1.0-0' }}</span>
+                </div>
+              }
+            </div>
+            <div class="btn-row">
+              <button class="btn-back" (click)="prevStep()">← Back</button>
+              <button class="btn-place" (click)="placeOrder()" [disabled]="isPlacing()">
+                @if (isPlacing()) { <span class="spinner"></span> PLACING... }
+                @else { PLACE ORDER · ₹{{ total | number:'1.0-0' }} }
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- ORDER SUMMARY SIDEBAR -->
+      <div class="checkout-summary">
+        <h3>YOUR BAG ({{ cartService.totalItems() }})</h3>
+        <div class="summary-items">
+          @for (item of cartService.items(); track item.product.id) {
+            <div class="summary-item">
+              <img [src]="item.product.image" [alt]="item.product.title" />
+              <div class="summary-item-info">
+                <p>{{ item.product.title }}</p>
+                <span>{{ item.selectedSize }} · ×{{ item.quantity }}</span>
+              </div>
+              <span class="summary-item-price">₹{{ (item.product.price * item.quantity) | number:'1.0-0' }}</span>
+            </div>
+          }
+        </div>
+        <div class="summary-totals">
+          <div class="st-row"><span>Subtotal</span><span>₹{{ cartService.subtotal() | number:'1.0-0' }}</span></div>
+          <div class="st-row"><span>Shipping</span><span>{{ shipping === 0 ? 'FREE' : '₹199' }}</span></div>
+          <div class="st-row total"><span>Total</span><span>₹{{ total | number:'1.0-0' }}</span></div>
+        </div>
+        <div class="secure-badge">🔒 Secure Checkout · SSL Encrypted</div>
+      </div>
+    </div>
+  }
+</div>

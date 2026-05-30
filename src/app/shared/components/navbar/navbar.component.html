@@ -1,0 +1,101 @@
+<header class="navbar" [class.scrolled]="isScrolled()">
+  <!-- Top announcement bar -->
+  <div class="announcement-bar">
+    <span>FREE SHIPPING ON ORDERS ABOVE ₹2,999 &nbsp;|&nbsp; USE CODE: <strong>OE10</strong> FOR 10% OFF YOUR FIRST ORDER</span>
+  </div>
+
+  <nav class="nav-main">
+    <!-- Mobile hamburger -->
+    <button class="hamburger" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen()">
+      <span></span><span></span><span></span>
+    </button>
+
+    <!-- Logo -->
+    <a class="logo" routerLink="/">
+      <img class="logo-img" src="assets/logo.png" alt="One Element Active Wear" />
+    </a>
+
+    <!-- Desktop nav links -->
+    <ul class="nav-links">
+      @for (link of navLinks; track link.label) {
+        <li>
+          <a [routerLink]="link.path" [queryParams]="link.query"
+             class="nav-link" routerLinkActive="active">
+            {{ link.label }}
+          </a>
+        </li>
+      }
+    </ul>
+
+    <!-- Nav actions -->
+    <div class="nav-actions">
+      <button class="icon-btn search-btn" (click)="toggleSearch()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </button>
+
+      <a routerLink="/wishlist" class="icon-btn wishlist-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        @if (wishlistService.count() > 0) {
+          <span class="badge">{{ wishlistService.count() }}</span>
+        }
+      </a>
+
+      <button class="icon-btn cart-btn" (click)="navigateToCart()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        @if (cartService.totalItems() > 0) {
+          <span class="badge">{{ cartService.totalItems() }}</span>
+        }
+      </button>
+    </div>
+  </nav>
+
+  <!-- Search overlay -->
+  <div class="search-overlay" [class.open]="isSearchOpen()">
+    <div class="search-inner">
+      <input
+        type="text"
+        placeholder="Search products, styles, categories..."
+        [(ngModel)]="searchQuery"
+        (keyup.enter)="onSearch()"
+        autofocus
+      />
+      <button class="search-submit" (click)="onSearch()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </button>
+      <button class="search-close" (click)="toggleSearch()">✕</button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile menu overlay -->
+<div class="mobile-menu" [class.open]="isMobileMenuOpen()">
+  <button class="mobile-close" (click)="closeMobileMenu()">✕</button>
+  <div class="mobile-menu-inner">
+    <a class="mobile-logo" routerLink="/" (click)="closeMobileMenu()">
+      <img class="logo-img" src="assets/logo.png" alt="One Element Active Wear" />
+    </a>
+    <ul class="mobile-nav-links">
+      @for (link of navLinks; track link.label) {
+        <li>
+          <a [routerLink]="link.path" [queryParams]="link.query"
+             (click)="closeMobileMenu()">{{ link.label }}</a>
+        </li>
+      }
+    </ul>
+    <div class="mobile-footer-links">
+      <a routerLink="/cart" (click)="closeMobileMenu()">Cart ({{ cartService.totalItems() }})</a>
+      <a routerLink="/wishlist" (click)="closeMobileMenu()">Wishlist ({{ wishlistService.count() }})</a>
+    </div>
+  </div>
+</div>
+<div class="mobile-overlay" [class.show]="isMobileMenuOpen()" (click)="closeMobileMenu()"></div>
