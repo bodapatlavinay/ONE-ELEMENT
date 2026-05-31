@@ -28,7 +28,16 @@ export class CheckoutComponent {
     paymentMethod: 'upi'
   };
 
-  states = ['Andhra Pradesh','Delhi','Gujarat','Karnataka','Kerala','Maharashtra','Rajasthan','Tamil Nadu','Telangana','Uttar Pradesh','West Bengal'];
+  states = [
+    'Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh',
+    'Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka',
+    'Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram',
+    'Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana',
+    'Tripura','Uttar Pradesh','Uttarakhand','West Bengal',
+    // Union Territories
+    'Andaman & Nicobar Islands','Chandigarh','Dadra & Nagar Haveli and Daman & Diu',
+    'Delhi','Jammu & Kashmir','Ladakh','Lakshadweep','Puducherry'
+  ];
 
   get shipping(): number { return this.cartService.subtotal() >= 2999 ? 0 : 199; }
   get total(): number { return this.cartService.subtotal() + this.shipping; }
