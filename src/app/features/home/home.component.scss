@@ -100,11 +100,8 @@
   margin-bottom: 28px;
   letter-spacing: 0.01em;
   animation: fadeSlideUp 0.8s ease 0.4s both;
-  max-width: 420px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  @media (max-width: 768px) { white-space: normal; font-size: 15px; }
+  max-width: 480px;
+  @media (max-width: 768px) { font-size: 15px; }
 }
 
 .hero-ctas {

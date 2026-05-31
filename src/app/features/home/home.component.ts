@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
   categories = [
     { label: 'MEN', sub: 'Training · Running · Lifestyle', link: '/shop', query: { gender: 'men' }, img: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&q=80' },
     { label: 'WOMEN', sub: 'Yoga · Training · Performance', link: '/shop', query: { gender: 'women' }, img: 'https://images.unsplash.com/photo-1518459031867-a89b944bffe4?w=600&q=80' },
-    { label: 'UNISEX', sub: 'Everyday Essentials', link: '/shop', query: { gender: 'unisex' }, img: 'https://images.unsplash.com/photo-1556906781-9a412961a28c?w=600&q=80' }
+    { label: 'UNISEX', sub: 'Everyday Essentials', link: '/shop', query: { gender: 'unisex' }, img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80' }
   ];
 
   features = [

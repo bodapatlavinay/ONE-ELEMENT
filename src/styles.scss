@@ -27,20 +27,16 @@
 
 /* ── RESET ── */
 *, *::before, *::after {
-  position: relative;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   border: 0;
   vertical-align: baseline;
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
-  outline: 0;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
-  letter-spacing: 0.4px;
 }
 
 html {
