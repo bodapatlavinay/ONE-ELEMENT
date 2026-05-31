@@ -18,8 +18,8 @@ export class AboutComponent {
   ];
 
   team = [
-    { name: 'Vinay Reddy', role: 'Founder & CEO', img: 'https://randomuser.me/api/portraits/men/32.jpg' },
-    { name: 'Vishnu Reddy', role: 'Co-Founder & Head of Product', img: 'https://randomuser.me/api/portraits/men/55.jpg' },
-    { name: 'Uday Reddy', role: 'Head of Design', img: 'https://randomuser.me/api/portraits/men/68.jpg' }
+    { name: 'Vinay Reddy', role: 'Founder & CEO', img: 'assets/vinay.jpg' },
+    { name: 'Vishnu Reddy', role: 'Co-Founder & Head of Product', img: 'assets/vishnu.jpg' },
+    { name: 'Uday Reddy', role: 'Head of Design', img: 'assets/uday.jpg' }
   ];
 }
