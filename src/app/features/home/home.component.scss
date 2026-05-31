@@ -79,7 +79,7 @@
   .headline-line {
     display: block;
     font-family: var(--font-display);
-    font-size: clamp(80px, 12vw, 160px);
+    font-size: clamp(60px, 10vw, 140px);
     font-weight: 900;
     letter-spacing: -0.02em;
     color: #fff;
@@ -94,13 +94,17 @@
 }
 
 .hero-sub {
-  font-size: 17px;
+  font-size: 16px;
   color: rgba(255,255,255,0.7);
-  line-height: 1.6;
-  margin-bottom: 36px;
-  letter-spacing: 0.02em;
+  line-height: 1.5;
+  margin-bottom: 28px;
+  letter-spacing: 0.01em;
   animation: fadeSlideUp 0.8s ease 0.4s both;
-  max-width: 480px;
+  max-width: 420px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  @media (max-width: 768px) { white-space: normal; font-size: 15px; }
 }
 
 .hero-ctas {
@@ -112,7 +116,7 @@
 
 .hero-scroll-indicator {
   position: absolute;
-  bottom: 120px;
+  bottom: 100px;
   right: 60px;
   z-index: 2;
   display: flex;
