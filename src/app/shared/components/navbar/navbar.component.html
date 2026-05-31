@@ -15,16 +15,107 @@
       <img class="logo-img" src="assets/logo.png" alt="One Element Active Wear" width="100" height="98" />
     </a>
 
-    <!-- Desktop nav links -->
+    <!-- Desktop nav links with mega menu -->
     <ul class="nav-links">
-      @for (link of navLinks; track link.label) {
-        <li>
-          <a [routerLink]="link.path" [queryParams]="link.query"
-             class="nav-link" routerLinkActive="active">
-            {{ link.label }}
-          </a>
-        </li>
-      }
+      <!-- NEW ARRIVALS -->
+      <li>
+        <a routerLink="/shop" [queryParams]="{filter:'new'}" class="nav-link" routerLinkActive="active">NEW ARRIVALS</a>
+      </li>
+
+      <!-- MEN with mega menu -->
+      <li class="has-mega" (mouseenter)="openMega('men')" (mouseleave)="closeMega()">
+        <a routerLink="/shop" [queryParams]="{gender:'men'}" class="nav-link" [class.active]="activeMega==='men'">
+          MEN <span class="chevron">▾</span>
+        </a>
+        <div class="mega-menu" [class.open]="activeMega==='men'">
+          <div class="mega-inner">
+            <div class="mega-col">
+              <p class="mega-heading">Shop by Category</p>
+              <a routerLink="/shop" [queryParams]="{gender:'men',category:'tops'}" (click)="closeMega()">Tops & T-Shirts</a>
+              <a routerLink="/shop" [queryParams]="{gender:'men',category:'shorts'}" (click)="closeMega()">Shorts</a>
+              <a routerLink="/shop" [queryParams]="{gender:'men',category:'compression'}" (click)="closeMega()">Compression</a>
+              <a routerLink="/shop" [queryParams]="{gender:'men',category:'jackets'}" (click)="closeMega()">Jackets & Vests</a>
+              <a routerLink="/shop" [queryParams]="{gender:'men',category:'joggers'}" (click)="closeMega()">Joggers & Pants</a>
+              <a routerLink="/shop" [queryParams]="{gender:'men',category:'hoodies'}" (click)="closeMega()">Hoodies</a>
+            </div>
+            <div class="mega-col">
+              <p class="mega-heading">Shop by Sport</p>
+              <a routerLink="/shop" [queryParams]="{gender:'men',tag:'training'}" (click)="closeMega()">Training & Gym</a>
+              <a routerLink="/shop" [queryParams]="{gender:'men',tag:'running'}" (click)="closeMega()">Running</a>
+              <a routerLink="/shop" [queryParams]="{gender:'men',tag:'yoga'}" (click)="closeMega()">Yoga & Stretch</a>
+              <a routerLink="/shop" [queryParams]="{gender:'men',tag:'outdoor'}" (click)="closeMega()">Outdoor</a>
+            </div>
+            <div class="mega-col">
+              <p class="mega-heading">Collections</p>
+              <a routerLink="/shop" [queryParams]="{filter:'new',gender:'men'}" (click)="closeMega()">New Arrivals</a>
+              <a routerLink="/shop" [queryParams]="{filter:'bestseller',gender:'men'}" (click)="closeMega()">Best Sellers</a>
+              <a routerLink="/shop" [queryParams]="{filter:'sale',gender:'men'}" (click)="closeMega()">Sale</a>
+            </div>
+            <div class="mega-feature">
+              <img src="assets/hero.jpg" alt="Men's Collection" />
+              <div class="mega-feature-text">
+                <p>New Drop</p>
+                <a routerLink="/shop" [queryParams]="{filter:'new',gender:'men'}" (click)="closeMega()" class="mega-cta">SHOP MEN →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- WOMEN with mega menu -->
+      <li class="has-mega" (mouseenter)="openMega('women')" (mouseleave)="closeMega()">
+        <a routerLink="/shop" [queryParams]="{gender:'women'}" class="nav-link" [class.active]="activeMega==='women'">
+          WOMEN <span class="chevron">▾</span>
+        </a>
+        <div class="mega-menu" [class.open]="activeMega==='women'">
+          <div class="mega-inner">
+            <div class="mega-col">
+              <p class="mega-heading">Shop by Category</p>
+              <a routerLink="/shop" [queryParams]="{gender:'women',category:'sports-bra'}" (click)="closeMega()">Sports Bras</a>
+              <a routerLink="/shop" [queryParams]="{gender:'women',category:'leggings'}" (click)="closeMega()">Leggings & Tights</a>
+              <a routerLink="/shop" [queryParams]="{gender:'women',category:'tops'}" (click)="closeMega()">Tops & Tanks</a>
+              <a routerLink="/shop" [queryParams]="{gender:'women',category:'shorts'}" (click)="closeMega()">Shorts & Skorts</a>
+              <a routerLink="/shop" [queryParams]="{gender:'women',category:'jackets'}" (click)="closeMega()">Jackets</a>
+              <a routerLink="/shop" [queryParams]="{gender:'women',category:'sets'}" (click)="closeMega()">Sets & Bundles</a>
+            </div>
+            <div class="mega-col">
+              <p class="mega-heading">Shop by Sport</p>
+              <a routerLink="/shop" [queryParams]="{gender:'women',tag:'yoga'}" (click)="closeMega()">Yoga & Pilates</a>
+              <a routerLink="/shop" [queryParams]="{gender:'women',tag:'running'}" (click)="closeMega()">Running</a>
+              <a routerLink="/shop" [queryParams]="{gender:'women',tag:'training'}" (click)="closeMega()">Training & HIIT</a>
+              <a routerLink="/shop" [queryParams]="{gender:'women',tag:'lifestyle'}" (click)="closeMega()">Lifestyle</a>
+            </div>
+            <div class="mega-col">
+              <p class="mega-heading">Collections</p>
+              <a routerLink="/shop" [queryParams]="{filter:'new',gender:'women'}" (click)="closeMega()">New Arrivals</a>
+              <a routerLink="/shop" [queryParams]="{filter:'bestseller',gender:'women'}" (click)="closeMega()">Best Sellers</a>
+              <a routerLink="/shop" [queryParams]="{filter:'sale',gender:'women'}" (click)="closeMega()">Sale</a>
+            </div>
+            <div class="mega-feature">
+              <img src="assets/banner.jpg" alt="Women's Collection" />
+              <div class="mega-feature-text">
+                <p>Sport Style</p>
+                <a routerLink="/shop" [queryParams]="{filter:'new',gender:'women'}" (click)="closeMega()" class="mega-cta">SHOP WOMEN →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- UNISEX -->
+      <li>
+        <a routerLink="/shop" [queryParams]="{gender:'unisex'}" class="nav-link" routerLinkActive="active">UNISEX</a>
+      </li>
+
+      <!-- SALE -->
+      <li>
+        <a routerLink="/shop" [queryParams]="{filter:'sale'}" class="nav-link sale-link" routerLinkActive="active">SALE</a>
+      </li>
+
+      <!-- ABOUT -->
+      <li>
+        <a routerLink="/about" class="nav-link" routerLinkActive="active">ABOUT</a>
+      </li>
     </ul>
 
     <!-- Nav actions -->
@@ -67,13 +158,8 @@
   <!-- Search overlay -->
   <div class="search-overlay" [class.open]="isSearchOpen()">
     <div class="search-inner">
-      <input
-        type="text"
-        placeholder="Search products, styles, categories..."
-        [(ngModel)]="searchQuery"
-        (keyup.enter)="onSearch()"
-        autofocus
-      />
+      <input type="text" placeholder="Search products, styles, categories..."
+        [(ngModel)]="searchQuery" (keyup.enter)="onSearch()" autofocus />
       <button class="search-submit" (click)="onSearch()">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
@@ -92,12 +178,14 @@
       <img class="logo-img" src="assets/logo.png" alt="One Element Active Wear" width="100" height="98" />
     </a>
     <ul class="mobile-nav-links">
-      @for (link of navLinks; track link.label) {
-        <li>
-          <a [routerLink]="link.path" [queryParams]="link.query"
-             (click)="closeMobileMenu()">{{ link.label }}</a>
-        </li>
-      }
+      <li><a routerLink="/shop" [queryParams]="{filter:'new'}" (click)="closeMobileMenu()">New Arrivals</a></li>
+      <li><a routerLink="/shop" [queryParams]="{gender:'men'}" (click)="closeMobileMenu()">Men</a></li>
+      <li><a routerLink="/shop" [queryParams]="{gender:'women'}" (click)="closeMobileMenu()">Women</a></li>
+      <li><a routerLink="/shop" [queryParams]="{gender:'unisex'}" (click)="closeMobileMenu()">Unisex</a></li>
+      <li><a routerLink="/shop" [queryParams]="{filter:'sale'}" (click)="closeMobileMenu()">Sale</a></li>
+      <li><a routerLink="/about" (click)="closeMobileMenu()">About</a></li>
+      <li><a routerLink="/size-guide" (click)="closeMobileMenu()">Size Guide</a></li>
+      <li><a routerLink="/contact" (click)="closeMobileMenu()">Contact</a></li>
     </ul>
     <div class="mobile-footer-links">
       <a routerLink="/cart" (click)="closeMobileMenu()">Cart ({{ cartService.totalItems() }})</a>

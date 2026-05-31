@@ -21,6 +21,8 @@ export class NavbarComponent {
   isMobileMenuOpen = signal(false);
   isSearchOpen = signal(false);
   searchQuery = signal('');
+  activeMega: string | null = null;
+  private megaTimeout: any;
 
   navLinks = [
     { label: 'New Arrivals', path: '/shop', query: { filter: 'new' } },
@@ -48,7 +50,14 @@ export class NavbarComponent {
     }
   }
 
-  navigateToCart(): void {
-    this.cartService.openCart();
+  navigateToCart(): void { this.cartService.openCart(); }
+
+  openMega(menu: string): void {
+    clearTimeout(this.megaTimeout);
+    this.activeMega = menu;
+  }
+
+  closeMega(): void {
+    this.megaTimeout = setTimeout(() => { this.activeMega = null; }, 120);
   }
 }
