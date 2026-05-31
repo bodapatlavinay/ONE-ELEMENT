@@ -22,7 +22,7 @@
   color: #fff;
   text-align: center;
   padding: 9px 20px;
-  font-size: 10px;
+  font-size: 14px;
   font-family: var(--font-mono);
   letter-spacing: 0.12em;
   font-weight: 700;
@@ -72,7 +72,7 @@
     color: rgba(255,255,255,0.75);
     text-decoration: none;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 15px;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -136,7 +136,7 @@
     top: 2px;
     right: 2px;
     background: var(--accent);
-    color: #000;
+    color: #fff;
     font-size: 9px;
     font-weight: 700;
     width: 16px;
@@ -307,7 +307,7 @@
   a {
     color: rgba(255,255,255,0.4);
     text-decoration: none;
-    font-size: 13px;
+    font-size: 15px;
     font-family: var(--font-mono);
     letter-spacing: 0.06em;
     transition: color 0.2s;
@@ -331,5 +331,5 @@
   .nav-main { padding: 14px 20px; }
   .hamburger { display: flex; }
   .nav-links { display: none; }
-  .announcement-bar { font-size: 9px; padding: 6px 10px; }
+  .announcement-bar { font-size: 15px; padding: 6px 10px; }
 }
