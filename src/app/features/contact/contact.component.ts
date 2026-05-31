@@ -40,7 +40,7 @@ import { CommonModule } from '@angular/common';
               <span class="info-icon">📍</span>
               <div>
                 <p class="info-label">Registered Office</p>
-                <p>Bengaluru, Karnataka, India</p>
+                <p>Hyderabad, Telangana, India</p>
               </div>
             </div>
           </div>
