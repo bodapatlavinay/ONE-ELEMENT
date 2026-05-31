@@ -2,7 +2,7 @@
   <div class="footer-top">
     <div class="footer-brand">
       <div class="footer-logo">
-        <img class="footer-logo-img" src="assets/logo.png" alt="One Element Active Wear" />
+        <img class="footer-logo-img" src="assets/logo.png" alt="One Element Active Wear" width="100" height="98" />
       </div>
       <p class="brand-desc">
         Built for athletes who push every boundary. Premium activewear engineered for performance, designed for the streets.
@@ -42,11 +42,10 @@
       <div class="footer-col">
         <h4>Help</h4>
         <ul>
-          <li><a href="#">Size Guide</a></li>
-          <li><a href="#">Shipping & Returns</a></li>
-          <li><a href="#">FAQs</a></li>
-          <li><a href="#">Track Order</a></li>
-          <li><a href="#">Contact Us</a></li>
+          <li><a routerLink="/size-guide">Size Guide</a></li>
+          <li><a routerLink="/returns">Shipping & Returns</a></li>
+          <li><a routerLink="/contact">Contact Us</a></li>
+          <li><a href="https://elements-10037.myshopify.com/account" target="_blank">Track Order</a></li>
         </ul>
       </div>
 
@@ -54,10 +53,9 @@
         <h4>Company</h4>
         <ul>
           <li><a routerLink="/about">About Us</a></li>
-          <li><a href="#">Sustainability</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="#">Press</a></li>
-          <li><a href="#">Affiliate Program</a></li>
+          <li><a routerLink="/privacy">Privacy Policy</a></li>
+          <li><a routerLink="/terms">Terms of Use</a></li>
+          <li><a routerLink="/returns">Returns Policy</a></li>
         </ul>
       </div>
     </div>
@@ -74,9 +72,9 @@
     <div class="footer-legal">
       <p>© {{ currentYear }} One Element Activewear Pvt. Ltd. All rights reserved.</p>
       <div class="legal-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Use</a>
-        <a href="#">Cookie Policy</a>
+        <a routerLink="/privacy">Privacy Policy</a>
+        <a routerLink="/terms">Terms of Use</a>
+        <a routerLink="/returns">Returns Policy</a>
       </div>
     </div>
 
