@@ -91,8 +91,8 @@ export class ProductService {
     {
       id: 111, title: 'ONE ELEMENT ThermoGrid Base Layer', price: 3499,
       description: 'ColdGear® infrared inner lining. Fitted cut. Anti-odour tech. Ideal under jersey or as standalone layer.',
-      category: "men's clothing", image: 'https://images.unsplash.com/photo-1620012253295-c15cc3e65df4?w=600&q=80',
-      images: ['https://images.unsplash.com/photo-1620012253295-c15cc3e65df4?w=600&q=80'],
+      category: "men's clothing", image: 'https://images.unsplash.com/photo-1571731956672-f2b94d7dd0cb?w=600&q=80',
+      images: ['https://images.unsplash.com/photo-1571731956672-f2b94d7dd0cb?w=600&q=80'],
       rating: { rate: 4.5, count: 167 }, stock: 30, badge: 'NEW',
       sizes: ['S','M','L','XL','XXL'], colors: ['Carbon Black','Steel Grey'], gender: 'Men', tags: ['winter','baselayer','training']
     },
