@@ -18,10 +18,15 @@
 .product-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  padding: 40px 80px;
-  max-width: 1400px;
+  gap: 48px;
+  padding: 40px clamp(16px, 5vw, 64px);
+  max-width: 1300px;
   margin: 0 auto;
+
+  @media (max-width: 1100px) {
+    gap: 32px;
+    padding: 32px clamp(16px, 4vw, 40px);
+  }
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
@@ -96,7 +101,7 @@
 
 .product-name {
   font-family: var(--font-display);
-  font-size: clamp(28px, 3.5vw, 42px);
+  font-size: clamp(24px, 3vw, 40px);
   font-weight: 900;
   color: #fff;
   letter-spacing: 0.02em;
