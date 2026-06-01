@@ -62,7 +62,7 @@
   overflow: hidden;
   background: #111;
 
-  .main-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .main-img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
   .badge {
     position: absolute;
@@ -96,7 +96,7 @@
 
 .product-name {
   font-family: var(--font-display);
-  font-size: clamp(22px, 3vw, 32px);
+  font-size: clamp(28px, 3.5vw, 42px);
   font-weight: 900;
   color: #fff;
   letter-spacing: 0.02em;
@@ -108,22 +108,22 @@
   display: flex; align-items: center; gap: 8px;
 
   .stars span {
-    color: rgba(255,255,255,0.2); font-size: 14px;
+    color: rgba(255,255,255,0.2); font-size: 17px;
     &.filled { color: var(--accent); }
   }
-  .rating-val { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: #fff; }
-  .rating-count { font-family: var(--font-mono); font-size: 15px; color: var(--text-muted); }
+  .rating-val { font-family: var(--font-mono); font-size: 17px; font-weight: 700; color: #fff; }
+  .rating-count { font-family: var(--font-mono); font-size: 17px; color: var(--text-muted); }
 }
 
 .price-block {
   display: flex; align-items: center; gap: 12px;
-  .price { font-family: var(--font-display); font-size: 32px; font-weight: 900; color: #fff; }
-  .original-price { font-size: 16px; color: var(--text-muted); text-decoration: line-through; }
+  .price { font-family: var(--font-display); font-size: 40px; font-weight: 900; color: #fff; }
+  .original-price { font-size: 18px; color: var(--text-muted); text-decoration: line-through; }
   .discount-tag {
     background: rgba(255,59,59,0.15);
     color: #ff6b6b;
     font-family: var(--font-mono);
-    font-size: 15px; font-weight: 700;
+    font-size: 17px; font-weight: 700;
     letter-spacing: 0.06em;
     padding: 4px 10px;
     border-radius: 2px;
@@ -143,7 +143,7 @@
 
 .option-label {
   font-family: var(--font-mono);
-  font-size: 15px;
+  font-size: 17px;
   letter-spacing: 0.12em;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -280,9 +280,9 @@
 
 .trust-item {
   display: flex; align-items: center; gap: 6px;
-  font-family: var(--font-mono); font-size: 15px; color: var(--text-muted);
+  font-family: var(--font-mono); font-size: 16px; color: var(--text-muted);
   letter-spacing: 0.04em;
-  span { font-size: 14px; }
+  span { font-size: 16px; }
 }
 
 /* ── TABS ── */
@@ -300,13 +300,13 @@
   &:hover:not(.active) { color: #fff; }
 }
 
-.description-text { color: rgba(255,255,255,0.7); font-size: 14px; line-height: 1.8; margin-bottom: 16px; }
+.description-text { color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.8; margin-bottom: 16px; }
 .feature-list {
   list-style: none; padding: 0; margin: 0;
   li {
-    color: rgba(255,255,255,0.6); font-size: 15px; padding: 6px 0;
-    padding-left: 18px; position: relative; line-height: 1.5;
-    &::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 15px; }
+    color: rgba(255,255,255,0.6); font-size: 16px; padding: 8px 0;
+    padding-left: 20px; position: relative; line-height: 1.6;
+    &::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 16px; }
   }
 }
 

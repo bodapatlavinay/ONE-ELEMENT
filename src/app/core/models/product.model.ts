@@ -14,8 +14,9 @@ export interface Product {
   colors: string[];
   gender: 'Men' | 'Women' | 'Unisex';
   tags: string[];
-  variantId?: string;        // Shopify variant GID for checkout
-  shopifyId?: string;        // Full Shopify product GID
+  variantId?: string;                    // Shopify variant GID for the first/default variant
+  variantMap?: Record<string, string>;   // size → Shopify variant GID for checkout
+  shopifyId?: string;                    // Full Shopify product GID
 }
 
 export interface Rating {
@@ -28,6 +29,7 @@ export interface CartItem {
   quantity: number;
   selectedSize: string;
   selectedColor: string;
+  variantId?: string;   // Shopify variant GID for this size/color combination
 }
 
 export interface WishlistItem {

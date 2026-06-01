@@ -27,6 +27,8 @@ export class ShopComponent implements OnInit {
   selectedSort = signal('default');
   searchQuery = signal('');
   priceMax = signal(10000);
+  selectedTag = signal('');       // sport tag from navbar (e.g. 'running', 'training')
+  selectedCategory = signal(''); // category tag from navbar (e.g. 'tops', 'shorts')
 
   genders = ['all', 'Men', 'Women', 'Unisex'];
   badges = ['all', 'NEW', 'BESTSELLER', 'SALE', 'LIMITED'];
@@ -46,6 +48,14 @@ export class ShopComponent implements OnInit {
     }
     if (this.selectedBadge() !== 'all') {
       list = list.filter(p => p.badge === this.selectedBadge());
+    }
+    if (this.selectedTag()) {
+      const t = this.selectedTag().toLowerCase();
+      list = list.filter(p => p.tags.some(tag => tag.toLowerCase() === t));
+    }
+    if (this.selectedCategory()) {
+      const c = this.selectedCategory().toLowerCase();
+      list = list.filter(p => p.tags.some(tag => tag.toLowerCase() === c));
     }
     if (this.searchQuery()) {
       const q = this.searchQuery().toLowerCase();
@@ -69,10 +79,16 @@ export class ShopComponent implements OnInit {
     });
 
     this.route.queryParams.subscribe(params => {
-      if (params['gender']) this.selectedGender.set(params['gender']);
+      // Reset all URL-driven filters on each navigation so old state doesn't bleed through
+      this.selectedGender.set(params['gender'] || 'all');
+      this.selectedTag.set(params['tag'] || '');
+      this.selectedCategory.set(params['category'] || '');
+      this.searchQuery.set(params['search'] || '');
+
       if (params['filter'] === 'new') this.selectedBadge.set('NEW');
-      if (params['filter'] === 'sale') this.selectedBadge.set('SALE');
-      if (params['search']) this.searchQuery.set(params['search']);
+      else if (params['filter'] === 'sale') this.selectedBadge.set('SALE');
+      else if (params['filter'] === 'bestseller') this.selectedBadge.set('BESTSELLER');
+      else if (!params['filter']) this.selectedBadge.set('all');
     });
   }
 
@@ -82,6 +98,8 @@ export class ShopComponent implements OnInit {
     this.selectedSort.set('default');
     this.searchQuery.set('');
     this.priceMax.set(10000);
+    this.selectedTag.set('');
+    this.selectedCategory.set('');
   }
 
   get activeFilterCount(): number {
@@ -90,6 +108,8 @@ export class ShopComponent implements OnInit {
     if (this.selectedBadge() !== 'all') count++;
     if (this.priceMax() < 10000) count++;
     if (this.searchQuery()) count++;
+    if (this.selectedTag()) count++;
+    if (this.selectedCategory()) count++;
     return count;
   }
 }

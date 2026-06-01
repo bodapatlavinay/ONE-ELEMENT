@@ -144,11 +144,14 @@
                 </div>
               }
             </div>
+            @if (checkoutError()) {
+              <div class="checkout-error">⚠️ {{ checkoutError() }}</div>
+            }
             <div class="btn-row">
               <button class="btn-back" (click)="prevStep()">← Back</button>
               <button class="btn-place" (click)="placeOrder()" [disabled]="isPlacing()">
-                @if (isPlacing()) { <span class="spinner"></span> PLACING... }
-                @else { PLACE ORDER · ₹{{ total | number:'1.0-0' }} }
+                @if (isPlacing()) { <span class="spinner"></span> REDIRECTING TO CHECKOUT... }
+                @else { PROCEED TO PAYMENT · ₹{{ total | number:'1.0-0' }} }
               </button>
             </div>
           </div>

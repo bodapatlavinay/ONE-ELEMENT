@@ -17,6 +17,9 @@ export class CartService {
   }, 0));
 
   addToCart(product: Product, size: string, color: string, qty = 1): void {
+    // Resolve the correct Shopify variant ID for the selected size
+    const variantId = product.variantMap?.[size] ?? product.variantId;
+
     const current = this._items();
     const idx = current.findIndex(i =>
       i.product.id === product.id && i.selectedSize === size && i.selectedColor === color
@@ -26,7 +29,7 @@ export class CartService {
       updated[idx] = { ...updated[idx], quantity: updated[idx].quantity + qty };
       this._items.set(updated);
     } else {
-      this._items.set([...current, { product, quantity: qty, selectedSize: size, selectedColor: color }]);
+      this._items.set([...current, { product, quantity: qty, selectedSize: size, selectedColor: color, variantId }]);
     }
     this.saveToStorage();
     this.openCart();

@@ -206,10 +206,11 @@
 .filter-label {
   display: block;
   font-family: var(--font-mono);
-  font-size: 15px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.18em;
-  color: var(--accent);
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
   margin-bottom: 12px;
 }
 
@@ -241,7 +242,7 @@
   border: 1px solid rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.6);
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;
   padding: 6px 12px;
@@ -251,7 +252,7 @@
   text-transform: uppercase;
 
   &:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
-  &.active { background: var(--accent); border-color: var(--accent); color: #000; }
+  &.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 }
 
 .price-range {
@@ -265,7 +266,7 @@
   display: flex;
   justify-content: space-between;
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 11px;
   color: var(--text-muted);
 }
 
@@ -281,7 +282,7 @@
   border: 1px solid rgba(255,255,255,0.15);
   color: rgba(255,255,255,0.5);
   font-family: var(--font-mono);
-  font-size: 15px;
+  font-size: 11px;
   letter-spacing: 0.08em;
   padding: 10px;
   border-radius: 3px;
@@ -294,16 +295,16 @@
   flex: 1;
   background: var(--accent);
   border: none;
-  color: #000;
+  color: #fff;
   font-family: var(--font-mono);
-  font-size: 15px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;
   padding: 10px;
   border-radius: 3px;
   cursor: pointer;
-  transition: background 0.2s;
-  &:hover { background: #fff; }
+  transition: opacity 0.2s;
+  &:hover { opacity: 0.88; }
 }
 
 /* ── GRID ── */
