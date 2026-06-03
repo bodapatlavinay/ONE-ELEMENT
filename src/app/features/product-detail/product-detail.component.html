@@ -24,7 +24,8 @@
           (touchstart)="onTouchStart($event)"
           (touchend)="onTouchEnd($event)">
 
-          <img [src]="images[activeImage()]" [alt]="product()!.title" class="main-img" />
+          <img [src]="images[activeImage()]" [alt]="product()!.title" class="main-img zoom-cursor"
+               (click)="openLightbox()" />
 
           @if (product()?.badge) {
             <span class="badge" [class]="'badge--' + product()!.badge!.toLowerCase()">{{ product()!.badge }}</span>
@@ -192,6 +193,31 @@
         </div>
       </div>
     </div>
+
+    <!-- LIGHTBOX -->
+    @if (lightboxOpen()) {
+      <div class="lightbox" (click)="closeLightbox()">
+        <div class="lightbox-inner" (click)="$event.stopPropagation()">
+          <img [src]="images[activeImage()]" [alt]="product()!.title"
+               [style.transform]="'scale(' + lightboxZoom() + ')'" class="lightbox-img" />
+        </div>
+
+        <!-- Controls -->
+        <div class="lightbox-controls" (click)="$event.stopPropagation()">
+          <button class="lb-btn" (click)="zoomOut()" [disabled]="lightboxZoom() <= 1">−</button>
+          <span class="lb-zoom">{{ (lightboxZoom() * 100).toFixed(0) }}%</span>
+          <button class="lb-btn" (click)="zoomIn()" [disabled]="lightboxZoom() >= 4">+</button>
+        </div>
+
+        <!-- Nav arrows inside lightbox -->
+        @if (images.length > 1) {
+          <button class="lb-arrow lb-arrow--prev" (click)="$event.stopPropagation(); prevImage()">‹</button>
+          <button class="lb-arrow lb-arrow--next" (click)="$event.stopPropagation(); nextImage()">›</button>
+        }
+
+        <button class="lb-close" (click)="closeLightbox()">✕</button>
+      </div>
+    }
 
     <!-- RELATED -->
     @if (relatedProducts().length > 0) {

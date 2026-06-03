@@ -32,6 +32,24 @@ export class ProductDetailComponent implements OnInit {
   isLoading = signal(true);
   sizeError = signal(false);
 
+  // Lightbox
+  lightboxOpen = signal(false);
+  lightboxZoom = signal(1);
+
+  openLightbox(): void {
+    this.lightboxOpen.set(true);
+    this.lightboxZoom.set(1);
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeLightbox(): void {
+    this.lightboxOpen.set(false);
+    document.body.style.overflow = '';
+  }
+
+  zoomIn(): void  { this.lightboxZoom.set(Math.min(this.lightboxZoom() + 0.5, 4)); }
+  zoomOut(): void { this.lightboxZoom.set(Math.max(this.lightboxZoom() - 0.5, 1)); }
+
   specs = [
     { label: 'Material', value: 'HeatGear® 92% Polyester, 8% Elastane' },
     { label: 'Fit', value: 'Fitted / Compression' },
