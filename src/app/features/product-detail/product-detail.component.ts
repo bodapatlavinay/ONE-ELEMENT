@@ -96,6 +96,34 @@ export class ProductDetailComponent implements OnInit {
   }
 
   setImage(i: number): void { this.activeImage.set(i); }
+
+  get images(): string[] {
+    const p = this.product();
+    return p ? (p.images?.length ? p.images : [p.image]) : [];
+  }
+
+  prevImage(): void {
+    this.setImage(Math.max(this.activeImage() - 1, 0));
+  }
+
+  nextImage(): void {
+    this.setImage(Math.min(this.activeImage() + 1, this.images.length - 1));
+  }
+
+  // Touch swipe support
+  private touchStartX = 0;
+
+  onTouchStart(e: TouchEvent): void {
+    this.touchStartX = e.changedTouches[0].screenX;
+  }
+
+  onTouchEnd(e: TouchEvent): void {
+    const diff = this.touchStartX - e.changedTouches[0].screenX;
+    if (Math.abs(diff) > 40) {
+      diff > 0 ? this.nextImage() : this.prevImage();
+    }
+  }
+
   changeQty(delta: number): void {
     const max = this.product()?.stock || 10;
     this.quantity.set(Math.max(1, Math.min(max, this.quantity() + delta)));

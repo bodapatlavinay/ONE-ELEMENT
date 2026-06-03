@@ -10,18 +10,39 @@
     <div class="product-layout">
       <!-- GALLERY -->
       <div class="gallery">
+        <!-- Thumbs (desktop only) -->
         <div class="gallery-thumbs">
-          @for (img of (product()!.images?.length ? product()!.images! : [product()!.image]); track $index) {
+          @for (img of images; track $index) {
             <button class="thumb" [class.active]="activeImage() === $index" (click)="setImage($index)">
               <img [src]="img" [alt]="product()!.title" />
             </button>
           }
         </div>
-        <div class="gallery-main">
-          <img [src]="(product()!.images?.length ? product()!.images! : [product()!.image])[activeImage()]"
-            [alt]="product()!.title" class="main-img" />
+
+        <!-- Main image with swipe support -->
+        <div class="gallery-main"
+          (touchstart)="onTouchStart($event)"
+          (touchend)="onTouchEnd($event)">
+
+          <img [src]="images[activeImage()]" [alt]="product()!.title" class="main-img" />
+
           @if (product()?.badge) {
             <span class="badge" [class]="'badge--' + product()!.badge!.toLowerCase()">{{ product()!.badge }}</span>
+          }
+
+          <!-- Prev / Next arrows -->
+          @if (images.length > 1) {
+            <button class="gallery-arrow gallery-arrow--prev" (click)="prevImage()" [disabled]="activeImage() === 0">‹</button>
+            <button class="gallery-arrow gallery-arrow--next" (click)="nextImage()" [disabled]="activeImage() === images.length - 1">›</button>
+          }
+
+          <!-- Dot indicators (mobile) -->
+          @if (images.length > 1) {
+            <div class="gallery-dots">
+              @for (img of images; track $index) {
+                <button class="dot" [class.active]="activeImage() === $index" (click)="setImage($index)"></button>
+              }
+            </div>
           }
         </div>
       </div>
