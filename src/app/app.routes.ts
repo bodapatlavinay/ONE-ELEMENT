@@ -7,6 +7,7 @@ export const routes: Routes = [
   { path: 'cart', loadComponent: () => import('./features/cart/cart.component').then(m => m.CartComponent) },
   { path: 'checkout', loadComponent: () => import('./features/checkout/checkout.component').then(m => m.CheckoutComponent) },
   { path: 'wishlist', loadComponent: () => import('./features/wishlist/wishlist.component').then(m => m.WishlistComponent) },
+  { path: 'account', loadComponent: () => import('./features/account/account.component').then(m => m.AccountComponent) },
   { path: 'about', loadComponent: () => import('./features/about/about.component').then(m => m.AboutComponent) },
   { path: 'contact', loadComponent: () => import('./features/contact/contact.component').then(m => m.ContactComponent) },
   { path: 'size-guide', loadComponent: () => import('./features/size-guide/size-guide.component').then(m => m.SizeGuideComponent) },

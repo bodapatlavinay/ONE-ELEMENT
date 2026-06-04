@@ -1,94 +1,129 @@
 /* =============================================
-   ONE ELEMENT ACTIVEWEAR — GLOBAL STYLES
+   ONE ELEMENT — NIKE-LEVEL DARK THEME
    ============================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,400&display=swap');
 
 /* ── CSS VARIABLES ── */
 :root {
-  --accent: #E25822;
-  --accent-light: rgba(226, 88, 34, 0.12);
-  --accent-border: rgba(226, 88, 34, 0.25);
-  --bg-primary: #080808;
-  --bg-secondary: #0d0d0d;
-  --surface: #111111;
-  --surface-2: #161616;
-  --border: rgba(255,255,255,0.07);
-  --border-strong: rgba(255,255,255,0.12);
-  --text-primary: #f5f5f5;
-  --text-secondary: rgba(255,255,255,0.65);
-  --text-muted: rgba(255,255,255,0.35);
-  --font-display: 'Barlow Condensed', sans-serif;
-  --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
-  --font-mono: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-  --radius: 3px;
-  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Colors */
+  --bg:              #080808;
+  --bg-secondary:    #111111;
+  --surface:         #111111;
+  --text-primary:    #F0F0F0;
+  --text-secondary:  #999999;
+  --border:          #222222;
+  --sale:            #FF6B00;
+  --accent:          #FF6B00;
+
+  /* CTA */
+  --cta-bg:          #FF6B00;
+  --cta-text:        #080808;
+  --cta-sec-bg:      #080808;
+  --cta-sec-border:  #FF6B00;
+  --cta-sec-text:    #FF6B00;
+
+  /* Legacy aliases */
+  --accent-light:    rgba(255,107,0,0.12);
+  --bg-primary:      #080808;
+  --text-muted:      #999999;
+
+  /* Typography */
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body:    'Barlow', sans-serif;
+  --font-mono:    'Barlow', sans-serif;
+
+  /* Shape */
+  --radius-pill: 30px;
+  --radius:      0px;
+
+  /* Motion */
+  --transition: 0.25s ease;
 }
 
 /* ── RESET ── */
 *, *::before, *::after {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border: 0;
+  margin: 0; padding: 0; border: 0;
   vertical-align: baseline;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
-  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
 }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
 body {
   font-family: var(--font-body);
-  font-size: 17px;
-  background-color: var(--bg-primary);
+  font-size: 15px;
+  background-color: var(--bg);
   color: var(--text-primary);
-  line-height: 1.7;
+  line-height: 1.6;
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ── SCROLLBAR ── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: #080808; }
-::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #3a3a3a; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
 
 /* ── SELECTION ── */
-::selection { background: var(--accent); color: #fff; }
+::selection { background: #FF6B00; color: #080808; }
 
 /* ── FOCUS ── */
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+:focus-visible { outline: 2px solid #FF6B00; outline-offset: 2px; }
 
-/* ── IMAGES ── */
+/* ── BASE ── */
 img { max-width: 100%; display: block; }
-
-/* ── LINKS ── */
 a { color: inherit; }
 
-/* ── SMOOTH VIEW TRANSITIONS ── */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.3s;
-}
+/* ── VIEW TRANSITIONS ── */
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.25s; }
 
-/* ── UTILITY CLASSES ── */
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
+/* ── GLOBAL PILL BUTTONS ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  gap: 8px;
+  background: var(--cta-bg);
+  color: var(--cta-text);
+  font-family: var(--font-body);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  padding: 0 24px; height: 48px;
+  border-radius: var(--radius-pill);
+  border: none; cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
   white-space: nowrap;
+  &:hover { opacity: 0.85; }
+  &:active { transform: scale(0.97); }
 }
 
-/* ── NUMBER FONT ── */
-.font-display { font-family: var(--font-display) !important; }
-.font-mono { font-family: var(--font-mono) !important; }
+.btn-secondary {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  gap: 8px;
+  background: var(--cta-sec-bg);
+  color: var(--cta-sec-text);
+  font-family: var(--font-body);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  padding: 0 24px; height: 48px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--cta-sec-border);
+  cursor: pointer; text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  &:hover { background: rgba(255,107,0,0.1); }
+  &:active { transform: scale(0.97); }
+}
+
+/* ── UTILITY ── */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}

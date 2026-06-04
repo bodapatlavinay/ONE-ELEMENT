@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { CartSidebarComponent } from './shared/components/cart-sidebar/cart-sidebar.component';
 import { ToastComponent } from './shared/components/toast/toast.component';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -50,4 +51,13 @@ import { ToastComponent } from './shared/components/toast/toast.component';
     }
   `]
 })
-export class AppComponent {}
+export class AppComponent {
+  constructor() {
+    const router = inject(Router);
+    router.events.pipe(
+      filter(e => e instanceof NavigationEnd)
+    ).subscribe(() => {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    });
+  }
+}

@@ -24,15 +24,6 @@ export class NavbarComponent {
   activeMega: string | null = null;
   private megaTimeout: any;
 
-  navLinks = [
-    { label: 'New Arrivals', path: '/shop', query: { filter: 'new' } },
-    { label: 'Men', path: '/shop', query: { gender: 'men' } },
-    { label: 'Women', path: '/shop', query: { gender: 'women' } },
-    { label: 'Unisex', path: '/shop', query: { gender: 'unisex' } },
-    { label: 'Sale', path: '/shop', query: { filter: 'sale' } },
-    { label: 'About', path: '/about', query: {} }
-  ];
-
   @HostListener('window:scroll')
   onScroll(): void {
     this.isScrolled.set(window.scrollY > 50);

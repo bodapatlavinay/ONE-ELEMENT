@@ -1,0 +1,131 @@
+<div class="account-page">
+
+  @if (customerService.loading()) {
+    <div class="account-loading">
+      <div class="spinner"></div>
+      <p>Signing you in…</p>
+    </div>
+  } @else if (!customerService.isLoggedIn()) {
+    <div class="login-wrap">
+      <div class="login-card">
+        <div class="login-header">
+          <span class="login-eyebrow">MY ACCOUNT</span>
+          <h1>SIGN IN</h1>
+          <p>Access your orders, wishlist and profile.</p>
+        </div>
+
+        <form class="login-form" (ngSubmit)="login()">
+          <div class="field">
+            <label>EMAIL</label>
+            <input type="email" [ngModel]="email()" (ngModelChange)="email.set($event)"
+              name="email" placeholder="you@example.com" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label>PASSWORD</label>
+            <input type="password" [ngModel]="password()" (ngModelChange)="password.set($event)"
+              name="password" placeholder="••••••••" autocomplete="current-password" required />
+          </div>
+
+          @if (errorMsg()) {
+            <p class="error-msg">{{ errorMsg() }}</p>
+          }
+
+          <button type="submit" class="btn-login">SIGN IN →</button>
+        </form>
+
+        <div class="login-footer">
+          <p>Don't have an account?
+            <a href="https://elements-10037.myshopify.com/account/register" target="_blank">Create one</a>
+          </p>
+          <p>
+            <a href="https://elements-10037.myshopify.com/account/login#recover" target="_blank">Forgot password?</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="dashboard">
+      <div class="dashboard-header">
+        <div class="dashboard-welcome">
+          <span class="eyebrow">MY ACCOUNT</span>
+          <h1>WELCOME BACK,<br><span class="name">{{ customerService.customer()?.firstName | uppercase }}.</span></h1>
+        </div>
+        <button class="btn-logout" (click)="logout()">Sign Out</button>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn" [class.active]="activeTab() === 'orders'" (click)="activeTab.set('orders')">
+          ORDERS <span class="tab-count">{{ customerService.customer()?.orders?.length || 0 }}</span>
+        </button>
+        <button class="tab-btn" [class.active]="activeTab() === 'profile'" (click)="activeTab.set('profile')">
+          PROFILE
+        </button>
+      </div>
+
+      @if (activeTab() === 'orders') {
+        <div class="orders-section">
+          @if (!customerService.customer()?.orders?.length) {
+            <div class="empty-orders">
+              <div class="empty-icon">📦</div>
+              <h3>No orders yet</h3>
+              <p>When you place orders, they'll appear here.</p>
+              <a routerLink="/shop" class="btn-shop">SHOP NOW →</a>
+            </div>
+          } @else {
+            <div class="orders-list">
+              @for (order of customerService.customer()!.orders; track order.id) {
+                <div class="order-card">
+                  <div class="order-top">
+                    <div>
+                      <span class="order-num">#{{ order.orderNumber }}</span>
+                      <span class="order-date">{{ formatDate(order.processedAt) }}</span>
+                    </div>
+                    <span class="order-total">₹{{ +order.totalPrice.amount | number:'1.0-0' }}</span>
+                  </div>
+                  <div class="order-items">
+                    @for (item of order.lineItems; track item.title) {
+                      <span class="order-item">{{ item.title }} × {{ item.quantity }}</span>
+                    }
+                  </div>
+                  <div class="order-bottom">
+                    <span class="status-pill" [class]="statusClass(order.financialStatus)">
+                      {{ formatStatus(order.financialStatus) }}
+                    </span>
+                    <span class="status-pill" [class]="statusClass(order.fulfillmentStatus)">
+                      {{ formatStatus(order.fulfillmentStatus) }}
+                    </span>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+
+      @if (activeTab() === 'profile') {
+        <div class="profile-section">
+          <div class="profile-card">
+            <div class="profile-row">
+              <span class="profile-label">NAME</span>
+              <span class="profile-val">{{ customerService.customer()?.firstName }} {{ customerService.customer()?.lastName }}</span>
+            </div>
+            <div class="profile-row">
+              <span class="profile-label">EMAIL</span>
+              <span class="profile-val">{{ customerService.customer()?.email }}</span>
+            </div>
+            @if (customerService.customer()?.phone) {
+              <div class="profile-row">
+                <span class="profile-label">PHONE</span>
+                <span class="profile-val">{{ customerService.customer()?.phone }}</span>
+              </div>
+            }
+          </div>
+          <p class="profile-note">To update your details, visit your
+            <a href="https://elements-10037.myshopify.com/account" target="_blank">account portal</a>.
+          </p>
+        </div>
+      }
+    </div>
+  }
+
+</div>

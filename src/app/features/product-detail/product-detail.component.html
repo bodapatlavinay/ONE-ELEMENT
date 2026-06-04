@@ -96,7 +96,7 @@
         <div class="option-group">
           <div class="size-header">
             <label class="option-label">SIZE: <strong>{{ selectedSize() || 'Select a size' }}</strong></label>
-            <a href="#" class="size-guide-link">Size Guide</a>
+            <a routerLink="/size-guide" class="size-guide-link">Size Guide</a>
           </div>
           <div class="size-options" [class.error]="sizeError()">
             @for (size of product()!.sizes; track size) {

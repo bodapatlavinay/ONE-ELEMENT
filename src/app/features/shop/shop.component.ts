@@ -79,8 +79,9 @@ export class ShopComponent implements OnInit {
     });
 
     this.route.queryParams.subscribe(params => {
-      // Reset all URL-driven filters on each navigation so old state doesn't bleed through
-      this.selectedGender.set(params['gender'] || 'all');
+      // Normalize gender to match genders array casing
+      const g = params['gender'];
+      this.selectedGender.set(g ? (g.charAt(0).toUpperCase() + g.slice(1).toLowerCase()) : 'all');
       this.selectedTag.set(params['tag'] || '');
       this.selectedCategory.set(params['category'] || '');
       this.searchQuery.set(params['search'] || '');

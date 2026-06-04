@@ -54,7 +54,7 @@
           <div class="filter-chips">
             @for (g of genders; track g) {
               <button class="chip" [class.active]="selectedGender() === g"
-                (click)="selectedGender.set(g)">
+                (click)="selectedGender.set(selectedGender() === g && g !== 'all' ? 'all' : g)">
                 {{ g === 'all' ? 'All' : g }}
               </button>
             }
@@ -67,7 +67,7 @@
           <div class="filter-chips">
             @for (b of badges; track b) {
               <button class="chip" [class.active]="selectedBadge() === b"
-                (click)="selectedBadge.set(b)">
+                (click)="selectedBadge.set(selectedBadge() === b && b !== 'all' ? 'all' : b)">
                 {{ b === 'all' ? 'All' : b }}
               </button>
             }

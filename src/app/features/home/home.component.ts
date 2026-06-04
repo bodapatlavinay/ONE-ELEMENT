@@ -18,26 +18,10 @@ export class HomeComponent implements OnInit {
   featuredProducts = signal<Product[]>([]);
   newArrivals = signal<Product[]>([]);
 
-  heroSlides = [
-    {
-      label: 'New Season Drop',
-      headline: 'PUSH EVERY\nLIMIT.',
-      sub: 'Premium activewear engineered for India\'s relentless athletes.',
-      cta: 'Shop Men',
-      ctaLink: '/shop',
-      ctaQuery: { gender: 'men' },
-      ctaSecondary: 'Shop Women',
-      ctaSecondaryLink: '/shop',
-      ctaSecondaryQuery: { gender: 'women' },
-      bg: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=80',
-      align: 'left'
-    }
-  ];
-
   categories = [
-    { label: 'MEN', sub: 'Training · Running · Lifestyle', link: '/shop', query: { gender: 'men' }, img: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&q=80' },
-    { label: 'WOMEN', sub: 'Yoga · Training · Performance', link: '/shop', query: { gender: 'women' }, img: 'https://images.unsplash.com/photo-1518459031867-a89b944bffe4?w=600&q=80' },
-    { label: 'UNISEX', sub: 'Everyday Essentials', link: '/shop', query: { gender: 'unisex' }, img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80' }
+    { label: 'MEN', sub: 'Training · Running · Lifestyle', link: '/shop', query: { gender: 'men' }, img: 'assets/men.webp' },
+    { label: 'WOMEN', sub: 'Yoga · Training · Performance', link: '/shop', query: { gender: 'women' }, img: 'assets/women.webp' },
+    { label: 'UNISEX', sub: 'Everyday Essentials', link: '/shop', query: { gender: 'unisex' }, img: 'assets/unisex.webp' }
   ];
 
   features = [

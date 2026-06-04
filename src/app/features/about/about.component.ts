@@ -18,7 +18,7 @@ export class AboutComponent {
   ];
 
   team = [
-    { name: 'Vinay Reddy', role: 'Founder & CEO', img: 'assets/vinay.jpg' },
-    { name: 'Vishnu Reddy', role: 'Co-Founder & Head of Product', img: 'assets/vishnu.jpg' }
+    { name: 'Vinay Reddy', role: 'Founder & CEO', img: 'assets/vinay.jpeg' },
+    { name: 'Vishnu Reddy', role: 'Co-Founder & Head of Product', img: 'assets/vishnu.jpeg' }
   ];
 }
