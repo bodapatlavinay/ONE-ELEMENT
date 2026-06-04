@@ -46,7 +46,7 @@
   scrollbar-width: none; &::-webkit-scrollbar { display: none; } background: #080808;
   @media (max-width: 860px) { position: static; max-height: none; padding: 24px 16px; }
 }
-.info-breadcrumb { font-family: var(--font-body); font-size: 13px; color: #666; display: flex; gap: 8px; align-items: center; a { color: #666; text-decoration: none; &:hover { color: #F0F0F0; text-decoration: underline; } } span { color: #555; } }
+.info-breadcrumb { font-family: var(--font-body); font-size: 13px; color: #666; display: flex; gap: 8px; align-items: center; a { color: #666; text-decoration: none; &:hover { color: #F0F0F0; text-decoration: underline; } } span { color: #777; } }
 .product-name { font-family: var(--font-display); font-size: clamp(28px, 3vw, 40px); font-weight: 400; color: #F0F0F0; letter-spacing: 0.01em; margin: 0; line-height: 1.05; text-transform: uppercase; }
 .rating-row {
   display: flex; align-items: center; gap: 8px;
@@ -81,7 +81,7 @@
 .btn-add-cart { flex: 1; display: flex; align-items: center; justify-content: center; gap: 10px; background: #FF6B00; border: none; color: #080808; font-family: var(--font-body); font-size: 14px; font-weight: 700; letter-spacing: 0.1em; height: 56px; border-radius: 30px; cursor: pointer; text-transform: uppercase; transition: opacity 0.2s; &:hover { opacity: 0.85; } }
 .btn-wishlist { width: 56px; height: 56px; border: 1px solid #333; background: transparent; color: #666; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; &:hover { border-color: #FF6B00; color: #FF6B00; } &.active { border-color: #FF6B00; color: #FF6B00; background: rgba(255,107,0,0.08); } }
 .trust-row { display: flex; flex-wrap: wrap; gap: 12px; padding: 16px 0; border-top: 1px solid #222; border-bottom: 1px solid #222; }
-.trust-item { display: flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: 13px; color: #666; span { font-size: 14px; } }
+.trust-item { display: flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: 13px; color: #888; span { font-size: 14px; } }
 
 /* ── TABS ── */
 .tab-header { display: flex; gap: 0; border-bottom: 1px solid #222; margin-bottom: 20px; }

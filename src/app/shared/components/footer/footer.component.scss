@@ -6,7 +6,7 @@
   @media (max-width: 900px) { grid-template-columns: 1fr; padding: 32px 16px; gap: 32px; }
 }
 .footer-logo { display: flex; align-items: center; margin-bottom: 20px; .footer-logo-img { height: 40px; width: auto; filter: brightness(0) invert(1); } }
-.brand-desc { color: #666; font-size: 14px; line-height: 1.7; margin-bottom: 24px; max-width: 280px; }
+.brand-desc { color: #888; font-size: 14px; line-height: 1.7; margin-bottom: 24px; max-width: 280px; }
 .social-links { display: flex; gap: 12px; }
 .social-link {
   width: 36px; height: 36px; border: 1px solid #333; border-radius: 50%;
@@ -28,7 +28,7 @@
   display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
   @media (max-width: 768px) { padding: 16px 16px; flex-direction: column; align-items: flex-start; gap: 10px; }
 }
-.footer-copyright { font-size: 11px; color: #666; font-family: var(--font-body); }
+.footer-copyright { font-size: 11px; color: #888; font-family: var(--font-body); }
 .footer-legal-links {
   display: flex; gap: 16px; flex-wrap: wrap;
   a { font-size: 11px; color: #666; text-decoration: none; transition: color 0.2s; &:hover { color: #F0F0F0; } }

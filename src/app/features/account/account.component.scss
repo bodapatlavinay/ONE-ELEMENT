@@ -14,7 +14,7 @@
     border-top-color: #FF6B00; border-radius: 50%;
     animation: spin 0.8s linear infinite;
   }
-  p { color: #666; font-family: var(--font-body); font-size: 13px; letter-spacing: 0.08em; }
+  p { color: #888; font-family: var(--font-body); font-size: 13px; letter-spacing: 0.08em; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -38,7 +38,7 @@
     font-family: var(--font-display); font-size: 52px; font-weight: 400;
     color: #F0F0F0; margin: 0 0 8px; text-transform: uppercase; line-height: 1;
   }
-  p { color: #666; font-size: 14px; font-family: var(--font-body); margin: 0; }
+  p { color: #888; font-size: 14px; font-family: var(--font-body); margin: 0; }
 }
 
 .login-form {
@@ -49,7 +49,7 @@
   display: flex; flex-direction: column; gap: 8px;
   label {
     font-family: var(--font-body); font-size: 11px; font-weight: 700;
-    letter-spacing: 0.1em; color: #666; text-transform: uppercase;
+    letter-spacing: 0.1em; color: #888; text-transform: uppercase;
   }
   input {
     background: #111; border: 1px solid #222; color: #F0F0F0;
@@ -76,7 +76,7 @@
 
 .login-footer {
   margin-top: 24px; display: flex; flex-direction: column; gap: 8px;
-  p { font-size: 13px; color: #666; font-family: var(--font-body); margin: 0; }
+  p { font-size: 13px; color: #888; font-family: var(--font-body); margin: 0; }
   a { color: #FF6B00; text-decoration: none; &:hover { text-decoration: underline; } }
 }
 
@@ -118,7 +118,7 @@
 }
 .tab-btn {
   background: transparent; border: none; border-bottom: 2px solid transparent;
-  color: #666; font-family: var(--font-body); font-size: 13px; font-weight: 700;
+  color: #888; font-family: var(--font-body); font-size: 13px; font-weight: 700;
   letter-spacing: 0.08em; padding: 12px 24px 12px 0; cursor: pointer;
   transition: all 0.2s; display: flex; align-items: center; gap: 8px;
   margin-bottom: -1px;
@@ -135,7 +135,7 @@
   text-align: center; padding: 80px 20px;
   .empty-icon { font-size: 48px; margin-bottom: 16px; }
   h3 { font-family: var(--font-display); font-size: 28px; color: #F0F0F0; margin: 0 0 8px; text-transform: uppercase; }
-  p { color: #666; font-size: 14px; margin: 0 0 24px; }
+  p { color: #888; font-size: 14px; margin: 0 0 24px; }
 }
 .btn-shop {
   display: inline-flex; background: #FF6B00; color: #080808;
@@ -159,7 +159,7 @@
     font-family: var(--font-body); font-size: 14px; font-weight: 700;
     color: #F0F0F0; margin-right: 12px;
   }
-  .order-date { font-size: 13px; color: #666; }
+  .order-date { font-size: 13px; color: #888; }
   .order-total { font-family: var(--font-body); font-size: 15px; font-weight: 700; color: #F0F0F0; }
 }
 .order-items {
@@ -178,7 +178,7 @@
   &.status--success { background: rgba(34,197,94,0.1); color: #22c55e; }
   &.status--pending { background: rgba(234,179,8,0.1); color: #eab308; }
   &.status--refunded { background: rgba(239,68,68,0.1); color: #ef4444; }
-  &.status--default { background: #1a1a1a; color: #666; }
+  &.status--default { background: #1a1a1a; color: #888; }
 }
 
 /* ── PROFILE ── */
