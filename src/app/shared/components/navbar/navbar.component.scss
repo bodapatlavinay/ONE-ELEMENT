@@ -232,3 +232,9 @@
   z-index: 1050; opacity: 0; pointer-events: none; transition: opacity 0.35s;
   &.show { opacity: 1; pointer-events: all; }
 }
+
+/* ── MOBILE NAV ACTIONS ── */
+@media (max-width: 768px) {
+  .nav-actions { gap: 0; }
+  .icon-btn { width: 36px; height: 36px; padding: 6px; }
+}

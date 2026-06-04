@@ -46,11 +46,11 @@
   scrollbar-width: none; &::-webkit-scrollbar { display: none; } background: #080808;
   @media (max-width: 860px) { position: static; max-height: none; padding: 24px 16px; }
 }
-.info-breadcrumb { font-family: var(--font-body); font-size: 13px; color: #666; display: flex; gap: 8px; align-items: center; a { color: #666; text-decoration: none; &:hover { color: #F0F0F0; text-decoration: underline; } } span { color: #333; } }
+.info-breadcrumb { font-family: var(--font-body); font-size: 13px; color: #666; display: flex; gap: 8px; align-items: center; a { color: #666; text-decoration: none; &:hover { color: #F0F0F0; text-decoration: underline; } } span { color: #555; } }
 .product-name { font-family: var(--font-display); font-size: clamp(28px, 3vw, 40px); font-weight: 400; color: #F0F0F0; letter-spacing: 0.01em; margin: 0; line-height: 1.05; text-transform: uppercase; }
 .rating-row {
   display: flex; align-items: center; gap: 8px;
-  .stars span { color: #333; font-size: 16px; &.filled { color: #FF6B00; } }
+  .stars span { color: #3a3a3a; font-size: 16px; &.filled { color: #FF6B00; } }
   .rating-val { font-family: var(--font-body); font-size: 15px; font-weight: 700; color: #F0F0F0; }
   .rating-count { font-family: var(--font-body); font-size: 14px; color: #666; }
 }

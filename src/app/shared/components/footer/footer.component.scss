@@ -3,7 +3,7 @@
 .footer-top {
   display: grid; grid-template-columns: 1fr 2fr; gap: 80px;
   padding: 64px 80px; border-bottom: 1px solid #222;
-  @media (max-width: 900px) { grid-template-columns: 1fr; padding: 40px 24px; gap: 40px; }
+  @media (max-width: 900px) { grid-template-columns: 1fr; padding: 32px 16px; gap: 32px; }
 }
 .footer-logo { display: flex; align-items: center; margin-bottom: 20px; .footer-logo-img { height: 40px; width: auto; filter: brightness(0) invert(1); } }
 .brand-desc { color: #666; font-size: 14px; line-height: 1.7; margin-bottom: 24px; max-width: 280px; }
@@ -26,7 +26,7 @@
 .footer-bottom {
   padding: 24px 80px; border-top: 1px solid #222;
   display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
-  @media (max-width: 768px) { padding: 20px 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
+  @media (max-width: 768px) { padding: 16px 16px; flex-direction: column; align-items: flex-start; gap: 10px; }
 }
 .footer-copyright { font-size: 11px; color: #666; font-family: var(--font-body); }
 .footer-legal-links {
