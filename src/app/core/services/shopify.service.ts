@@ -7,6 +7,10 @@ import { environment } from '../../../environments/environment';
 const { domain, storefrontToken, apiVersion } = environment.shopify;
 const ENDPOINT = `https://${domain}/api/${apiVersion}/graphql.json`;
 
+// Cached proxy endpoint — served from Vercel's edge CDN (10-min cache).
+// Falls back to direct Shopify call in local dev where /api/products doesn't exist.
+const CACHED_ENDPOINT = '/api/products';
+
 const HEADERS = new HttpHeaders({
   'Content-Type': 'application/json',
   'X-Shopify-Storefront-Access-Token': storefrontToken
@@ -78,19 +82,28 @@ export interface BuyerInfo {
 export class ShopifyService {
   private http = inject(HttpClient);
 
-  getProducts(count = 50): Observable<Product[]> {
-    return this.http.post<any>(ENDPOINT, {
-      query: PRODUCTS_QUERY,
-      variables: { first: count }
-    }, { headers: HEADERS }).pipe(
+  getProducts(count = 100): Observable<Product[]> {
+    // In production: use /api/products (Vercel edge-cached, 10-min TTL)
+    // In local dev:  /api/products doesn't exist, so fall back to direct Shopify call
+    const isLocalDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+
+    const request$ = isLocalDev
+      ? this.http.post<any>(ENDPOINT, { query: PRODUCTS_QUERY, variables: { first: count } }, { headers: HEADERS })
+      : this.http.get<any>(CACHED_ENDPOINT);
+
+    return request$.pipe(
       map(res => {
         const edges = res?.data?.products?.edges ?? [];
         console.log(`Shopify: fetched ${edges.length} products`);
         return edges.map((e: any) => this.mapProduct(e.node));
       }),
       catchError(err => {
-        console.error('Shopify products fetch failed:', err);
-        return of([]);
+        console.error('Shopify fetch failed, retrying direct:', err);
+        // Final fallback: direct Shopify call
+        return this.http.post<any>(ENDPOINT, { query: PRODUCTS_QUERY, variables: { first: count } }, { headers: HEADERS }).pipe(
+          map(res => (res?.data?.products?.edges ?? []).map((e: any) => this.mapProduct(e.node))),
+          catchError(() => of([]))
+        );
       })
     );
   }
