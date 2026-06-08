@@ -96,7 +96,7 @@
 
 /* ── MEGA MENU ── */
 .has-mega { position: static !important; height: 100%; display: flex; align-items: center; }
-.chevron { font-size: 9px; opacity: 0.4; margin-left: 4px; }
+.chevron { font-size: 8px; opacity: 0.4; margin-left: 4px; }
 
 .mega-menu {
   position: absolute; top: 100%; left: 0; right: 0;
@@ -143,6 +143,7 @@
   color: #F0F0F0; cursor: pointer; padding: 8px; border-radius: 4px;
   display: flex; align-items: center; justify-content: center;
   transition: opacity 0.2s; text-decoration: none; width: 40px; height: 40px;
+  i { font-size: 18px; line-height: 1; }
   &:hover { opacity: 0.6; }
   .badge {
     position: absolute; top: 2px; right: 2px;

@@ -67,7 +67,9 @@
             <span [class.filled]="product()!.rating.rate >= 4.5">★</span>
           </div>
           <span class="rating-val">{{ product()!.rating.rate }}</span>
-          <span class="rating-count">({{ product()!.rating.count }} reviews)</span>
+          @if (product()!.rating.count > 0) {
+            <span class="rating-count">({{ product()!.rating.count }} reviews)</span>
+          }
         </div>
 
         <div class="price-block">
@@ -125,25 +127,19 @@
         <!-- CTA -->
         <div class="cta-buttons">
           <button class="btn-add-cart" (click)="addToCart()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <path d="M16 10a4 4 0 0 1-8 0"/>
-            </svg>
+            <i class="fa-solid fa-bag-shopping"></i>
             ADD TO BAG
           </button>
           <button class="btn-wishlist" (click)="toggleWishlist()" [class.active]="isWishlisted">
-            <svg width="20" height="20" viewBox="0 0 24 24" [attr.fill]="isWishlisted ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-            </svg>
+            <i [class]="isWishlisted ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
           </button>
         </div>
 
         <!-- Trust -->
         <div class="trust-row">
-          <div class="trust-item"><span>🚚</span>Free shipping above ₹2,999</div>
-          <div class="trust-item"><span>↩️</span>30-day easy returns</div>
-          <div class="trust-item"><span>✅</span>Authentic product</div>
+          <div class="trust-item"><i class="fa-solid fa-truck-fast trust-icon"></i>Free shipping above ₹2,999</div>
+          <div class="trust-item"><i class="fa-solid fa-rotate-left trust-icon"></i>30-day easy returns</div>
+          <div class="trust-item"><i class="fa-solid fa-shield-halved trust-icon"></i>Authentic product</div>
         </div>
 
         <!-- Tabs -->
@@ -175,7 +171,7 @@
                 <div class="review-score">
                   <span class="big-score">{{ product()!.rating.rate }}</span>
                   <div class="stars-big">★★★★★</div>
-                  <span class="review-count">{{ product()!.rating.count }} reviews</span>
+                  <span class="review-count">{{ product()!.rating.count > 0 ? product()!.rating.count + ' reviews' : 'Be the first to review' }}</span>
                 </div>
                 <div class="review-samples">
                   <div class="review">

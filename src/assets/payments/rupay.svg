@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 38">
+  <rect width="72" height="38" rx="4" fill="#fff" stroke="#ddd" stroke-width="1"/>
+  <!-- RuPay logo: blue Ru + orange Pay -->
+  <text x="5" y="24" font-family="'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="900" fill="#003399">Ru</text>
+  <text x="29" y="24" font-family="'Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="900" fill="#FF6600">Pay</text>
+  <!-- small India map silhouette hint — orange stripe at bottom -->
+  <rect x="5" y="28" width="62" height="3" rx="1.5" fill="linear-gradient(90deg,#003399,#FF6600)"/>
+  <rect x="5" y="28" width="30" height="3" rx="1.5" fill="#003399"/>
+  <rect x="35" y="28" width="32" height="3" rx="1.5" fill="#FF6600"/>
+</svg>

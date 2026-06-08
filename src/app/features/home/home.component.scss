@@ -191,7 +191,10 @@
 }
 .feature-card {
   text-align: center;
-  .feature-icon { font-size: 24px; margin-bottom: 10px; display: block; }
+  .feature-icon {
+    font-size: 28px; margin-bottom: 14px; display: block;
+    color: #FF6B00;
+  }
   .feature-title {
     font-family: var(--font-body); font-size: 13px; font-weight: 700;
     color: #F0F0F0; margin: 0 0 4px; letter-spacing: 0.02em;
@@ -255,6 +258,13 @@
   }
 }
 .newsletter-note { font-family: var(--font-body); font-size: 11px; color: #888; letter-spacing: 0.04em; }
+.newsletter-success {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  color: #22c55e; font-family: var(--font-body); font-size: 15px; font-weight: 600;
+  padding: 16px; background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2);
+  border-radius: 8px; margin-bottom: 12px;
+  i { font-size: 20px; }
+}
 
 @keyframes fadeSlideUp {
   from { opacity: 0; transform: translateY(20px); }

@@ -9,9 +9,7 @@
       }
     </div>
     <button class="close-btn" (click)="cartService.closeCart()">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M18 6L6 18M6 6l12 12"/>
-      </svg>
+      <i class="fa-solid fa-xmark"></i>
     </button>
   </div>
 
@@ -25,14 +23,14 @@
   }
   @if (cartService.subtotal() >= 2999) {
     <div class="free-shipping-bar achieved">
-      <span>🎉 You've unlocked FREE shipping!</span>
+      <span><i class="fa-solid fa-truck-fast"></i> You've unlocked FREE shipping!</span>
     </div>
   }
 
   <div class="cart-items">
     @if (cartService.items().length === 0) {
       <div class="empty-cart">
-        <div class="empty-icon">🛍️</div>
+        <div class="empty-icon"><i class="fa-solid fa-bag-shopping"></i></div>
         <h3>Your bag is empty</h3>
         <p>Add some activewear to get started</p>
         <a routerLink="/shop" class="shop-btn" (click)="cartService.closeCart()">SHOP NOW</a>
@@ -59,9 +57,7 @@
           </div>
         </div>
         <button class="remove-btn" (click)="cartService.removeFromCart(item.product.id, item.selectedSize, item.selectedColor)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M18 6L6 18M6 6l12 12"/>
-          </svg>
+          <i class="fa-regular fa-trash-can"></i>
         </button>
       </div>
     }
@@ -92,9 +88,7 @@
 
       <a routerLink="/checkout" class="checkout-btn" (click)="cartService.closeCart()">
         PROCEED TO CHECKOUT
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
+        <i class="fa-solid fa-arrow-right"></i>
       </a>
       <a routerLink="/shop" class="continue-link" (click)="cartService.closeCart()">Continue Shopping</a>
     </div>

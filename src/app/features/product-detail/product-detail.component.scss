@@ -78,8 +78,8 @@
 .stock-info { font-family: var(--font-body); font-size: 13px; color: #4caf50; letter-spacing: 0.03em; }
 .qty-ctrl-row { display: flex; align-items: center; gap: 16px; }
 .cta-buttons { display: flex; gap: 10px; @media (max-width: 380px) { flex-direction: column; } }
-.btn-add-cart { flex: 1; display: flex; align-items: center; justify-content: center; gap: 10px; background: #FF6B00; border: none; color: #080808; font-family: var(--font-body); font-size: 14px; font-weight: 700; letter-spacing: 0.1em; height: 56px; border-radius: 30px; cursor: pointer; text-transform: uppercase; transition: opacity 0.2s; &:hover { opacity: 0.85; } }
-.btn-wishlist { width: 56px; height: 56px; border: 1px solid #333; background: transparent; color: #666; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; &:hover { border-color: #FF6B00; color: #FF6B00; } &.active { border-color: #FF6B00; color: #FF6B00; background: rgba(255,107,0,0.08); } }
+.btn-add-cart { flex: 1; display: flex; align-items: center; justify-content: center; gap: 10px; background: #FF6B00; border: none; color: #080808; font-family: var(--font-body); font-size: 14px; font-weight: 700; letter-spacing: 0.1em; height: 56px; border-radius: 30px; cursor: pointer; text-transform: uppercase; transition: opacity 0.2s; i { font-size: 18px; } &:hover { opacity: 0.85; } }
+.btn-wishlist { width: 56px; height: 56px; border: 1px solid #333; background: transparent; color: #666; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; i { font-size: 20px; } &:hover { border-color: #FF6B00; color: #FF6B00; } &.active { border-color: #FF6B00; color: #FF6B00; background: rgba(255,107,0,0.08); } }
 .trust-row { display: flex; flex-wrap: wrap; gap: 12px; padding: 16px 0; border-top: 1px solid #222; border-bottom: 1px solid #222; }
 .trust-item { display: flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: 13px; color: #888; span { font-size: 14px; } }
 

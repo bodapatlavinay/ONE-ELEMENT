@@ -16,7 +16,7 @@ import { CartService } from '../../core/services/cart.service';
 
   @if (cartService.items().length === 0) {
     <div class="empty-cart">
-      <div class="empty-icon">🛍️</div>
+      <div class="empty-icon"><i class="fa-solid fa-bag-shopping"></i></div>
       <h2>Your bag is empty</h2>
       <p>Looks like you haven't added anything yet.</p>
       <a routerLink="/shop" class="btn-primary">CONTINUE SHOPPING</a>

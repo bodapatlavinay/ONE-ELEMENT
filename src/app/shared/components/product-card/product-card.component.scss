@@ -33,6 +33,7 @@
   background: rgba(0,0,0,0.6); border: none; border-radius: 50%;
   width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
   color: #999; cursor: pointer; transition: all 0.2s ease;
+  i { font-size: 16px; }
   &:hover { color: #F0F0F0; background: rgba(0,0,0,0.85); }
   &.active { color: #FF6B00; }
 }

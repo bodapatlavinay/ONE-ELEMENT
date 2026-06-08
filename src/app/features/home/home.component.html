@@ -92,7 +92,7 @@
   <div class="features-grid">
     @for (feat of features; track feat.title) {
       <div class="feature-card">
-        <span class="feature-icon">{{ feat.icon }}</span>
+        <i [class]="feat.icon + ' feature-icon'"></i>
         <h4 class="feature-title">{{ feat.title }}</h4>
         <p class="feature-desc">{{ feat.desc }}</p>
       </div>
@@ -131,10 +131,18 @@
     <div class="newsletter-badge">JOIN THE ELEMENT</div>
     <h2>EARLY ACCESS.<br>EXCLUSIVE DROPS.</h2>
     <p>Be the first to know about new collections, flash sales, and athlete stories.</p>
-    <div class="newsletter-form">
-      <input type="email" placeholder="Your email address" />
-      <button class="btn-newsletter">SUBSCRIBE</button>
-    </div>
+    @if (newsletterSubmitted()) {
+      <div class="newsletter-success">
+        <i class="fa-solid fa-circle-check"></i>
+        You're in! Welcome to the Element.
+      </div>
+    } @else {
+      <div class="newsletter-form">
+        <input type="email" placeholder="Your email address"
+          [ngModel]="newsletterEmail()" (ngModelChange)="newsletterEmail.set($event)" (keyup.enter)="subscribeNewsletter()" />
+        <button class="btn-newsletter" (click)="subscribeNewsletter()">SUBSCRIBE</button>
+      </div>
+    }
     <span class="newsletter-note">No spam, ever. Unsubscribe anytime.</span>
   </div>
 </section>

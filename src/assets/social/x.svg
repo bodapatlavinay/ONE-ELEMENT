@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
+  <rect width="40" height="40" rx="10" fill="#000"/>
+  <!-- X logo — exact shape from X/Twitter brand -->
+  <path d="M22.5 18.3L30.2 10h-1.8l-6.7 7.6L16.2 10H10l8.1 11.5L10 30h1.8l7.1-8 5.7 8H31L22.5 18.3zm-2.5 2.8l-.8-1.1L12.6 11.3h2.8l5.2 7.3.8 1.1 6.9 9.8h-2.8l-5.5-7.4z" fill="white"/>
+</svg>

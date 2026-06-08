@@ -1,5 +1,5 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, OnDestroy, inject, signal } from '@angular/core';
+import { DOCUMENT, CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProductService } from '../../core/services/product.service';
 import { CartService } from '../../core/services/cart.service';
@@ -15,9 +15,11 @@ import { ProductCardComponent } from '../../shared/components/product-card/produ
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss'
 })
-export class ProductDetailComponent implements OnInit {
+export class ProductDetailComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private productService = inject(ProductService);
+  private document = inject(DOCUMENT);
+  private schemaScript: HTMLScriptElement | null = null;
   cartService = inject(CartService);
   wishlistService = inject(WishlistService);
   toastService = inject(ToastService);
@@ -73,6 +75,7 @@ export class ProductDetailComponent implements OnInit {
         if (product) {
           this.selectedColor.set(product.colors[0]);
           this.productService.getRelatedProducts(product).subscribe(r => this.relatedProducts.set(r));
+          this.injectProductSchema(product);
         }
         this.isLoading.set(false);
       });
@@ -145,5 +148,47 @@ export class ProductDetailComponent implements OnInit {
   changeQty(delta: number): void {
     const max = this.product()?.stock || 10;
     this.quantity.set(Math.max(1, Math.min(max, this.quantity() + delta)));
+  }
+
+  private injectProductSchema(product: any): void {
+    // Remove any existing schema
+    if (this.schemaScript) {
+      this.schemaScript.remove();
+    }
+    const schema = {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: product.title,
+      description: product.description,
+      image: product.images?.length ? product.images : [product.image],
+      brand: { '@type': 'Brand', name: 'One Element' },
+      offers: {
+        '@type': 'Offer',
+        url: `https://oneelement.in/product/${product.id}`,
+        priceCurrency: 'INR',
+        price: product.price,
+        availability: product.stock > 0
+          ? 'https://schema.org/InStock'
+          : 'https://schema.org/OutOfStock',
+        seller: { '@type': 'Organization', name: 'One Element Activewear' }
+      },
+      ...(product.rating?.count > 0 ? {
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: product.rating.rate,
+          reviewCount: product.rating.count
+        }
+      } : {})
+    };
+    this.schemaScript = this.document.createElement('script');
+    this.schemaScript.type = 'application/ld+json';
+    this.schemaScript.text = JSON.stringify(schema);
+    this.document.head.appendChild(this.schemaScript);
+  }
+
+  ngOnDestroy(): void {
+    if (this.schemaScript) {
+      this.schemaScript.remove();
+    }
   }
 }

@@ -16,28 +16,28 @@ import { CommonModule } from '@angular/common';
 
           <div class="info-items">
             <div class="info-item">
-              <span class="info-icon">📧</span>
+              <span class="info-icon"><i class="fa-regular fa-envelope"></i></span>
               <div>
                 <p class="info-label">Email</p>
                 <a href="mailto:support@oneelement.in">support&#64;oneelement.in</a>
               </div>
             </div>
             <div class="info-item">
-              <span class="info-icon">💬</span>
+              <span class="info-icon"><i class="fa-brands fa-whatsapp"></i></span>
               <div>
                 <p class="info-label">WhatsApp</p>
-                <a href="https://wa.me/91XXXXXXXXXX" target="_blank">+91 XXXXX XXXXX</a>
+                <a href="https://wa.me/91XXXXXXXXXX" target="_blank">Chat with us</a>
               </div>
             </div>
             <div class="info-item">
-              <span class="info-icon">🕐</span>
+              <span class="info-icon"><i class="fa-regular fa-clock"></i></span>
               <div>
                 <p class="info-label">Hours</p>
                 <p>Mon–Sat, 10am–7pm IST</p>
               </div>
             </div>
             <div class="info-item">
-              <span class="info-icon">📍</span>
+              <span class="info-icon"><i class="fa-solid fa-location-dot"></i></span>
               <div>
                 <p class="info-label">Registered Office</p>
                 <p>Hyderabad, Telangana, India</p>

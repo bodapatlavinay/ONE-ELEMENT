@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Block internal/non-public paths
+Disallow: /account
+Disallow: /cart
+Disallow: /checkout
+Disallow: /wishlist
+
+Sitemap: https://oneelement.in/sitemap.xml

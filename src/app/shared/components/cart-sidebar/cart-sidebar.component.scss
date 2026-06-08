@@ -5,7 +5,7 @@
 .cart-header {
   display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid #222;
   .cart-title { display: flex; align-items: baseline; gap: 10px; h2 { font-family: var(--font-display); font-size: 20px; font-weight: 400; letter-spacing: 0.05em; color: #F0F0F0; margin: 0; text-transform: uppercase; } .item-count { font-family: var(--font-body); font-size: 13px; color: #666; } }
-  .close-btn { background: transparent; border: none; color: #666; cursor: pointer; padding: 8px; border-radius: 50%; display: flex; transition: all 0.2s; &:hover { background: #1a1a1a; color: #F0F0F0; } }
+  .close-btn { background: transparent; border: none; color: #666; cursor: pointer; padding: 8px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s; i { font-size: 18px; } &:hover { background: #1a1a1a; color: #F0F0F0; } }
 }
 
 .free-shipping-bar { padding: 10px 24px; background: rgba(255,107,0,0.06); border-bottom: 1px solid rgba(255,107,0,0.15); span { font-family: var(--font-body); font-size: 13px; color: #FF6B00; display: block; margin-bottom: 8px; } &.achieved { background: rgba(0,200,0,0.06); border-color: rgba(0,200,0,0.15); span { color: #4caf50; } } }
@@ -36,7 +36,7 @@
   span { width: 32px; text-align: center; font-family: var(--font-body); font-size: 14px; font-weight: 600; color: #F0F0F0; border-left: 1px solid #333; border-right: 1px solid #333; }
 }
 
-.remove-btn { position: absolute; top: 16px; right: 0; background: transparent; border: none; color: #444; cursor: pointer; padding: 4px; transition: color 0.2s; &:hover { color: #FF6B00; } }
+.remove-btn { position: absolute; top: 16px; right: 0; background: transparent; border: none; color: #444; cursor: pointer; padding: 4px; transition: color 0.2s; i { font-size: 14px; } &:hover { color: #FF6B00; } }
 
 .cart-footer { padding: 20px 24px; border-top: 1px solid #222; background: #080808; }
 .order-summary { margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px; }
