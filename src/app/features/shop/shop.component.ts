@@ -20,6 +20,7 @@ export class ShopComponent implements OnInit {
   allProducts = signal<Product[]>([]);
   isLoading = signal(true);
   isSidebarOpen = signal(false);
+  isSortOpen = signal(false);
 
   // Filters
   selectedGender = signal('all');
@@ -39,6 +40,10 @@ export class ShopComponent implements OnInit {
     { value: 'rating', label: 'Top Rated' },
     { value: 'newest', label: 'Newest First' },
   ];
+
+  selectedSortLabel = computed(() =>
+    this.sorts.find(s => s.value === this.selectedSort())?.label ?? 'Featured'
+  );
 
   pageTitle = computed(() => {
     const g = this.selectedGender();

@@ -23,12 +23,24 @@
       </button>
 
       <div class="sort-wrap">
-        <label>SORT BY</label>
-        <select [ngModel]="selectedSort()" (ngModelChange)="selectedSort.set($event)" class="sort-select">
-          @for (s of sorts; track s.value) {
-            <option [value]="s.value">{{ s.label }}</option>
-          }
-        </select>
+        <label class="sort-label">SORT BY</label>
+        <div class="sort-dropdown" [class.open]="isSortOpen()">
+          <button class="sort-trigger" (click)="isSortOpen.set(!isSortOpen())" (blur)="isSortOpen.set(false)">
+            <span>{{ selectedSortLabel() }}</span>
+            <i class="fa-solid fa-chevron-down sort-chevron"></i>
+          </button>
+          <ul class="sort-menu">
+            @for (s of sorts; track s.value) {
+              <li>
+                <button class="sort-option" [class.active]="selectedSort() === s.value"
+                  (mousedown)="selectedSort.set(s.value); isSortOpen.set(false)">
+                  @if (selectedSort() === s.value) { <i class="fa-solid fa-check"></i> }
+                  {{ s.label }}
+                </button>
+              </li>
+            }
+          </ul>
+        </div>
       </div>
     </div>
 
