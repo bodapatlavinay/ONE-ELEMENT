@@ -1,8 +1,10 @@
-<article class="product-card" (mouseenter)="isHovered.set(true)" (mouseleave)="isHovered.set(false); showSizeSelect.set(false)">
+<article class="product-card" [class.out-of-stock]="product.stock === 0" (mouseenter)="isHovered.set(true)" (mouseleave)="isHovered.set(false); showSizeSelect.set(false)">
   <a [routerLink]="['/product', product.id]" class="card-image-wrap">
     <img [src]="product.image" [alt]="product.title" class="product-img" loading="lazy" (error)="$any($event.target).src='https://placehold.co/600x750/1a1a1a/555?text=ONE+ELEMENT'" />
 
-    @if (product.badge) {
+    @if (product.stock === 0) {
+      <span class="badge badge--out-of-stock">OUT OF STOCK</span>
+    } @else if (product.badge) {
       <span class="badge" [class]="'badge--' + product.badge.toLowerCase()">{{ product.badge }}</span>
     }
 
@@ -10,19 +12,21 @@
       <i [class]="isWishlisted ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
     </button>
 
-    <div class="quick-add-wrap" [class.visible]="isHovered()">
-      @if (!showSizeSelect()) {
-        <button class="quick-add-btn" (click)="quickAdd($event)">
-          QUICK ADD
-        </button>
-      } @else {
-        <div class="size-select-bar">
-          @for (size of product.sizes; track size) {
-            <button class="size-chip" (click)="selectSizeAndAdd(size, $event)">{{ size }}</button>
-          }
-        </div>
-      }
-    </div>
+    @if (product.stock > 0) {
+      <div class="quick-add-wrap" [class.visible]="isHovered()">
+        @if (!showSizeSelect()) {
+          <button class="quick-add-btn" (click)="quickAdd($event)">
+            QUICK ADD
+          </button>
+        } @else {
+          <div class="size-select-bar">
+            @for (size of product.sizes; track size) {
+              <button class="size-chip" (click)="selectSizeAndAdd(size, $event)">{{ size }}</button>
+            }
+          </div>
+        }
+      </div>
+    }
   </a>
 
   <div class="card-info">

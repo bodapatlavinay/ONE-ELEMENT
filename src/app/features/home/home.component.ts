@@ -1,5 +1,6 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Title, Meta } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Product } from '../../core/models/product.model';
@@ -15,6 +16,8 @@ import { ProductCardComponent } from '../../shared/components/product-card/produ
 })
 export class HomeComponent implements OnInit {
   private productService = inject(ProductService);
+  private titleService = inject(Title);
+  private metaService = inject(Meta);
 
   featuredProducts = signal<Product[]>([]);
   newArrivals = signal<Product[]>([]);
@@ -47,6 +50,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('ONE ELEMENT | Premium Activewear Made in India');
+    this.metaService.updateTag({ name: 'description', content: 'Shop premium activewear at ONE ELEMENT — HeatGear® fabric, 4-way stretch, moisture-wicking. Designed for India\'s athletes. Free shipping above ₹2999.' });
+    this.metaService.updateTag({ property: 'og:title', content: 'ONE ELEMENT | Premium Activewear Made in India' });
+    this.metaService.updateTag({ property: 'og:description', content: 'Premium activewear engineered for Indian athletes. Shop men\'s and women\'s training, running & yoga gear.' });
     this.productService.getFeaturedProducts().subscribe(p => this.featuredProducts.set(p));
     this.productService.getNewArrivals().subscribe(p => this.newArrivals.set(p));
   }

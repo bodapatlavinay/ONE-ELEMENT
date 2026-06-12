@@ -1,4 +1,4 @@
-<div class="shop-page">
+<div class="shop-page" id="main-content">
   <!-- Page Header -->
   <div class="shop-header">
     <div class="shop-header-content">
@@ -25,7 +25,7 @@
       <div class="sort-wrap">
         <label class="sort-label">SORT BY</label>
         <div class="sort-dropdown" [class.open]="isSortOpen()">
-          <button class="sort-trigger" (click)="isSortOpen.set(!isSortOpen())" (blur)="isSortOpen.set(false)">
+          <button class="sort-trigger" (click)="toggleSort()">
             <span>{{ selectedSortLabel() }}</span>
             <i class="fa-solid fa-chevron-down sort-chevron"></i>
           </button>

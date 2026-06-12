@@ -86,10 +86,13 @@
         </div>
       </div>
 
-      <a routerLink="/checkout" class="checkout-btn" (click)="cartService.closeCart()">
-        PROCEED TO CHECKOUT
-        <i class="fa-solid fa-arrow-right"></i>
-      </a>
+      <button class="checkout-btn" (click)="proceedToCheckout()" [disabled]="isCheckingOut()">
+        @if (isCheckingOut()) {
+          <span class="checkout-spinner"></span> LOADING...
+        } @else {
+          PROCEED TO CHECKOUT <i class="fa-solid fa-arrow-right"></i>
+        }
+      </button>
       <a routerLink="/shop" class="continue-link" (click)="cartService.closeCart()">Continue Shopping</a>
     </div>
   }

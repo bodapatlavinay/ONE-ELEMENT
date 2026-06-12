@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { Title, Meta } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-size-guide',
@@ -69,4 +70,12 @@ import { RouterLink } from '@angular/router';
     .tip-box strong { color: rgba(255,255,255,0.85); }
   `]
 })
-export class SizeGuideComponent {}
+export class SizeGuideComponent implements OnInit {
+  private titleService = inject(Title);
+  private metaService = inject(Meta);
+
+  ngOnInit(): void {
+    this.titleService.setTitle('Size Guide | ONE ELEMENT Activewear');
+    this.metaService.updateTag({ name: 'description', content: 'Find your perfect fit with the ONE ELEMENT size guide — men\'s and women\'s sizing charts for activewear, measured in centimetres.' });
+  }
+}

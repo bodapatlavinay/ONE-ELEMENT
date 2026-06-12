@@ -42,7 +42,9 @@
 .order-summary { margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px; }
 .summary-row { display: flex; justify-content: space-between; font-size: 14px; color: #666; font-family: var(--font-body); &.savings { color: #4caf50; font-weight: 600; } &.total { color: #F0F0F0; font-size: 16px; font-weight: 700; margin-top: 8px; padding-top: 12px; border-top: 1px solid #222; } }
 
-.checkout-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: #FF6B00; color: #080808; font-family: var(--font-body); font-size: 14px; font-weight: 700; letter-spacing: 0.1em; height: 52px; text-decoration: none; border-radius: 30px; transition: opacity 0.2s; margin-bottom: 12px; text-transform: uppercase; &:hover { opacity: 0.85; } }
+.checkout-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: #FF6B00; color: #080808; font-family: var(--font-body); font-size: 14px; font-weight: 700; letter-spacing: 0.1em; height: 52px; text-decoration: none; border-radius: 30px; transition: opacity 0.2s; margin-bottom: 12px; text-transform: uppercase; border: none; cursor: pointer; &:hover:not(:disabled) { opacity: 0.85; } &:disabled { opacity: 0.6; cursor: not-allowed; } }
+.checkout-spinner { width: 16px; height: 16px; border: 2px solid rgba(8,8,8,0.3); border-top-color: #080808; border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
 .continue-link { display: block; text-align: center; color: #666; font-size: 13px; font-family: var(--font-body); text-decoration: underline; text-underline-offset: 3px; transition: color 0.2s; &:hover { color: #F0F0F0; } }
 
 @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }

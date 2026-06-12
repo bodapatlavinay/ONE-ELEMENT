@@ -17,15 +17,19 @@
   transition: transform 400ms ease; display: block;
 }
 
+.product-card.out-of-stock .product-img { opacity: 0.45; }
+.product-card.out-of-stock { cursor: default; }
+
 .badge {
   position: absolute; top: 12px; left: 12px;
   font-family: var(--font-body); font-size: 11px; font-weight: 700;
   letter-spacing: 0.05em; padding: 3px 8px; border-radius: 2px;
   text-transform: uppercase; z-index: 2;
-  &--new        { background: #FF6B00; color: #080808; }
-  &--sale       { background: #FF6B00; color: #080808; }
-  &--bestseller { background: #F0F0F0; color: #080808; }
-  &--limited    { background: transparent; border: 1px solid #FF6B00; color: #FF6B00; }
+  &--new          { background: #FF6B00; color: #080808; }
+  &--sale         { background: #FF6B00; color: #080808; }
+  &--bestseller   { background: #F0F0F0; color: #080808; }
+  &--limited      { background: transparent; border: 1px solid #FF6B00; color: #FF6B00; }
+  &--out-of-stock { background: rgba(20,20,20,0.85); color: #888; border: 1px solid #333; }
 }
 
 .wishlist-btn {

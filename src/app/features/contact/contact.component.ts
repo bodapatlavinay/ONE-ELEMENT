@@ -1,4 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { Title, Meta } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -116,7 +117,15 @@ import { CommonModule } from '@angular/common';
     .success-msg p { color: rgba(255,255,255,0.5); font-size: 15px; }
   `]
 })
-export class ContactComponent {
+export class ContactComponent implements OnInit {
+  private titleService = inject(Title);
+  private metaService = inject(Meta);
+
+  ngOnInit(): void {
+    this.titleService.setTitle('Contact Us | ONE ELEMENT Activewear');
+    this.metaService.updateTag({ name: 'description', content: 'Get in touch with ONE ELEMENT. Questions about orders, sizing, or returns? We typically respond within 2 hours.' });
+  }
+
   sent = signal(false);
   form = { name: '', email: '', subject: '', message: '' };
   submit() { this.sent.set(true); this.form = { name: '', email: '', subject: '', message: '' }; }

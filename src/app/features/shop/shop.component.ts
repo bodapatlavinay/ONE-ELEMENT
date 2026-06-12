@@ -1,5 +1,6 @@
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Title, Meta } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../core/services/product.service';
@@ -13,9 +14,12 @@ import { ProductCardComponent } from '../../shared/components/product-card/produ
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.scss'
 })
-export class ShopComponent implements OnInit {
+export class ShopComponent implements OnInit, OnDestroy {
+  private sortClickListener?: () => void;
   private productService = inject(ProductService);
   private route = inject(ActivatedRoute);
+  private titleService = inject(Title);
+  private metaService = inject(Meta);
 
   allProducts = signal<Product[]>([]);
   isLoading = signal(true);
@@ -119,7 +123,27 @@ export class ShopComponent implements OnInit {
       else if (params['filter'] === 'sale') this.selectedBadge.set('SALE');
       else if (params['filter'] === 'bestseller') this.selectedBadge.set('BESTSELLER');
       else if (!params['filter']) this.selectedBadge.set('all');
+
+      // Update page title and meta dynamically
+      const title = this.pageTitle();
+      this.titleService.setTitle(`${title} | ONE ELEMENT Activewear`);
+      this.metaService.updateTag({ name: 'description', content: `Shop ${title.toLowerCase()} at ONE ELEMENT — premium activewear made in India. Free shipping above ₹2999.` });
     });
+  }
+
+  toggleSort(): void {
+    this.isSortOpen.set(!this.isSortOpen());
+    if (this.isSortOpen()) {
+      // Close on next outside click
+      setTimeout(() => {
+        this.sortClickListener = () => { this.isSortOpen.set(false); document.removeEventListener('click', this.sortClickListener!); };
+        document.addEventListener('click', this.sortClickListener);
+      }, 0);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.sortClickListener) document.removeEventListener('click', this.sortClickListener);
   }
 
   resetFilters(): void {

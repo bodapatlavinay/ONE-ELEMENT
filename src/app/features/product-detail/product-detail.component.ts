@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, inject, signal } from '@angular/core';
 import { DOCUMENT, CommonModule } from '@angular/common';
+import { Title, Meta } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProductService } from '../../core/services/product.service';
 import { CartService } from '../../core/services/cart.service';
@@ -19,6 +20,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private productService = inject(ProductService);
   private document = inject(DOCUMENT);
+  private titleService = inject(Title);
+  private metaService = inject(Meta);
   private schemaScript: HTMLScriptElement | null = null;
   cartService = inject(CartService);
   wishlistService = inject(WishlistService);
@@ -76,6 +79,12 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
           this.selectedColor.set(product.colors[0]);
           this.productService.getRelatedProducts(product).subscribe(r => this.relatedProducts.set(r));
           this.injectProductSchema(product);
+          this.titleService.setTitle(`${product.title} — ₹${product.price.toLocaleString('en-IN')} | ONE ELEMENT`);
+          const desc = product.description?.slice(0, 155) || `Shop ${product.title} at ONE ELEMENT Activewear.`;
+          this.metaService.updateTag({ name: 'description', content: desc });
+          this.metaService.updateTag({ property: 'og:title', content: `${product.title} | ONE ELEMENT` });
+          this.metaService.updateTag({ property: 'og:description', content: desc });
+          this.metaService.updateTag({ property: 'og:image', content: product.image });
         }
         this.isLoading.set(false);
       });

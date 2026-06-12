@@ -58,19 +58,19 @@
 
         <h1 class="product-name">{{ product()!.title }}</h1>
 
-        <div class="rating-row">
-          <div class="stars">
-            <span [class.filled]="product()!.rating.rate >= 1">★</span>
-            <span [class.filled]="product()!.rating.rate >= 2">★</span>
-            <span [class.filled]="product()!.rating.rate >= 3">★</span>
-            <span [class.filled]="product()!.rating.rate >= 4">★</span>
-            <span [class.filled]="product()!.rating.rate >= 4.5">★</span>
-          </div>
-          <span class="rating-val">{{ product()!.rating.rate }}</span>
-          @if (product()!.rating.count > 0) {
+        @if (product()!.rating.count > 0) {
+          <div class="rating-row">
+            <div class="stars">
+              <span [class.filled]="product()!.rating.rate >= 1">★</span>
+              <span [class.filled]="product()!.rating.rate >= 2">★</span>
+              <span [class.filled]="product()!.rating.rate >= 3">★</span>
+              <span [class.filled]="product()!.rating.rate >= 4">★</span>
+              <span [class.filled]="product()!.rating.rate >= 4.5">★</span>
+            </div>
+            <span class="rating-val">{{ product()!.rating.rate }}</span>
             <span class="rating-count">({{ product()!.rating.count }} reviews)</span>
-          }
-        </div>
+          </div>
+        }
 
         <div class="price-block">
           <span class="price">₹{{ product()!.price | number:'1.0-0' }}</span>
@@ -120,16 +120,27 @@
               <span>{{ quantity() }}</span>
               <button (click)="changeQty(1)">+</button>
             </div>
-            <span class="stock-info">{{ product()!.stock }} left in stock</span>
+            @if (product()!.stock > 0 && product()!.stock <= 5) {
+              <span class="stock-info stock-low">Only {{ product()!.stock }} left!</span>
+            } @else if (product()!.stock > 5) {
+              <span class="stock-info">{{ product()!.stock }} in stock</span>
+            }
           </div>
         </div>
 
         <!-- CTA -->
         <div class="cta-buttons">
-          <button class="btn-add-cart" (click)="addToCart()">
-            <i class="fa-solid fa-bag-shopping"></i>
-            ADD TO BAG
-          </button>
+          @if (product()!.stock === 0) {
+            <button class="btn-add-cart btn-oos" disabled>
+              <i class="fa-solid fa-ban"></i>
+              OUT OF STOCK
+            </button>
+          } @else {
+            <button class="btn-add-cart" (click)="addToCart()">
+              <i class="fa-solid fa-bag-shopping"></i>
+              ADD TO BAG
+            </button>
+          }
           <button class="btn-wishlist" (click)="toggleWishlist()" [class.active]="isWishlisted">
             <i [class]="isWishlisted ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
           </button>
@@ -152,12 +163,6 @@
           <div class="tab-content">
             @if (activeTab() === 'description') {
               <p class="description-text">{{ product()!.description }}</p>
-              <ul class="feature-list">
-                <li>HeatGear® moisture-transport technology</li>
-                <li>4-way stretch construction for maximum mobility</li>
-                <li>Anti-odour technology prevents odour-causing microbes</li>
-                <li>Flatlock seam construction for less chafing</li>
-              </ul>
             }
             @if (activeTab() === 'specs') {
               <table class="specs-table">
@@ -167,22 +172,11 @@
               </table>
             }
             @if (activeTab() === 'reviews') {
-              <div class="reviews-summary">
-                <div class="review-score">
-                  <span class="big-score">{{ product()!.rating.rate }}</span>
-                  <div class="stars-big">★★★★★</div>
-                  <span class="review-count">{{ product()!.rating.count > 0 ? product()!.rating.count + ' reviews' : 'Be the first to review' }}</span>
-                </div>
-                <div class="review-samples">
-                  <div class="review">
-                    <div class="rev-header"><span class="rev-stars">★★★★★</span><span class="rev-author">Priya M.</span></div>
-                    <p>Absolutely love this piece! The fit is perfect and the fabric feels premium.</p>
-                  </div>
-                  <div class="review">
-                    <div class="rev-header"><span class="rev-stars">★★★★★</span><span class="rev-author">Rahul K.</span></div>
-                    <p>Great quality, fast delivery. Rivals international brands easily.</p>
-                  </div>
-                </div>
+              <div class="reviews-empty">
+                <i class="fa-regular fa-star reviews-empty-icon"></i>
+                <h4>No reviews yet</h4>
+                <p>Be the first to share your experience with this product.</p>
+                <a href="mailto:hello@oneelement.in?subject=Product Review" class="btn-review-cta">WRITE A REVIEW</a>
               </div>
             }
           </div>
@@ -241,8 +235,12 @@
         <span class="sticky-original">₹{{ product()!.originalPrice | number:'1.0-0' }}</span>
       }
     </div>
-    <button class="sticky-add-btn" (click)="addToCart()">
-      <i class="fa-solid fa-bag-shopping"></i> ADD TO BAG
+    <button class="sticky-add-btn" (click)="addToCart()" [disabled]="product()!.stock === 0" [class.btn-oos]="product()!.stock === 0">
+      @if (product()!.stock === 0) {
+        OUT OF STOCK
+      } @else {
+        <i class="fa-solid fa-bag-shopping"></i> ADD TO BAG
+      }
     </button>
     <button class="sticky-wishlist-btn" (click)="toggleWishlist()" [class.active]="isWishlisted">
       <i [class]="isWishlisted ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>

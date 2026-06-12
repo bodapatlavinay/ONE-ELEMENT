@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Title, Meta } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { WishlistService } from '../../core/services/wishlist.service';
 import { CartService } from '../../core/services/cart.service';
@@ -47,8 +48,15 @@ import { ProductCardComponent } from '../../shared/components/product-card/produ
     .wishlist-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; @media (max-width: 1100px) { grid-template-columns: repeat(3, 1fr); } @media (max-width: 768px) { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
   `]
 })
-export class WishlistComponent {
+export class WishlistComponent implements OnInit {
+  private titleService = inject(Title);
+  private metaService = inject(Meta);
   wishlistService = inject(WishlistService);
   cartService = inject(CartService);
   toastService = inject(ToastService);
+
+  ngOnInit(): void {
+    this.titleService.setTitle('Wishlist | ONE ELEMENT Activewear');
+    this.metaService.updateTag({ name: 'description', content: 'Your saved items at ONE ELEMENT Activewear.' });
+  }
 }
