@@ -231,3 +231,21 @@
     }
   }
 </div>
+
+<!-- MOBILE STICKY CTA BAR -->
+@if (product()) {
+  <div class="mobile-sticky-cta">
+    <div class="sticky-product-info">
+      <span class="sticky-price">₹{{ product()!.price | number:'1.0-0' }}</span>
+      @if (product()!.originalPrice) {
+        <span class="sticky-original">₹{{ product()!.originalPrice | number:'1.0-0' }}</span>
+      }
+    </div>
+    <button class="sticky-add-btn" (click)="addToCart()">
+      <i class="fa-solid fa-bag-shopping"></i> ADD TO BAG
+    </button>
+    <button class="sticky-wishlist-btn" (click)="toggleWishlist()" [class.active]="isWishlisted">
+      <i [class]="isWishlisted ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
+    </button>
+  </div>
+}

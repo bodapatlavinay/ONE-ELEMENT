@@ -187,19 +187,26 @@ export class ShopifyService {
       }
     }
 
-    // Determine gender from tags or product type
+    // Normalise tags to lowercase for all comparisons
     const tags: string[] = node.tags;
+    const tagsLower = tags.map((t: string) => t.toLowerCase());
     const typeLower = (node.productType as string).toLowerCase();
-    let gender: 'Men' | 'Women' | 'Unisex' = 'Unisex';
-    if (tags.includes('men') || typeLower.includes('men')) gender = 'Men';
-    else if (tags.includes('women') || typeLower.includes('women')) gender = 'Women';
 
-    // Badge from tags or compare-at price
+    // Determine gender — handle capitalization & common variations
+    let gender: 'Men' | 'Women' | 'Unisex' = 'Unisex';
+    const isWomen = tagsLower.some(t => ['women', 'womens', "women's", 'female', 'ladies'].includes(t))
+      || typeLower.includes('women');
+    const isMen = tagsLower.some(t => ['men', 'mens', "men's", 'male'].includes(t))
+      || typeLower.includes('men');
+    if (isWomen) gender = 'Women'; // check women first so "women" doesn't match "men" substring
+    else if (isMen) gender = 'Men';
+
+    // Badge from tags (case-insensitive) or compare-at price
     let badge: 'NEW' | 'SALE' | 'BESTSELLER' | 'LIMITED' | undefined;
-    if (tags.includes('new')) badge = 'NEW';
-    else if (tags.includes('sale') || originalPrice) badge = 'SALE';
-    else if (tags.includes('bestseller')) badge = 'BESTSELLER';
-    else if (tags.includes('limited')) badge = 'LIMITED';
+    if (tagsLower.includes('new')) badge = 'NEW';
+    else if (tagsLower.includes('sale') || originalPrice) badge = 'SALE';
+    else if (tagsLower.includes('bestseller')) badge = 'BESTSELLER';
+    else if (tagsLower.includes('limited')) badge = 'LIMITED';
 
     const stock = variants.reduce((sum: number, v: any) => sum + (v.quantityAvailable ?? 0), 0);
 
@@ -219,7 +226,7 @@ export class ShopifyService {
       sizes: sizes.length ? sizes : ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
       colors: colors.length ? colors : ['Black'],
       gender,
-      tags,
+      tags: tagsLower, // store normalised lowercase tags so shop filters always match
       variantId: variants[0]?.id,
       variantMap
     };

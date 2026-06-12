@@ -48,7 +48,7 @@
               <a routerLink="/shop" [queryParams]="{gender:'men',category:'tops'}" (click)="closeMega()">Tops & T-Shirts</a>
               <a routerLink="/shop" [queryParams]="{gender:'men',category:'shorts'}" (click)="closeMega()">Shorts</a>
               <a routerLink="/shop" [queryParams]="{gender:'men',category:'compression'}" (click)="closeMega()">Compression</a>
-              <a routerLink="/shop" [queryParams]="{gender:'men',category:'jackets'}" (click)="closeMega()">Jackets & Vests</a>
+              <a routerLink="/shop" [queryParams]="{gender:'men',category:'jacket'}" (click)="closeMega()">Jackets & Vests</a>
               <a routerLink="/shop" [queryParams]="{gender:'men',category:'joggers'}" (click)="closeMega()">Joggers & Pants</a>
               <a routerLink="/shop" [queryParams]="{gender:'men',category:'hoodies'}" (click)="closeMega()">Hoodies</a>
             </div>
@@ -88,7 +88,7 @@
               <p class="mega-heading">Shop by Category</p>
               <a routerLink="/shop" [queryParams]="{gender:'women',category:'sports-bra'}" (click)="closeMega()">Sports Bras</a>
               <a routerLink="/shop" [queryParams]="{gender:'women',category:'leggings'}" (click)="closeMega()">Leggings & Tights</a>
-              <a routerLink="/shop" [queryParams]="{gender:'women',category:'tops'}" (click)="closeMega()">Tops & Tanks</a>
+              <a routerLink="/shop" [queryParams]="{gender:'women',category:'tank'}" (click)="closeMega()">Tops & Tanks</a>
               <a routerLink="/shop" [queryParams]="{gender:'women',category:'shorts'}" (click)="closeMega()">Shorts</a>
               <a routerLink="/shop" [queryParams]="{gender:'women',category:'jackets'}" (click)="closeMega()">Jackets</a>
               <a routerLink="/shop" [queryParams]="{gender:'women',category:'sets'}" (click)="closeMega()">Sets & Bundles</a>
@@ -166,23 +166,89 @@
 
 <!-- Mobile menu -->
 <div class="mobile-menu" [class.open]="isMobileMenuOpen()">
-  <button class="mobile-close" (click)="closeMobileMenu()">✕</button>
-  <div class="mobile-menu-inner">
-    <a class="mobile-logo" routerLink="/" (click)="closeMobileMenu()">
-      <img class="logo-img" src="assets/logo.png" alt="One Element" width="100" height="40" />
+  <div class="mobile-menu-header">
+    <a routerLink="/" (click)="closeMobileMenu()">
+      <img class="logo-img" src="assets/logo.png" alt="One Element" width="100" height="36" />
     </a>
+    <button class="mobile-close" (click)="closeMobileMenu()">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <div class="mobile-menu-inner">
     <ul class="mobile-nav-links">
-      <li><a routerLink="/shop" [queryParams]="{filter:'new'}" (click)="closeMobileMenu()">New Arrivals</a></li>
-      <li><a routerLink="/shop" [queryParams]="{gender:'men'}" (click)="closeMobileMenu()">Men</a></li>
-      <li><a routerLink="/shop" [queryParams]="{gender:'women'}" (click)="closeMobileMenu()">Women</a></li>
-      <li><a routerLink="/shop" [queryParams]="{gender:'unisex'}" (click)="closeMobileMenu()">Unisex</a></li>
-      <li><a routerLink="/shop" [queryParams]="{filter:'sale'}" (click)="closeMobileMenu()">Sale</a></li>
-      <li><a routerLink="/about" (click)="closeMobileMenu()">About</a></li>
-      <li><a routerLink="/size-guide" (click)="closeMobileMenu()">Size Guide</a></li>
+
+      <li class="mobile-nav-item">
+        <a routerLink="/shop" [queryParams]="{filter:'new'}" class="mobile-nav-link" (click)="closeMobileMenu()">
+          New Arrivals
+        </a>
+      </li>
+
+      <!-- MEN expandable -->
+      <li class="mobile-nav-item has-sub">
+        <div class="mobile-nav-row">
+          <a routerLink="/shop" [queryParams]="{gender:'men'}" class="mobile-nav-link" (click)="closeMobileMenu()">Men</a>
+          <button class="mobile-expand-btn" (click)="toggleMobileExpand('men')" [class.open]="mobileExpanded() === 'men'">
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+        @if (mobileExpanded() === 'men') {
+          <ul class="mobile-sub-links">
+            <li><a routerLink="/shop" [queryParams]="{gender:'men',category:'tops'}" (click)="closeMobileMenu()">Tops & T-Shirts</a></li>
+            <li><a routerLink="/shop" [queryParams]="{gender:'men',category:'shorts'}" (click)="closeMobileMenu()">Shorts</a></li>
+            <li><a routerLink="/shop" [queryParams]="{gender:'men',category:'compression'}" (click)="closeMobileMenu()">Compression</a></li>
+            <li><a routerLink="/shop" [queryParams]="{gender:'men',category:'jacket'}" (click)="closeMobileMenu()">Jackets & Vests</a></li>
+            <li><a routerLink="/shop" [queryParams]="{gender:'men',category:'jogger'}" (click)="closeMobileMenu()">Joggers & Pants</a></li>
+            <li><a routerLink="/shop" [queryParams]="{gender:'men',category:'hoodie'}" (click)="closeMobileMenu()">Hoodies</a></li>
+          </ul>
+        }
+      </li>
+
+      <!-- WOMEN expandable -->
+      <li class="mobile-nav-item has-sub">
+        <div class="mobile-nav-row">
+          <a routerLink="/shop" [queryParams]="{gender:'women'}" class="mobile-nav-link" (click)="closeMobileMenu()">Women</a>
+          <button class="mobile-expand-btn" (click)="toggleMobileExpand('women')" [class.open]="mobileExpanded() === 'women'">
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+        @if (mobileExpanded() === 'women') {
+          <ul class="mobile-sub-links">
+            <li><a routerLink="/shop" [queryParams]="{gender:'women',category:'sports-bra'}" (click)="closeMobileMenu()">Sports Bras</a></li>
+            <li><a routerLink="/shop" [queryParams]="{gender:'women',category:'leggings'}" (click)="closeMobileMenu()">Leggings & Tights</a></li>
+            <li><a routerLink="/shop" [queryParams]="{gender:'women',category:'tank'}" (click)="closeMobileMenu()">Tops & Tanks</a></li>
+            <li><a routerLink="/shop" [queryParams]="{gender:'women',category:'shorts'}" (click)="closeMobileMenu()">Shorts</a></li>
+            <li><a routerLink="/shop" [queryParams]="{gender:'women',category:'set'}" (click)="closeMobileMenu()">Sets & Bundles</a></li>
+          </ul>
+        }
+      </li>
+
+      <li class="mobile-nav-item">
+        <a routerLink="/shop" [queryParams]="{gender:'unisex'}" class="mobile-nav-link" (click)="closeMobileMenu()">Unisex</a>
+      </li>
+      <li class="mobile-nav-item">
+        <a routerLink="/shop" [queryParams]="{filter:'sale'}" class="mobile-nav-link sale" (click)="closeMobileMenu()">Sale</a>
+      </li>
     </ul>
-    <div class="mobile-footer-links">
-      <a routerLink="/cart" (click)="closeMobileMenu()">Cart ({{ cartService.totalItems() }})</a>
-      <a routerLink="/wishlist" (click)="closeMobileMenu()">Wishlist ({{ wishlistService.count() }})</a>
+
+    <div class="mobile-menu-divider"></div>
+
+    <ul class="mobile-secondary-links">
+      <li><a routerLink="/about" (click)="closeMobileMenu()"><i class="fa-regular fa-circle-user"></i> About Us</a></li>
+      <li><a routerLink="/size-guide" (click)="closeMobileMenu()"><i class="fa-regular fa-ruler"></i> Size Guide</a></li>
+      <li><a routerLink="/contact" (click)="closeMobileMenu()"><i class="fa-regular fa-envelope"></i> Contact</a></li>
+    </ul>
+
+    <div class="mobile-menu-actions">
+      <a routerLink="/wishlist" class="mobile-action-btn" (click)="closeMobileMenu()">
+        <i class="fa-regular fa-heart"></i>
+        Wishlist
+        @if (wishlistService.count() > 0) { <span class="mobile-badge">{{ wishlistService.count() }}</span> }
+      </a>
+      <a routerLink="/account" class="mobile-action-btn" (click)="closeMobileMenu()">
+        <i class="fa-regular fa-user"></i>
+        Account
+      </a>
     </div>
   </div>
 </div>

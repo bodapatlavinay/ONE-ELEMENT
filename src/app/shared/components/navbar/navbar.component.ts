@@ -22,6 +22,7 @@ export class NavbarComponent {
   isSearchOpen = signal(false);
   searchQuery = signal('');
   activeMega: string | null = null;
+  mobileExpanded = signal<string | null>(null);
   private megaTimeout: any;
 
   @HostListener('window:scroll')
@@ -29,8 +30,9 @@ export class NavbarComponent {
     this.isScrolled.set(window.scrollY > 50);
   }
 
-  toggleMobileMenu(): void { this.isMobileMenuOpen.set(!this.isMobileMenuOpen()); }
-  closeMobileMenu(): void { this.isMobileMenuOpen.set(false); }
+  toggleMobileMenu(): void { this.isMobileMenuOpen.set(!this.isMobileMenuOpen()); this.mobileExpanded.set(null); }
+  closeMobileMenu(): void { this.isMobileMenuOpen.set(false); this.mobileExpanded.set(null); }
+  toggleMobileExpand(section: string): void { this.mobileExpanded.set(this.mobileExpanded() === section ? null : section); }
   toggleSearch(): void { this.isSearchOpen.set(!this.isSearchOpen()); }
 
   onSearch(): void {

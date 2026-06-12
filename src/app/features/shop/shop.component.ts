@@ -40,11 +40,26 @@ export class ShopComponent implements OnInit {
     { value: 'newest', label: 'Newest First' },
   ];
 
+  pageTitle = computed(() => {
+    const g = this.selectedGender();
+    const c = this.selectedCategory();
+    const tag = this.selectedTag();
+    const badge = this.selectedBadge();
+
+    if (c) return c.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    if (tag) return tag.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    if (badge !== 'all') return badge === 'NEW' ? 'NEW ARRIVALS' : badge === 'SALE' ? 'SALE' : badge;
+    if (g !== 'all') return `SHOP ${g.toUpperCase()}`;
+    return 'ALL PRODUCTS';
+  });
+
   filteredProducts = computed(() => {
     let list = [...this.allProducts()];
 
     if (this.selectedGender() !== 'all') {
-      list = list.filter(p => p.gender.toLowerCase() === this.selectedGender().toLowerCase());
+      const g = this.selectedGender().toLowerCase();
+      // Unisex products appear under both Men and Women
+      list = list.filter(p => p.gender.toLowerCase() === g || p.gender.toLowerCase() === 'unisex');
     }
     if (this.selectedBadge() !== 'all') {
       list = list.filter(p => p.badge === this.selectedBadge());
@@ -55,7 +70,16 @@ export class ShopComponent implements OnInit {
     }
     if (this.selectedCategory()) {
       const c = this.selectedCategory().toLowerCase();
-      list = list.filter(p => p.tags.some(tag => tag.toLowerCase() === c));
+      // Related tag groups — selecting one shows all related
+      const relatedTags: Record<string, string[]> = {
+        'jacket': ['jacket', 'vest'],
+        'tank':   ['tank', 'tops'],
+        'tops':   ['tops', 'tank'],
+        'set':    ['set', 'bundle', 'sets'],
+        'leggings': ['leggings', 'tights'],
+      };
+      const matches = relatedTags[c] ?? [c, c.replace(/s$/, ''), c + 's'];
+      list = list.filter(p => p.tags.some(tag => matches.includes(tag.toLowerCase())));
     }
     if (this.searchQuery()) {
       const q = this.searchQuery().toLowerCase();

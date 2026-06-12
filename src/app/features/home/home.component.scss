@@ -2,7 +2,7 @@
 .hero {
   position: relative; height: 100vh; min-height: 600px;
   display: flex; align-items: flex-end; overflow: hidden;
-  @media (max-width: 768px) { height: 92svh; min-height: 500px; }
+  @media (max-width: 768px) { height: 100svh; min-height: 580px; }
 }
 .hero-bg {
   position: absolute; inset: 0;
@@ -13,27 +13,28 @@
 }
 .hero-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 55%, transparent 100%);
   @media (max-width: 768px) {
-    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 40%, transparent 100%);
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.1) 100%);
   }
 }
 .hero-content {
   position: relative; z-index: 2; padding: 48px 80px; max-width: 640px;
-  @media (max-width: 768px) { padding: 28px 20px 40px; max-width: 100%; }
+  @media (max-width: 768px) { padding: 32px 24px 48px; max-width: 100%; }
 }
 .hero-eyebrow {
-  font-family: var(--font-body); font-size: 12px; font-weight: 400;
-  letter-spacing: 0.15em; color: rgba(255,255,255,0.8); text-transform: uppercase;
-  margin-bottom: 12px; display: flex; align-items: center; gap: 12px;
+  font-family: var(--font-body); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.2em; color: rgba(255,255,255,0.7); text-transform: uppercase;
+  margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
   animation: fadeSlideUp 0.8s ease both;
-  .eyebrow-line { display: block; width: 32px; height: 1px; background: #FF6B00; }
+  .eyebrow-line { display: block; width: 32px; height: 1px; background: #FF6B00; flex-shrink: 0; }
+  @media (max-width: 768px) { font-size: 10px; margin-bottom: 12px; }
 }
 .hero-headline {
-  margin: 0 0 14px; line-height: 0.92; overflow: hidden;
+  margin: 0 0 16px; line-height: 0.92; overflow: hidden;
   .headline-line {
     display: block; font-family: var(--font-display);
-    font-size: clamp(64px, 18vw, 112px); font-weight: 400;
+    font-size: clamp(56px, 14vw, 112px); font-weight: 400;
     letter-spacing: 0.01em; color: #fff; text-transform: uppercase;
     animation: fadeSlideUp 0.8s ease both;
     &.line-1 { animation-delay: 0.05s; }
@@ -43,31 +44,30 @@
 }
 .hero-sub {
   font-family: var(--font-body); font-size: 15px; font-weight: 400;
-  color: rgba(255,255,255,0.8); line-height: 1.5; margin-bottom: 24px; max-width: 400px;
+  color: rgba(255,255,255,0.75); line-height: 1.6; margin-bottom: 28px; max-width: 400px;
   animation: fadeSlideUp 0.8s ease 0.3s both;
-  @media (max-width: 768px) { font-size: 13px; margin-bottom: 20px; }
+  @media (max-width: 768px) { font-size: 14px; margin-bottom: 24px; max-width: 90%; }
 }
 .hero-ctas {
   display: flex; gap: 12px; flex-wrap: wrap;
   animation: fadeSlideUp 0.8s ease 0.4s both;
-  @media (max-width: 480px) { gap: 10px; }
   .btn-hero-primary {
     display: inline-flex; align-items: center; justify-content: center;
     background: #FF6B00; color: #080808; font-family: var(--font-body);
     font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 0 28px; height: 48px; border-radius: 30px; border: none;
+    padding: 0 32px; height: 52px; border-radius: 30px; border: none;
     cursor: pointer; text-decoration: none; transition: opacity 0.2s;
-    @media (max-width: 480px) { flex: 1; justify-content: center; }
+    @media (max-width: 480px) { flex: 1; height: 52px; font-size: 12px; }
     &:hover { opacity: 0.85; }
   }
   .btn-hero-secondary {
     display: inline-flex; align-items: center; justify-content: center;
-    background: transparent; color: #FF6B00; font-family: var(--font-body);
+    background: rgba(255,255,255,0.08); color: #fff; font-family: var(--font-body);
     font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 0 28px; height: 48px; border-radius: 30px; border: 1px solid #FF6B00;
+    padding: 0 32px; height: 52px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.25);
     cursor: pointer; text-decoration: none; transition: all 0.2s;
-    @media (max-width: 480px) { flex: 1; justify-content: center; }
-    &:hover { background: rgba(255,107,0,0.1); }
+    @media (max-width: 480px) { flex: 1; height: 52px; font-size: 12px; }
+    &:hover { background: rgba(255,107,0,0.15); border-color: #FF6B00; color: #FF6B00; }
   }
 }
 
@@ -124,17 +124,17 @@
 }
 .tile-label {
   font-family: var(--font-display); font-size: 36px; font-weight: 400;
-  color: #fff; letter-spacing: 0.02em; margin: 0 0 2px; text-transform: uppercase;
-  @media (max-width: 600px) { font-size: 24px; }
+  color: #fff; letter-spacing: 0.02em; margin: 0 0 4px; text-transform: uppercase;
+  @media (max-width: 600px) { font-size: 26px; }
 }
 .tile-sub {
   font-family: var(--font-body); font-size: 11px; letter-spacing: 0.06em;
   color: rgba(255,255,255,0.65); margin: 0 0 8px; text-transform: uppercase;
-  @media (max-width: 600px) { display: none; }
+  @media (max-width: 600px) { font-size: 10px; margin-bottom: 6px; }
 }
 .tile-cta {
   font-family: var(--font-body); font-size: 12px; font-weight: 700;
-  letter-spacing: 0.08em; color: #fff; text-transform: uppercase; transition: color 0.2s;
+  letter-spacing: 0.08em; color: rgba(255,255,255,0.85); text-transform: uppercase; transition: color 0.2s;
   @media (max-width: 600px) { font-size: 11px; }
 }
 
