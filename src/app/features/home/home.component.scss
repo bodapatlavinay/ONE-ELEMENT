@@ -98,12 +98,9 @@
   @media (max-width: 768px) { padding: 40px 0 28px; }
 }
 .categories-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; padding: 0 80px;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; padding: 0 80px;
   @media (max-width: 900px) { padding: 0 16px; gap: 8px; }
-  @media (max-width: 600px) {
-    grid-template-columns: repeat(2, 1fr); gap: 8px;
-    .category-tile:last-child:nth-child(odd) { grid-column: 1 / -1; aspect-ratio: 16/7; }
-  }
+  @media (max-width: 600px) { gap: 8px; }
 }
 .category-tile {
   position: relative; overflow: hidden; display: block; text-decoration: none;
