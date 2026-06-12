@@ -62,9 +62,9 @@
   }
   .btn-hero-secondary {
     display: inline-flex; align-items: center; justify-content: center;
-    background: rgba(255,255,255,0.08); color: #fff; font-family: var(--font-body);
+    background: rgba(12,12,12,0.82); color: #fff; font-family: var(--font-body);
     font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 0 32px; height: 52px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.25);
+    padding: 0 32px; height: 52px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.3);
     cursor: pointer; text-decoration: none; transition: all 0.2s;
     @media (max-width: 480px) { flex: 1; height: 52px; font-size: 12px; }
     &:hover { background: rgba(255,107,0,0.15); border-color: #FF6B00; color: #FF6B00; }
