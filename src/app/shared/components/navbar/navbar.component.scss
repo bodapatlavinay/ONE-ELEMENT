@@ -35,11 +35,15 @@
   line-height: 1.4;
 
   strong { font-weight: 900; }
+  .ann-mobile { display: none; }
+  .ann-desktop { display: inline; }
 
   @media (max-width: 768px) {
-    font-size: 9px;
-    letter-spacing: 0.05em;
-    padding: 7px 12px;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    padding: 8px 12px;
+    .ann-mobile { display: inline; }
+    .ann-desktop { display: none; }
   }
 }
 
@@ -280,6 +284,6 @@
 
 /* ── MOBILE NAV ACTIONS ── */
 @media (max-width: 768px) {
-  .nav-actions { gap: 0; }
-  .icon-btn { width: 36px; height: 36px; padding: 6px; }
+  .nav-actions { gap: 0; margin-left: auto; }
+  .icon-btn { width: 44px; height: 44px; padding: 8px; }
 }

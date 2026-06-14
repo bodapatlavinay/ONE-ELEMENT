@@ -86,6 +86,13 @@ body {
 img { max-width: 100%; display: block; }
 a { color: inherit; }
 
+/* ── GLOBAL TEXT SAFETY — prevents any heading overflowing its container ── */
+h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: none;
+}
+
 /* ── VIEW TRANSITIONS ── */
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.25s; }
 

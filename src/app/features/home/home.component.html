@@ -60,16 +60,13 @@
   </div>
 </section>
 
-<!-- EDITORIAL CAMPAIGN — SS 2025 -->
-<section class="editorial-section">
-  <a routerLink="/shop" [queryParams]="{gender: 'women'}" class="editorial-bg-wrap">
-    <img src="assets/PosterWomenBraVersion.png" alt="SS 2025 Women's Collection" />
-    <div class="editorial-overlay"></div>
-    <div class="editorial-content">
-      <h2 class="editorial-heading">MOVE.<br>FOCUS.<br>LIVE.</h2>
-      <p class="editorial-sub">Performance meets purpose. Designed for every move you make.</p>
-      <span class="editorial-cta">SHOP WOMEN'S <i class="fa-solid fa-arrow-right"></i></span>
-    </div>
+<!-- MEN & WOMEN CAMPAIGN SPLIT -->
+<section class="men-campaign-section">
+  <a routerLink="/shop" [queryParams]="{gender: 'men'}" class="men-campaign-wrap">
+    <img src="assets/BlackOutfitTrainFocusElevate.png" alt="ONE ELEMENT Men's Campaign" />
+  </a>
+  <a routerLink="/shop" [queryParams]="{gender: 'women'}" class="men-campaign-wrap">
+    <img src="assets/PosterWomen.png" alt="ONE ELEMENT Women's Campaign" />
   </a>
 </section>
 
@@ -87,16 +84,10 @@
   </div>
 </section>
 
-<!-- FEATURES STRIP -->
-<section class="features-section">
-  <div class="features-grid">
-    @for (feat of features; track feat.title) {
-      <div class="feature-card">
-        <i [class]="feat.icon + ' feature-icon'"></i>
-        <h4 class="feature-title">{{ feat.title }}</h4>
-        <p class="feature-desc">{{ feat.desc }}</p>
-      </div>
-    }
+<!-- EDITORIAL CAMPAIGN — SS 2025 -->
+<section class="editorial-section anim-target anim-zoom-in">
+  <div class="editorial-bg-wrap">
+    <img src="assets/PosterWomenBraVersion.png" alt="SS 2025 Women's Collection" />
   </div>
 </section>
 
@@ -109,23 +100,65 @@
   <div class="why-grid">
     <div class="why-item">
       <div class="why-icon"><i class="fa-solid fa-bolt"></i></div>
-      <h3>HeatGear® Fabric</h3>
-      <p>4-way stretch, moisture-wicking, anti-odour — engineered for India's training climate.</p>
+      <h3>4-Way Stretch Fabric</h3>
+      <p>Moves with you in every direction. No pulling, no restricting — just gear that keeps up.</p>
     </div>
     <div class="why-item">
       <div class="why-icon"><i class="fa-solid fa-truck-fast"></i></div>
-      <h3>Free Shipping ₹2999+</h3>
+      <h3>Free Shipping ₹2,999+</h3>
       <p>Fast delivery across India. Free returns within 30 days, no questions asked.</p>
     </div>
     <div class="why-item">
-      <div class="why-icon"><i class="fa-solid fa-leaf"></i></div>
-      <h3>40% Recycled Materials</h3>
-      <p>Every product uses EcoThread blends. Performance gear that's better for the planet.</p>
+      <div class="why-icon"><i class="fa-solid fa-shield-halved"></i></div>
+      <h3>Built to Last</h3>
+      <p>Holds its shape, colour, and performance wash after wash. Not fast fashion.</p>
     </div>
     <div class="why-item">
       <div class="why-icon"><i class="fa-solid fa-medal"></i></div>
       <h3>Made in India</h3>
-      <p>Designed and manufactured in India. Supporting local craftsmanship at global standards.</p>
+      <p>Designed and manufactured in India. Quality that competes anywhere in the world.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE STRIP -->
+<section class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-content">
+      <span>4-WAY STRETCH FABRIC</span>
+      <span class="marquee-dot">·</span>
+      <span>FREE SHIPPING ₹2,999+</span>
+      <span class="marquee-dot">·</span>
+      <span>MOISTURE-WICKING</span>
+      <span class="marquee-dot">·</span>
+      <span>30-DAY FREE RETURNS</span>
+      <span class="marquee-dot">·</span>
+      <span>MADE IN INDIA</span>
+      <span class="marquee-dot">·</span>
+      <span>ANTI-ODOUR TECHNOLOGY</span>
+      <span class="marquee-dot">·</span>
+      <span>PAN INDIA DELIVERY</span>
+      <span class="marquee-dot">·</span>
+      <span>BREATHABLE FABRICS</span>
+      <span class="marquee-dot">·</span>
+    </div>
+    <div class="marquee-content" aria-hidden="true">
+      <span>4-WAY STRETCH FABRIC</span>
+      <span class="marquee-dot">·</span>
+      <span>FREE SHIPPING ₹2,999+</span>
+      <span class="marquee-dot">·</span>
+      <span>MOISTURE-WICKING</span>
+      <span class="marquee-dot">·</span>
+      <span>30-DAY FREE RETURNS</span>
+      <span class="marquee-dot">·</span>
+      <span>MADE IN INDIA</span>
+      <span class="marquee-dot">·</span>
+      <span>ANTI-ODOUR TECHNOLOGY</span>
+      <span class="marquee-dot">·</span>
+      <span>PAN INDIA DELIVERY</span>
+      <span class="marquee-dot">·</span>
+      <span>BREATHABLE FABRICS</span>
+      <span class="marquee-dot">·</span>
     </div>
   </div>
 </section>

@@ -1,30 +1,28 @@
 <div class="about-page">
-  <!-- Hero -->
+
+  <!-- Hero — full bleed, text baked into image -->
   <section class="about-hero">
-    <div class="about-hero-bg">
-      <img src="assets/hero.webp" alt="About ONE ELEMENT" />
-      <div class="hero-overlay"></div>
-    </div>
-    <div class="about-hero-content">
-      <div class="eyebrow">OUR STORY</div>
-      <h1>WE ARE<br><span>ONE ELEMENT.</span></h1>
-      <p>Born in India. Built for Athletes. Made to Last.</p>
-    </div>
+    <a routerLink="/shop" [queryParams]="{gender: 'men'}" class="about-hero-img-wrap">
+      <img src="assets/BlueOutfitMoveBetter.png" alt="ONE ELEMENT — Built Different. Move Better." />
+    </a>
   </section>
 
-  <!-- Mission -->
-  <section class="mission-section">
-    <div class="mission-content">
-      <div class="mission-text">
-        <span class="section-tag">OUR MISSION</span>
-        <h2>BUILT FOR THE RELENTLESS</h2>
-        <p>ONE ELEMENT started with a simple belief: Indian athletes deserve world-class activewear that's engineered for our climate, our body types, and our hustle.</p>
-        <p>We're not a fashion brand that makes sportswear. We're a performance brand that refuses to compromise — on fabric, on fit, or on function.</p>
-        <a routerLink="/shop" class="btn-primary">EXPLORE THE COLLECTION</a>
-      </div>
-      <div class="mission-image">
-        <img src="assets/unisex.webp" alt="Training" />
-      </div>
+  <!-- Mission Statement — full width, massive type -->
+  <section class="about-mission-banner">
+    <span class="section-tag">OUR MISSION</span>
+    <h2>WE MAKE<br><span>ATHLETES</span><br>BETTER.</h2>
+  </section>
+
+  <!-- Brand Story — 2 column editorial -->
+  <section class="about-story">
+    <div class="about-story-left">
+      <span class="section-tag">OUR STORY</span>
+      <h3>WE ARE<br><span>ONE ELEMENT.</span></h3>
+    </div>
+    <div class="about-story-right">
+      <p>We got tired of activewear that quit before we did.</p>
+      <p>ONE ELEMENT started in 2022 because good training gear was either too expensive, too basic, or built for someone else entirely. We figured if we had that problem, a lot of other people did too.</p>
+      <p>So we built the gear we wanted. Tested it. Broke it. Fixed it. Kept going until it held up the way it was supposed to. Two years later, that is still how every product gets made.</p>
     </div>
   </section>
 
@@ -37,7 +35,6 @@
     <div class="values-grid">
       @for (val of values; track val.title) {
         <div class="value-card">
-          <span class="value-icon">{{ val.icon }}</span>
           <h3>{{ val.title }}</h3>
           <p>{{ val.desc }}</p>
         </div>
@@ -53,12 +50,12 @@
         <span class="stat-label">Founded</span>
       </div>
       <div class="stat-block">
-        <span class="stat-num">50K+</span>
-        <span class="stat-label">Happy Athletes</span>
+        <span class="stat-num">100%</span>
+        <span class="stat-label">Made in India</span>
       </div>
       <div class="stat-block">
-        <span class="stat-num">4.8★</span>
-        <span class="stat-label">Average Rating</span>
+        <span class="stat-num">4-WAY</span>
+        <span class="stat-label">Stretch Fabric</span>
       </div>
       <div class="stat-block">
         <span class="stat-num">PAN INDIA</span>
@@ -67,41 +64,29 @@
     </div>
   </section>
 
-  <!-- Team -->
-  <section class="team-section">
-    <div class="team-header">
-      <span class="section-tag">THE PEOPLE</span>
-      <h2>MEET THE TEAM</h2>
-    </div>
-    <div class="team-grid">
+  <!-- Founders -->
+  <section class="founders-section">
+    <span class="section-tag">THE PEOPLE BEHIND IT</span>
+    <div class="founders-grid">
       @for (member of team; track member.name) {
-        <div class="team-card">
-          <img [src]="member.img" [alt]="member.name" />
-          <div class="team-info">
-            <h4>{{ member.name }}</h4>
-            <span>{{ member.role }}</span>
+        <div class="founder-card">
+          <div class="founder-img-wrap">
+            <img [src]="member.img" [alt]="member.name" />
           </div>
+          <h3>{{ member.name }}</h3>
+          <span class="founder-role">{{ member.role }}</span>
         </div>
       }
     </div>
   </section>
 
-  <!-- CAMPAIGN VISUAL -->
-  <section class="about-campaign">
-    <div class="about-campaign-inner">
-      <span class="section-tag">SS 2025</span>
-      <a routerLink="/shop" class="about-campaign-img-wrap">
-        <img src="assets/PosterWomen.png" alt="ONE ELEMENT SS 2025 Campaign" />
-      </a>
-    </div>
-  </section>
-
   <!-- CTA -->
   <section class="about-cta">
-    <h2>READY TO TRAIN<br>LIKE AN ELEMENT?</h2>
+    <h2>TRAIN IN GEAR<br>THAT KEEPS UP.</h2>
     <div class="cta-btns">
       <a routerLink="/shop" class="btn-primary">SHOP NOW</a>
       <a routerLink="/shop" [queryParams]="{filter:'new'}" class="btn-outline">NEW ARRIVALS</a>
     </div>
   </section>
+
 </div>

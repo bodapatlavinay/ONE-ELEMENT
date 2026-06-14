@@ -16,13 +16,13 @@ export class AboutComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle('About Us | ONE ELEMENT Activewear');
-    this.metaService.updateTag({ name: 'description', content: 'Learn about ONE ELEMENT — premium Indian activewear brand built for performance. Our story, mission, and the team behind the brand.' });
+    this.metaService.updateTag({ name: 'description', content: 'ONE ELEMENT makes performance activewear that holds up through real training. Learn our story and what we stand for.' });
   }
   values = [
-    { icon: '⚡', title: 'Performance First', desc: 'Every stitch, every fibre is engineered to help you outperform your last session.' },
-    { icon: '🇮🇳', title: 'Made for India', desc: 'Designed for India\'s climate, athlete body types, and relentless training culture.' },
-    { icon: '♻️', title: 'Sustainable Future', desc: 'We use 40% recycled materials across our range and are committed to net-zero by 2030.' },
-    { icon: '🤝', title: 'Community Driven', desc: '50,000+ athletes. From crossfit boxes to marathon start lines, we\'re there with you.' }
+    { title: 'Made to Be Used', desc: 'This is not display gear. It is made to train in, sweat in, and wash fifty times without falling apart.' },
+    { title: 'Real Materials', desc: '4-way stretch. Anti-odour. Moisture-wicking. The kind of fabric that matters when you are mid-session and have no interest in stopping.' },
+    { title: 'No Fast Fashion', desc: 'We do not drop fifty products a season. We make fewer things and make them properly.' },
+    { title: 'Open to Everyone', desc: 'Professional or beginner, morning run or evening lift. If you show up and put in the work, this gear is for you.' }
   ];
 
   team = [
