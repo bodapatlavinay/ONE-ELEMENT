@@ -108,6 +108,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   selectColor(color: string): void {
     this.selectedColor.set(color);
+    this.activeImage.set(0);
   }
 
   addToCart(): void {
@@ -129,7 +130,13 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   get images(): string[] {
     const p = this.product();
-    return p ? (p.images?.length ? p.images : [p.image]) : [];
+    if (!p) return [];
+    const color = this.selectedColor();
+    // Use per-color images if available for this color
+    if (color && p.colorImages?.[color]?.length) {
+      return p.colorImages[color];
+    }
+    return p.images?.length ? p.images : [p.image];
   }
 
   prevImage(): void {

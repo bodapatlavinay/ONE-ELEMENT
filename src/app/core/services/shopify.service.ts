@@ -34,7 +34,7 @@ const PRODUCTS_QUERY = `
           compareAtPriceRange {
             minVariantPrice { amount }
           }
-          images(first: 5) {
+          images(first: 20) {
             edges { node { url altText } }
           }
           variants(first: 20) {
@@ -47,6 +47,7 @@ const PRODUCTS_QUERY = `
                 price { amount }
                 compareAtPrice { amount }
                 selectedOptions { name value }
+                image { url altText }
               }
             }
           }
@@ -187,6 +188,40 @@ export class ShopifyService {
       }
     }
 
+    // Build colorImages from image alt text (primary) or variant.image (fallback)
+    // Convention: set image alt text to the color name in Shopify (e.g. "Onyx Black", "Stone white")
+    const allImageNodes: { url: string; altText: string | null }[] =
+      node.images.edges.map((e: any) => e.node);
+    const colorImages: Record<string, string[]> = {};
+
+    // Primary: group product images by altText matching a known color
+    for (const img of allImageNodes) {
+      const alt = img.altText?.toLowerCase() ?? '';
+      const matchedColor = colors.find(c => alt.includes(c.toLowerCase()));
+      if (matchedColor) {
+        if (!colorImages[matchedColor]) colorImages[matchedColor] = [];
+        colorImages[matchedColor].push(img.url);
+      }
+    }
+
+    // Fallback: if alt-text approach yielded nothing, try variant.image per color
+    if (!Object.keys(colorImages).length) {
+      const seenPerColor: Record<string, Set<string>> = {};
+      for (const v of variants) {
+        const colorOpt = v.selectedOptions.find(
+          (o: any) => o.name.toLowerCase() === 'color' || o.name.toLowerCase() === 'colour'
+        );
+        if (colorOpt && v.image?.url) {
+          const c = colorOpt.value;
+          if (!colorImages[c]) { colorImages[c] = []; seenPerColor[c] = new Set(); }
+          if (!seenPerColor[c].has(v.image.url)) {
+            colorImages[c].push(v.image.url);
+            seenPerColor[c].add(v.image.url);
+          }
+        }
+      }
+    }
+
     // Normalise tags to lowercase for all comparisons
     const tags: string[] = node.tags;
     const tagsLower = tags.map((t: string) => t.toLowerCase());
@@ -220,6 +255,7 @@ export class ShopifyService {
       originalPrice,
       image: images[0] ?? '',
       images,
+      colorImages: Object.keys(colorImages).length ? colorImages : undefined,
       rating: { rate: 4.7, count: 0 },
       stock,
       badge,

@@ -7,6 +7,7 @@ export interface Product {
   category: string;
   image: string;
   images?: string[];
+  colorImages?: Record<string, string[]>;  // color → image URLs for variant image switching
   rating: Rating;
   stock: number;
   badge?: 'NEW' | 'SALE' | 'BESTSELLER' | 'LIMITED';
