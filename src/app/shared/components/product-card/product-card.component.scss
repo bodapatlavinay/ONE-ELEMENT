@@ -95,5 +95,10 @@
 .color-dot {
   width: 13px; height: 13px; border-radius: 50%; display: inline-block;
   border: 1.5px solid rgba(255,255,255,0.15); flex-shrink: 0;
+  cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+  &:hover, &.active {
+    transform: scale(1.25);
+    box-shadow: 0 0 0 1.5px #080808, 0 0 0 3px #FF6B00;
+  }
 }
 .more-colors { font-size: 11px; color: #666; font-family: var(--font-body); }

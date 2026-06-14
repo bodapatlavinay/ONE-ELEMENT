@@ -23,6 +23,15 @@ export class ProductCardComponent {
   isHovered = signal(false);
   selectedSize = signal('');
   showSizeSelect = signal(false);
+  hoveredColor = signal<string | null>(null);
+
+  get cardImage(): string {
+    const color = this.hoveredColor();
+    if (color && this.product.colorImages?.[color]?.length) {
+      return this.product.colorImages[color][0];
+    }
+    return this.product.image;
+  }
 
   private readonly colorHexMap: Record<string, string> = {
     'onyx black': '#111111', 'black': '#111111',
