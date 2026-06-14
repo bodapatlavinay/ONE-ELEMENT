@@ -194,10 +194,10 @@
 
 /* ========== MEN'S CAMPAIGN ========== */
 .men-campaign-section {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 0 80px 64px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0; padding: 0 80px 64px;
   align-items: stretch;
   @media (max-width: 900px) { padding: 0 16px 40px; }
-  @media (max-width: 768px) { grid-template-columns: 1fr; gap: 4px; padding: 0 0 40px; }
+  @media (max-width: 768px) { grid-template-columns: 1fr; gap: 0; padding: 0 0 40px; }
 }
 .men-campaign-wrap {
   display: block; overflow: hidden; line-height: 0;
