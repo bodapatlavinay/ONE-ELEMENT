@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   categories = [
     { label: 'MEN', sub: 'Training · Running · Lifestyle', link: '/shop', query: { gender: 'men' }, img: 'assets/men.webp' },
-    { label: 'WOMEN', sub: 'Yoga · Training · Performance', link: '/shop', query: { gender: 'women' }, img: 'assets/women.webp' },
+    { label: 'WOMEN', sub: 'Yoga · Training · Performance', link: '/shop', query: { gender: 'women' }, img: 'assets/womensection.png' },
   ];
 
   newsletterEmail = signal('');

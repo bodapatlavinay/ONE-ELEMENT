@@ -159,7 +159,12 @@ export class ProductService {
   getFeaturedProducts(): Observable<Product[]> {
     return new Observable(observer => {
       this.getAllProducts().subscribe(products => {
-        observer.next(products.filter(p => p.badge === 'BESTSELLER' || p.badge === 'NEW').slice(0, 6));
+        const sorted = [...products].sort((a, b) => b.id - a.id);
+        // Badged products first, then fill with newest to always show a mix
+        const badged = sorted.filter(p => p.badge === 'BESTSELLER' || p.badge === 'NEW');
+        const rest = sorted.filter(p => p.badge !== 'BESTSELLER' && p.badge !== 'NEW');
+        const combined = [...badged, ...rest].slice(0, 8);
+        observer.next(combined);
         observer.complete();
       });
     });
@@ -168,7 +173,12 @@ export class ProductService {
   getNewArrivals(): Observable<Product[]> {
     return new Observable(observer => {
       this.getAllProducts().subscribe(products => {
-        observer.next(products.filter(p => p.badge === 'NEW').slice(0, 4));
+        const sorted = [...products].sort((a, b) => b.id - a.id);
+        // NEW-badged products first, fill with newest
+        const badged = sorted.filter(p => p.badge === 'NEW');
+        const rest = sorted.filter(p => p.badge !== 'NEW');
+        const combined = [...badged, ...rest].slice(0, 4);
+        observer.next(combined);
         observer.complete();
       });
     });
