@@ -93,16 +93,7 @@
 }
 .color-dots { display: flex; align-items: center; gap: 4px; margin-top: 4px; }
 .color-dot {
-  width: 12px; height: 12px; border-radius: 50%; background: #444; border: 1px solid #555; display: inline-block;
-  &[data-color="Carbon Black"], &[data-color="Jet Black"], &[data-color="Onyx Black"] { background: #111; border-color: #555; }
-  &[data-color="Steel Grey"], &[data-color="Graphite"] { background: #6b7280; border-color: #888; }
-  &[data-color="Arctic White"], &[data-color="Cloud White"] { background: #f5f5f5; border-color: #ccc; }
-  &[data-color="Crimson"] { background: #dc2626; border-color: #ef4444; }
-  &[data-color="Midnight Navy"], &[data-color="Navy Storm"] { background: #1e3a5f; border-color: #2d4f7c; }
-  &[data-color="Dusty Rose"] { background: #e8a0a0; border-color: #d78080; }
-  &[data-color="Slate Blue"] { background: #4a6fa5; border-color: #5b82bb; }
-  &[data-color="Forest Green"] { background: #2d6a4f; border-color: #40916c; }
-  &[data-color="Olive"] { background: #6b7c3d; border-color: #8a9e50; }
-  &[data-color="Orange Pulse"] { background: #FF6B00; border-color: #FF6B00; }
+  width: 13px; height: 13px; border-radius: 50%; display: inline-block;
+  border: 1.5px solid rgba(255,255,255,0.15); flex-shrink: 0;
 }
 .more-colors { font-size: 11px; color: #666; font-family: var(--font-body); }

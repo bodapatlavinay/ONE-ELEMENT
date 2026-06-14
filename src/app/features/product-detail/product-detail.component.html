@@ -88,8 +88,13 @@
           <label class="option-label">COLOR: <strong>{{ selectedColor() }}</strong></label>
           <div class="color-options">
             @for (color of product()!.colors; track color) {
-              <button class="color-btn" [class.active]="selectedColor() === color"
-                (click)="selectColor(color)">{{ color }}</button>
+              <button class="color-swatch"
+                [class.active]="selectedColor() === color"
+                [style.background]="getColorHex(color)"
+                [attr.data-color]="color"
+                [title]="color"
+                (click)="selectColor(color)">
+              </button>
             }
           </div>
         </div>

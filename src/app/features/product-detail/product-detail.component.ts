@@ -106,6 +106,39 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.sizeError.set(false);
   }
 
+  private readonly colorHexMap: Record<string, string> = {
+    'onyx black': '#111111',
+    'black': '#111111',
+    'stone white': '#C8BFB0',
+    'white': '#F2F2F2',
+    'off white': '#F0EDE6',
+    'navy': '#1B2A4A',
+    'navy blue': '#1B2A4A',
+    'red': '#C0392B',
+    'grey': '#7A7A7A',
+    'gray': '#7A7A7A',
+    'charcoal': '#3C3C3C',
+    'green': '#2D5A27',
+    'olive': '#6B7A3E',
+    'blue': '#1E4DB7',
+    'royal blue': '#2756CC',
+    'orange': '#FF6B00',
+    'yellow': '#F0B429',
+    'pink': '#D63384',
+    'purple': '#6B21A8',
+    'maroon': '#800000',
+    'brown': '#7C5230',
+    'beige': '#D4C5A9',
+    'sand': '#C8BFB0',
+    'khaki': '#C3B091',
+    'teal': '#1A7A6E',
+    'cyan': '#0EA5C8',
+  };
+
+  getColorHex(color: string): string {
+    return this.colorHexMap[color.toLowerCase()] ?? '#888888';
+  }
+
   selectColor(color: string): void {
     this.selectedColor.set(color);
     this.activeImage.set(0);

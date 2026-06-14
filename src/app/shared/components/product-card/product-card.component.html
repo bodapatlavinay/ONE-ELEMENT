@@ -52,7 +52,7 @@
 
     <div class="color-dots">
       @for (color of product.colors.slice(0, 4); track color) {
-        <span class="color-dot" [title]="color" [attr.data-color]="color"></span>
+        <span class="color-dot" [title]="color" [style.background]="getColorHex(color)"></span>
       }
       @if (product.colors.length > 4) {
         <span class="more-colors">+{{ product.colors.length - 4 }}</span>
