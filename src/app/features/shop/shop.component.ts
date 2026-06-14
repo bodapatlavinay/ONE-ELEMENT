@@ -35,6 +35,9 @@ export class ShopComponent implements OnInit, OnDestroy {
   selectedTag = signal('');       // sport tag from navbar (e.g. 'running', 'training')
   selectedCategory = signal(''); // category tag from navbar (e.g. 'tops', 'shorts')
 
+  // Track what was set by URL navigation (not counted as user-applied filters)
+  private urlBaseline = { gender: 'all', badge: 'all', tag: '', category: '' };
+
   genders = ['all', 'Men', 'Women', 'Unisex'];
   badges = ['all', 'NEW', 'BESTSELLER', 'SALE', 'LIMITED'];
   sorts = [
@@ -114,15 +117,25 @@ export class ShopComponent implements OnInit, OnDestroy {
     this.route.queryParams.subscribe(params => {
       // Normalize gender to match genders array casing
       const g = params['gender'];
-      this.selectedGender.set(g ? (g.charAt(0).toUpperCase() + g.slice(1).toLowerCase()) : 'all');
+      const normalizedGender = g ? (g.charAt(0).toUpperCase() + g.slice(1).toLowerCase()) : 'all';
+      this.selectedGender.set(normalizedGender);
       this.selectedTag.set(params['tag'] || '');
       this.selectedCategory.set(params['category'] || '');
       this.searchQuery.set(params['search'] || '');
 
-      if (params['filter'] === 'new') this.selectedBadge.set('NEW');
-      else if (params['filter'] === 'sale') this.selectedBadge.set('SALE');
-      else if (params['filter'] === 'bestseller') this.selectedBadge.set('BESTSELLER');
-      else if (!params['filter']) this.selectedBadge.set('all');
+      let badge = 'all';
+      if (params['filter'] === 'new') badge = 'NEW';
+      else if (params['filter'] === 'sale') badge = 'SALE';
+      else if (params['filter'] === 'bestseller') badge = 'BESTSELLER';
+      this.selectedBadge.set(badge);
+
+      // Record URL baseline — these don't count as user-applied filters
+      this.urlBaseline = {
+        gender: normalizedGender,
+        badge,
+        tag: params['tag'] || '',
+        category: params['category'] || ''
+      };
 
       // Update page title and meta dynamically
       const title = this.pageTitle();
@@ -158,12 +171,13 @@ export class ShopComponent implements OnInit, OnDestroy {
 
   get activeFilterCount(): number {
     let count = 0;
-    if (this.selectedGender() !== 'all') count++;
-    if (this.selectedBadge() !== 'all') count++;
+    // Only count filters the customer explicitly changed beyond what the URL pre-set
+    if (this.selectedGender() !== 'all' && this.selectedGender() !== this.urlBaseline.gender) count++;
+    if (this.selectedBadge() !== 'all' && this.selectedBadge() !== this.urlBaseline.badge) count++;
+    if (this.selectedTag() && this.selectedTag() !== this.urlBaseline.tag) count++;
+    if (this.selectedCategory() && this.selectedCategory() !== this.urlBaseline.category) count++;
     if (this.priceMax() < 10000) count++;
     if (this.searchQuery()) count++;
-    if (this.selectedTag()) count++;
-    if (this.selectedCategory()) count++;
     return count;
   }
 }
