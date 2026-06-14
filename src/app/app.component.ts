@@ -30,7 +30,7 @@ import { filter } from 'rxjs';
     main { min-height: 100vh; }
     .whatsapp-float {
       position: fixed;
-      bottom: 28px;
+      bottom: 80px;
       right: 28px;
       z-index: 999;
       width: 56px;
