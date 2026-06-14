@@ -81,9 +81,11 @@ export class ProductCardComponent {
     return '#555555';
   }
 
-  onColorClick(color: string): void {
-    // Toggle on tap (mobile) — stay set on desktop alongside mouseenter/leave
-    this.hoveredColor.set(this.hoveredColor() === color ? null : color);
+  onColorClick(color: string, e: Event): void {
+    e.stopPropagation();
+    // Just set — never toggle. On desktop, mouseleave handles deselection.
+    // On mobile, tap sets the color so the animation + image swap work.
+    this.hoveredColor.set(color);
   }
 
   get isWishlisted(): boolean {

@@ -58,7 +58,7 @@
           [class.active]="hoveredColor() === color"
           (mouseenter)="hoveredColor.set(color)"
           (mouseleave)="hoveredColor.set(null)"
-          (click)="onColorClick(color)">
+          (click)="onColorClick(color, $event)">
         </span>
       }
       @if (product.colors.length > 4) {
