@@ -45,6 +45,14 @@ import { filter } from 'rxjs';
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       text-decoration: none;
     }
+    @media (max-width: 768px) {
+      .whatsapp-float {
+        bottom: 20px;
+        right: 16px;
+        width: 48px;
+        height: 48px;
+      }
+    }
     .whatsapp-float:hover {
       transform: scale(1.1);
       box-shadow: 0 6px 28px rgba(37, 211, 102, 0.55);
