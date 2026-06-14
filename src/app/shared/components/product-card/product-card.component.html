@@ -57,7 +57,8 @@
           [style.background]="getColorHex(color)"
           [class.active]="hoveredColor() === color"
           (mouseenter)="hoveredColor.set(color)"
-          (mouseleave)="hoveredColor.set(null)">
+          (mouseleave)="hoveredColor.set(null)"
+          (click)="onColorClick(color)">
         </span>
       }
       @if (product.colors.length > 4) {
