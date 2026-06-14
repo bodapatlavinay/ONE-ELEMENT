@@ -33,6 +33,15 @@ export class ProductCardComponent {
     return this.product.image;
   }
 
+  get hasColorImages(): boolean {
+    return !!(this.product.colorImages && Object.keys(this.product.colorImages).length > 0);
+  }
+
+  getColorThumb(color: string): string {
+    // Use the color-specific image if available, else fall back to main image
+    return this.product.colorImages?.[color]?.[0] ?? this.product.image;
+  }
+
   private readonly colorHexMap: Record<string, string> = {
     // Blacks
     'onyx black': '#111111', 'jet black': '#111111', 'carbon black': '#111111',

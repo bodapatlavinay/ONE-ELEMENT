@@ -50,20 +50,43 @@
       }
     </div>
 
-    <div class="color-dots">
-      @for (color of product.colors.slice(0, 4); track color) {
-        <span class="color-dot"
-          [title]="color"
-          [style.background]="getColorHex(color)"
-          [class.active]="hoveredColor() === color"
-          (mouseenter)="hoveredColor.set(color)"
-          (mouseleave)="hoveredColor.set(null)"
-          (click)="onColorClick(color, $event)">
-        </span>
+    @if (product.colors.length > 1) {
+      @if (hasColorImages) {
+        <!-- Nike-style: actual product thumbnail per color -->
+        <div class="color-thumbs">
+          @for (color of product.colors.slice(0, 5); track color) {
+            <span class="color-thumb"
+              [title]="color"
+              [class.active]="hoveredColor() === color"
+              (mouseenter)="hoveredColor.set(color)"
+              (mouseleave)="hoveredColor.set(null)"
+              (click)="onColorClick(color, $event)">
+              <img [src]="getColorThumb(color)" [alt]="color" loading="lazy" />
+            </span>
+          }
+          @if (product.colors.length > 5) {
+            <span class="more-colors">+{{ product.colors.length - 5 }}</span>
+          }
+        </div>
+      } @else {
+        <!-- Puma-style: color dots + count label -->
+        <div class="color-dots">
+          @for (color of product.colors.slice(0, 4); track color) {
+            <span class="color-dot"
+              [title]="color"
+              [style.background]="getColorHex(color)"
+              [class.active]="hoveredColor() === color"
+              (mouseenter)="hoveredColor.set(color)"
+              (mouseleave)="hoveredColor.set(null)"
+              (click)="onColorClick(color, $event)">
+            </span>
+          }
+          <span class="color-count-label">{{ product.colors.length }} COLORS</span>
+          @if (product.colors.length > 4) {
+            <span class="more-colors">+{{ product.colors.length - 4 }}</span>
+          }
+        </div>
       }
-      @if (product.colors.length > 4) {
-        <span class="more-colors">+{{ product.colors.length - 4 }}</span>
-      }
-    </div>
+    }
   </div>
 </article>
