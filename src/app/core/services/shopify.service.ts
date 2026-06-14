@@ -84,28 +84,14 @@ export class ShopifyService {
   private http = inject(HttpClient);
 
   getProducts(count = 100): Observable<Product[]> {
-    // In production: use /api/products (Vercel edge-cached, 10-min TTL)
-    // In local dev:  /api/products doesn't exist, so fall back to direct Shopify call
-    const isLocalDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-
-    const request$ = isLocalDev
-      ? this.http.post<any>(ENDPOINT, { query: PRODUCTS_QUERY, variables: { first: count } }, { headers: HEADERS })
-      : this.http.get<any>(CACHED_ENDPOINT);
-
-    return request$.pipe(
+    // Always call Shopify Storefront API directly — Storefront tokens are public/read-only safe
+    return this.http.post<any>(ENDPOINT, { query: PRODUCTS_QUERY, variables: { first: count } }, { headers: HEADERS }).pipe(
       map(res => {
         const edges = res?.data?.products?.edges ?? [];
         console.log(`Shopify: fetched ${edges.length} products`);
         return edges.map((e: any) => this.mapProduct(e.node));
       }),
-      catchError(err => {
-        console.error('Shopify fetch failed, retrying direct:', err);
-        // Final fallback: direct Shopify call
-        return this.http.post<any>(ENDPOINT, { query: PRODUCTS_QUERY, variables: { first: count } }, { headers: HEADERS }).pipe(
-          map(res => (res?.data?.products?.edges ?? []).map((e: any) => this.mapProduct(e.node))),
-          catchError(() => of([]))
-        );
-      })
+      catchError(() => of([]))
     );
   }
 
