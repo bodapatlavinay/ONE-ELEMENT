@@ -57,10 +57,12 @@ export class ShopComponent implements OnInit, OnDestroy {
     const c = this.selectedCategory();
     const tag = this.selectedTag();
     const badge = this.selectedBadge();
+    const sort = this.selectedSort();
 
     if (c) return c.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
     if (tag) return tag.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
     if (badge !== 'all') return badge === 'NEW' ? 'NEW ARRIVALS' : badge === 'SALE' ? 'SALE' : badge;
+    if (sort === 'newest' && g !== 'all') return `NEW ARRIVALS`;
     if (g !== 'all') return `SHOP ${g.toUpperCase()}`;
     return 'ALL PRODUCTS';
   });
@@ -128,6 +130,13 @@ export class ShopComponent implements OnInit, OnDestroy {
       else if (params['filter'] === 'sale') badge = 'SALE';
       else if (params['filter'] === 'bestseller') badge = 'BESTSELLER';
       this.selectedBadge.set(badge);
+
+      // Pre-set sort from URL (e.g. ?sortBy=newest from gender new arrivals links)
+      if (params['sortBy'] && this.sorts.some(s => s.value === params['sortBy'])) {
+        this.selectedSort.set(params['sortBy']);
+      } else {
+        this.selectedSort.set('default');
+      }
 
       // Record URL baseline — these don't count as user-applied filters
       this.urlBaseline = {

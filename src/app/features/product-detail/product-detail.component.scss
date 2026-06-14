@@ -1,4 +1,4 @@
-.detail-page { min-height: 100vh; padding-top: 96px; background: #080808; @media (max-width: 768px) { padding-top: 80px; padding-bottom: 80px; } }
+.detail-page { min-height: 100vh; padding-top: 108px; background: #080808; @media (max-width: 768px) { padding-top: 104px; padding-bottom: 80px; } }
 
 /* ── MOBILE STICKY CTA ── */
 .mobile-sticky-cta {
@@ -75,7 +75,7 @@
 /* ── INFO ── */
 .product-info {
   display: flex; flex-direction: column; gap: 20px; padding: 40px 32px;
-  position: sticky; top: 96px; max-height: calc(100vh - 96px); overflow-y: auto;
+  position: sticky; top: 108px; max-height: calc(100vh - 108px); overflow-y: auto;
   scrollbar-width: none; &::-webkit-scrollbar { display: none; } background: #080808;
   @media (max-width: 860px) { position: static; max-height: none; padding: 24px 16px; }
 }

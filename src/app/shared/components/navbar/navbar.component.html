@@ -62,15 +62,15 @@
             </div>
             <div class="mega-col">
               <p class="mega-heading">Collections</p>
-              <a routerLink="/shop" [queryParams]="{filter:'new',gender:'men'}" (click)="closeMega()">New Arrivals</a>
+              <a routerLink="/shop" [queryParams]="{gender:'men',sortBy:'newest'}" (click)="closeMega()">New Arrivals</a>
               <a routerLink="/shop" [queryParams]="{filter:'bestseller',gender:'men'}" (click)="closeMega()">Best Sellers</a>
               <a routerLink="/shop" [queryParams]="{filter:'sale',gender:'men'}" (click)="closeMega()">Sale</a>
             </div>
             <div class="mega-feature">
-              <a routerLink="/shop" [queryParams]="{filter:'new',gender:'men'}" (click)="closeMega()">
+              <a routerLink="/shop" [queryParams]="{gender:'men'}" (click)="closeMega()">
                 <img src="assets/men.webp" alt="Men's Collection" />
                 <div class="mega-feature-text">
-                  <a routerLink="/shop" [queryParams]="{filter:'new',gender:'men'}" class="mega-cta" (click)="closeMega()">SHOP MEN →</a>
+                  <a routerLink="/shop" [queryParams]="{gender:'men'}" class="mega-cta" (click)="closeMega()">SHOP MEN →</a>
                 </div>
               </a>
             </div>
@@ -103,12 +103,12 @@
             </div>
             <div class="mega-col">
               <p class="mega-heading">Collections</p>
-              <a routerLink="/shop" [queryParams]="{filter:'new',gender:'women'}" (click)="closeMega()">New Arrivals</a>
+              <a routerLink="/shop" [queryParams]="{gender:'women',sortBy:'newest'}" (click)="closeMega()">New Arrivals</a>
               <a routerLink="/shop" [queryParams]="{filter:'bestseller',gender:'women'}" (click)="closeMega()">Best Sellers</a>
               <a routerLink="/shop" [queryParams]="{filter:'sale',gender:'women'}" (click)="closeMega()">Sale</a>
             </div>
             <div class="mega-feature">
-              <a routerLink="/shop" [queryParams]="{filter:'new',gender:'women'}" (click)="closeMega()">
+              <a routerLink="/shop" [queryParams]="{gender:'women'}" (click)="closeMega()">
                 <img src="assets/women.webp" alt="Women's Collection" />
                 <div class="mega-feature-text">
                   <span class="mega-cta">SHOP WOMEN →</span>
