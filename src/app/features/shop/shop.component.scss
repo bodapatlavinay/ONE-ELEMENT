@@ -69,8 +69,8 @@
   &.active { color: #FF6B00; }
 }
 
-.shop-body { position: relative; overflow-x: hidden; }
-.shop-layout { display: flex; min-height: 60vh; overflow-x: hidden; }
+.shop-body { position: relative; overflow-x: clip; }
+.shop-layout { display: flex; min-height: 60vh; overflow-x: clip; }
 
 .filter-sidebar {
   width: 260px; flex-shrink: 0; padding: 24px; border-right: 1px solid #222; background: #080808;
