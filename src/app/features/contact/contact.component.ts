@@ -1,12 +1,11 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
-import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [RouterLink, FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule],
   template: `
     <div class="contact-page">
       <div class="contact-inner">
@@ -20,7 +19,7 @@ import { CommonModule } from '@angular/common';
               <span class="info-icon"><i class="fa-regular fa-envelope"></i></span>
               <div>
                 <p class="info-label">Email</p>
-                <a href="mailto:support@oneelement.in">support&#64;oneelement.in</a>
+                <a href="mailto:info@oneelement.in">info&#64;oneelement.in</a>
               </div>
             </div>
             <div class="info-item">
