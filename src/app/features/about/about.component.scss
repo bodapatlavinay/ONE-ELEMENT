@@ -12,6 +12,12 @@
   @media (max-width: 768px) { img { max-height: 65vh; } }
 }
 
+// ── EDITORIAL STRIP ───────────────────────────────────────────────
+.about-editorial {
+  line-height: 0;
+  img { width: 100%; height: auto; display: block; }
+}
+
 // ── MISSION BANNER ────────────────────────────────────────────────
 .about-mission-banner {
   padding: 100px 80px;
