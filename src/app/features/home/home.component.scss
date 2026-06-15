@@ -101,7 +101,7 @@
 .categories-grid {
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 0 80px;
   @media (max-width: 900px) { grid-template-columns: repeat(2, 1fr); padding: 0 16px; gap: 8px; }
-  @media (max-width: 768px) { padding: 0; gap: 4px; }
+  @media (max-width: 768px) { padding: 0; gap: 0; }
 }
 .category-tile {
   position: relative; overflow: hidden; display: block; text-decoration: none;

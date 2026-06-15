@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable, of, shareReplay, catchError, tap, switchMap } from 'rxjs';
+import { Observable, of, shareReplay, catchError, tap } from 'rxjs';
 import { Product } from '../models/product.model';
 import { ShopifyService } from './shopify.service';
 
@@ -110,7 +110,7 @@ export class ProductService {
     }
   ];
 
-  // ─── Core fetch — tries Shopify first, falls back to local ─────────────────
+  // ─── Core fetch — Shopify only, no local fallback ────────────────────────
   getAllProducts(): Observable<Product[]> {
     if (!this.products$) {
       this.products$ = this.shopifyService.getProducts(100).pipe(
@@ -120,11 +120,9 @@ export class ProductService {
           }
         }),
         catchError(err => {
-          console.warn('Shopify unavailable, falling back to local catalogue:', err);
-          return of(this.localProducts);
+          console.warn('Shopify fetch failed:', err);
+          return of([] as Product[]);
         }),
-        // Use local fallback if Shopify returns empty
-        switchMap(products => products.length > 0 ? of(products) : of(this.localProducts)),
         shareReplay(1)
       );
     }

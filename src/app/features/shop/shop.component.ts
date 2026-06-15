@@ -84,16 +84,31 @@ export class ShopComponent implements OnInit, OnDestroy {
     }
     if (this.selectedCategory()) {
       const c = this.selectedCategory().toLowerCase();
-      // Related tag groups — selecting one shows all related
+      // Related keyword groups — map category slug to all matching keywords
       const relatedTags: Record<string, string[]> = {
-        'jacket': ['jacket', 'vest'],
-        'tank':   ['tank', 'tops'],
-        'tops':   ['tops', 'tank'],
-        'set':    ['set', 'bundle', 'sets'],
-        'leggings': ['leggings', 'tights'],
+        'sports-bra':  ['sports-bra', 'sports bra', 'bra', 'sport bra'],
+        'leggings':    ['leggings', 'legging', 'tights', 'tight'],
+        'tank':        ['tank', 'top', 'tops', 'tee', 't-shirt'],
+        'tops':        ['tops', 'top', 'tank', 'tee', 't-shirt', 'shirt'],
+        'shorts':      ['shorts', 'short'],
+        'compression': ['compression', 'compressed'],
+        'jacket':      ['jacket', 'vest', 'shell'],
+        'jackets':     ['jacket', 'vest', 'shell'],
+        'hoodies':     ['hoodie', 'hoody', 'sweatshirt', 'fleece'],
+        'hoodie':      ['hoodie', 'hoody', 'sweatshirt', 'fleece'],
+        'joggers':     ['jogger', 'joggers', 'pant', 'pants', 'trouser'],
+        'jogger':      ['jogger', 'joggers', 'pant', 'pants'],
+        'set':         ['set', 'sets', 'bundle', 'kit'],
+        'sets':        ['set', 'sets', 'bundle', 'kit'],
       };
-      const matches = relatedTags[c] ?? [c, c.replace(/s$/, ''), c + 's'];
-      list = list.filter(p => p.tags.some(tag => matches.includes(tag.toLowerCase())));
+      // Build keyword list — replace hyphens with spaces as fallback
+      const matches = relatedTags[c] ?? [c, c.replace(/-/g, ' '), c.replace(/s$/, ''), c + 's'];
+      list = list.filter(p => {
+        const titleLower = p.title.toLowerCase();
+        // Check tags first, then fall back to title keyword match
+        return p.tags.some(tag => matches.some(m => tag.toLowerCase() === m)) ||
+               matches.some(m => titleLower.includes(m));
+      });
     }
     if (this.searchQuery()) {
       const q = this.searchQuery().toLowerCase();
