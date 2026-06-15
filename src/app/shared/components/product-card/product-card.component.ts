@@ -23,10 +23,16 @@ export class ProductCardComponent {
   isHovered = signal(false);
   selectedSize = signal('');
   showSizeSelect = signal(false);
-  hoveredColor = signal<string | null>(null);
+  hoveredColor = signal<string | null>(null);  // desktop hover only
+  tappedColor  = signal<string | null>(null);  // mobile tap selection
+
+  // Active color: desktop hover takes precedence, falls back to tapped
+  get activeColor(): string | null {
+    return this.hoveredColor() ?? this.tappedColor();
+  }
 
   get cardImage(): string {
-    const color = this.hoveredColor();
+    const color = this.activeColor;
     if (color && this.product.colorImages?.[color]?.length) {
       return this.product.colorImages[color][0];
     }
@@ -92,8 +98,9 @@ export class ProductCardComponent {
 
   onColorClick(color: string, e: Event): void {
     e.stopPropagation();
-    // Toggle: tap same color again to deselect (important on mobile — no mouseleave to reset)
-    this.hoveredColor.set(this.hoveredColor() === color ? null : color);
+    // Toggle tappedColor — completely separate from hoveredColor so mobile tap
+    // doesn't conflict with the synthetic mouseenter that fires before click on touch
+    this.tappedColor.set(this.tappedColor() === color ? null : color);
   }
 
   get isWishlisted(): boolean {

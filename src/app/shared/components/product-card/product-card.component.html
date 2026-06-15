@@ -57,7 +57,7 @@
           @for (color of product.colors; track color) {
             <span class="color-thumb"
               [title]="color"
-              [class.active]="hoveredColor() === color"
+              [class.active]="activeColor === color"
               (mouseenter)="hoveredColor.set(color)"
               (mouseleave)="hoveredColor.set(null)"
               (click)="onColorClick(color, $event)">
@@ -65,8 +65,8 @@
             </span>
           }
         </div>
-        @if (hoveredColor()) {
-          <p class="color-shown">{{ hoveredColor() }}</p>
+        @if (activeColor) {
+          <p class="color-shown">{{ activeColor }}</p>
         }
       } @else {
         <!-- Puma-style: color dots + count label -->
@@ -75,7 +75,7 @@
             <span class="color-dot"
               [title]="color"
               [style.background]="getColorHex(color)"
-              [class.active]="hoveredColor() === color"
+              [class.active]="activeColor === color"
               (mouseenter)="hoveredColor.set(color)"
               (mouseleave)="hoveredColor.set(null)"
               (click)="onColorClick(color, $event)">
