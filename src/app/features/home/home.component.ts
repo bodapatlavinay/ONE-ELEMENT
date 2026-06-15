@@ -23,8 +23,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   newArrivals = signal<Product[]>([]);
 
   categories = [
-    { label: 'MEN', sub: 'Training · Running · Lifestyle', link: '/shop', query: { gender: 'men' }, img: 'assets/men.webp' },
-    { label: 'WOMEN', sub: 'Yoga · Training · Performance', link: '/shop', query: { gender: 'women' }, img: 'assets/womensection.png' },
+    { label: 'TRAINING', sub: 'Gym · HIIT · Strength',      link: '/shop', query: { tag: 'training' }, img: 'assets/men.webp',                   imgPos: 'top center' },
+    { label: 'RUNNING',  sub: 'Road · Track · Trail',        link: '/shop', query: { tag: 'running'  }, img: 'assets/hero.png',                   imgPos: 'top center' },
+    { label: 'YOGA',     sub: 'Studio · Flow · Breathe',     link: '/shop', query: { tag: 'yoga'     }, img: 'assets/yoga.png',                   imgPos: 'top center' },
+    { label: 'LIFESTYLE',sub: 'Casual · Weekend · Travel',   link: '/shop', query: { tag: 'lifestyle'}, img: 'assets/lifestyle.jpeg',             imgPos: 'top center' },
   ];
 
   newsletterEmail = signal('');

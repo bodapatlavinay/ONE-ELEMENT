@@ -26,14 +26,14 @@
 <!-- CATEGORY TILES -->
 <section class="categories-section">
   <div class="section-header">
-    <span class="section-tag">SHOP BY</span>
-    <h2 class="section-title">FIND YOUR FIT</h2>
+    <span class="section-tag">SHOP BY ACTIVITY</span>
+    <h2 class="section-title">HOW DO YOU MOVE?</h2>
   </div>
   <div class="categories-grid">
     @for (cat of categories; track cat.label) {
       <a [routerLink]="cat.link" [queryParams]="cat.query" class="category-tile">
         <div class="tile-img-wrap">
-          <img [src]="cat.img" [alt]="cat.label" loading="lazy" />
+          <img [src]="cat.img" [alt]="cat.label" loading="lazy" [style.objectPosition]="cat.imgPos" />
           <div class="tile-overlay"></div>
         </div>
         <div class="tile-content">

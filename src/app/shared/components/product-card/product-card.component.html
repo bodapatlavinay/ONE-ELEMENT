@@ -54,7 +54,7 @@
       @if (hasColorImages) {
         <!-- Nike-style: actual product thumbnail per color -->
         <div class="color-thumbs">
-          @for (color of product.colors.slice(0, 5); track color) {
+          @for (color of product.colors; track color) {
             <span class="color-thumb"
               [title]="color"
               [class.active]="hoveredColor() === color"
@@ -64,10 +64,10 @@
               <img [src]="getColorThumb(color)" [alt]="color" loading="lazy" />
             </span>
           }
-          @if (product.colors.length > 5) {
-            <span class="more-colors">+{{ product.colors.length - 5 }}</span>
-          }
         </div>
+        @if (hoveredColor()) {
+          <p class="color-shown">{{ hoveredColor() }}</p>
+        }
       } @else {
         <!-- Puma-style: color dots + count label -->
         <div class="color-dots">
