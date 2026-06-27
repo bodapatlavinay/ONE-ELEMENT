@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../core/services/cart.service';
 import { ToastService } from '../../core/services/toast.service';
 import { ShopifyService } from '../../core/services/shopify.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-checkout',
@@ -17,6 +18,7 @@ export class CheckoutComponent {
   cartService = inject(CartService);
   toastService = inject(ToastService);
   shopifyService = inject(ShopifyService);
+  authService = inject(AuthService);
   router = inject(Router);
 
   step = signal<1 | 2 | 3>(1);
@@ -25,11 +27,19 @@ export class CheckoutComponent {
   orderId = signal('');
   checkoutError = signal('');
 
-  form = {
-    firstName: '', lastName: '', email: '', phone: '',
-    address: '', city: '', state: '', pincode: '',
-    paymentMethod: 'upi'
-  };
+  form = (() => {
+    const user = this.authService.user();
+    const displayName = user?.displayName ?? '';
+    const nameParts = displayName.trim().split(' ');
+    return {
+      firstName: nameParts[0] ?? '',
+      lastName: nameParts.slice(1).join(' ') ?? '',
+      email: user?.email ?? '',
+      phone: user?.phoneNumber ?? '',
+      address: '', city: '', state: '', pincode: '',
+      paymentMethod: 'upi'
+    };
+  })();
 
   states = [
     'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
