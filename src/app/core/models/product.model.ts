@@ -46,3 +46,26 @@ export interface FilterState {
   sortBy: string;
   search: string;
 }
+
+export interface Review {
+  id?: string;
+  productId: number;
+  userId: string;
+  userName: string;
+  rating: number;
+  comment: string;
+  createdAt: Date;
+}
+
+export interface SavedAddress {
+  id?: string;
+  label: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  pincode: string;
+  isDefault: boolean;
+}

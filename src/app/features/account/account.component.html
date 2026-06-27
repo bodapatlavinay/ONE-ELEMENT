@@ -125,8 +125,9 @@
       </div>
 
       <div class="tabs">
-        <button class="tab-btn" [class.active]="activeTab() === 'orders'" (click)="activeTab.set('orders')">ORDERS</button>
-        <button class="tab-btn" [class.active]="activeTab() === 'profile'" (click)="activeTab.set('profile')">PROFILE</button>
+        <button class="tab-btn" [class.active]="activeTab() === 'orders'" (click)="onTabChange('orders')">ORDERS</button>
+        <button class="tab-btn" [class.active]="activeTab() === 'addresses'" (click)="onTabChange('addresses')">ADDRESSES</button>
+        <button class="tab-btn" [class.active]="activeTab() === 'profile'" (click)="onTabChange('profile')">PROFILE</button>
       </div>
 
       @if (activeTab() === 'orders') {
@@ -135,6 +136,103 @@
           <h3>No orders yet</h3>
           <p>When you place orders, they'll show up here.</p>
           <a routerLink="/shop" class="btn-shop">SHOP NOW →</a>
+        </div>
+      }
+
+      @if (activeTab() === 'addresses') {
+        <div class="addresses-section">
+
+          @if (addressesLoading()) {
+            <div class="addresses-loading"><div class="spinner"></div></div>
+          } @else {
+
+            @if (addresses().length === 0 && !showAddressForm()) {
+              <div class="empty-addresses">
+                <div class="empty-icon">📍</div>
+                <h3>No saved addresses</h3>
+                <p>Save an address for faster checkout.</p>
+              </div>
+            }
+
+            @if (!showAddressForm()) {
+              <button class="btn-add-address" (click)="openAddressForm()">+ ADD NEW ADDRESS</button>
+            }
+
+            @for (addr of addresses(); track addr.id) {
+              <div class="address-card" [class.default-card]="addr.isDefault">
+                @if (addr.isDefault) { <span class="default-badge">DEFAULT</span> }
+                <p class="addr-label">{{ addr.label }}</p>
+                <p class="addr-name">{{ addr.firstName }} {{ addr.lastName }}</p>
+                <p class="addr-line">{{ addr.address }}</p>
+                <p class="addr-line">{{ addr.city }}, {{ addr.state }} — {{ addr.pincode }}</p>
+                <p class="addr-phone">{{ addr.phone }}</p>
+                <div class="addr-actions">
+                  @if (!addr.isDefault) {
+                    <button class="btn-addr-action" (click)="setDefault(addr.id!)">Set Default</button>
+                  }
+                  <button class="btn-addr-action btn-addr-delete" (click)="deleteAddress(addr.id!)">Delete</button>
+                </div>
+              </div>
+            }
+
+            @if (showAddressForm()) {
+              <div class="address-form-card">
+                <h4>NEW ADDRESS</h4>
+                <div class="addr-form-row">
+                  <div class="addr-form-group">
+                    <label>Label</label>
+                    <input type="text" [(ngModel)]="addressForm.label" placeholder="Home / Work / Other" />
+                  </div>
+                </div>
+                <div class="addr-form-row">
+                  <div class="addr-form-group">
+                    <label>First Name</label>
+                    <input type="text" [(ngModel)]="addressForm.firstName" placeholder="Rahul" />
+                  </div>
+                  <div class="addr-form-group">
+                    <label>Last Name</label>
+                    <input type="text" [(ngModel)]="addressForm.lastName" placeholder="Kumar" />
+                  </div>
+                </div>
+                <div class="addr-form-group">
+                  <label>Phone</label>
+                  <input type="tel" [(ngModel)]="addressForm.phone" placeholder="+91 98765 43210" />
+                </div>
+                <div class="addr-form-group">
+                  <label>Address</label>
+                  <input type="text" [(ngModel)]="addressForm.address" placeholder="Flat / House, Street, Area" />
+                </div>
+                <div class="addr-form-row">
+                  <div class="addr-form-group">
+                    <label>City</label>
+                    <input type="text" [(ngModel)]="addressForm.city" placeholder="Mumbai" />
+                  </div>
+                  <div class="addr-form-group">
+                    <label>Pincode</label>
+                    <input type="text" [(ngModel)]="addressForm.pincode" placeholder="400001" />
+                  </div>
+                </div>
+                <div class="addr-form-group">
+                  <label>State</label>
+                  <select [(ngModel)]="addressForm.state">
+                    <option value="">Select State</option>
+                    @for (s of states; track s) { <option [value]="s">{{ s }}</option> }
+                  </select>
+                </div>
+                <label class="addr-default-check">
+                  <input type="checkbox" [(ngModel)]="addressForm.isDefault" />
+                  Set as default address
+                </label>
+                <div class="addr-form-actions">
+                  <button class="btn-save-addr" (click)="saveAddress()" [disabled]="addressSaving()">
+                    {{ addressSaving() ? 'SAVING...' : 'SAVE ADDRESS' }}
+                  </button>
+                  <button class="btn-cancel-addr" (click)="showAddressForm.set(false)">Cancel</button>
+                </div>
+              </div>
+            }
+
+          }
         </div>
       }
 

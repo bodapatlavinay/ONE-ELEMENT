@@ -156,9 +156,11 @@
         <!-- Tabs -->
         <div class="tabs">
           <div class="tab-header">
-            <button class="tab-btn" [class.active]="activeTab() === 'description'" (click)="activeTab.set('description')">Description</button>
-            <button class="tab-btn" [class.active]="activeTab() === 'specs'" (click)="activeTab.set('specs')">Specs</button>
-            <button class="tab-btn" [class.active]="activeTab() === 'reviews'" (click)="activeTab.set('reviews')">Reviews</button>
+            <button class="tab-btn" [class.active]="activeTab() === 'description'" (click)="onTabChange('description')">Description</button>
+            <button class="tab-btn" [class.active]="activeTab() === 'specs'" (click)="onTabChange('specs')">Specs</button>
+            <button class="tab-btn" [class.active]="activeTab() === 'reviews'" (click)="onTabChange('reviews')">
+              Reviews @if (reviews().length) { <span class="review-count-badge">({{ reviews().length }})</span> }
+            </button>
           </div>
           <div class="tab-content">
             @if (activeTab() === 'description') {
@@ -172,11 +174,90 @@
               </table>
             }
             @if (activeTab() === 'reviews') {
-              <div class="reviews-empty">
-                <i class="fa-regular fa-star reviews-empty-icon"></i>
-                <h4>No reviews yet</h4>
-                <p>Be the first to share your experience with this product.</p>
-                <a href="mailto:hello@oneelement.in?subject=Product Review" class="btn-review-cta">WRITE A REVIEW</a>
+              <div class="reviews-panel">
+
+                <!-- Average summary -->
+                @if (reviews().length) {
+                  <div class="reviews-summary">
+                    <span class="reviews-avg">{{ averageRating }}</span>
+                    <div class="reviews-stars-row">
+                      @for (s of [1,2,3,4,5]; track s) {
+                        <span class="star" [class.filled]="s <= averageRating">★</span>
+                      }
+                    </div>
+                    <span class="reviews-total">{{ reviews().length }} review{{ reviews().length > 1 ? 's' : '' }}</span>
+                  </div>
+                }
+
+                <!-- Write a review form -->
+                @if (authService.user() && !hasReviewed()) {
+                  <div class="review-form">
+                    <h4>WRITE A REVIEW</h4>
+                    <div class="star-picker">
+                      @for (s of [1,2,3,4,5]; track s) {
+                        <button class="star-pick"
+                          [class.filled]="s <= (hoverRating() || newRating())"
+                          (mouseenter)="setHoverRating(s)"
+                          (mouseleave)="setHoverRating(0)"
+                          (click)="setNewRating(s)">★</button>
+                      }
+                    </div>
+                    <textarea
+                      class="review-textarea"
+                      placeholder="Share your experience with this product..."
+                      [value]="newComment()"
+                      (input)="newComment.set($any($event.target).value)"
+                      rows="4">
+                    </textarea>
+                    @if (reviewError()) { <p class="review-error">{{ reviewError() }}</p> }
+                    <button class="btn-submit-review" (click)="submitReview()" [disabled]="submittingReview()">
+                      {{ submittingReview() ? 'SUBMITTING...' : 'SUBMIT REVIEW' }}
+                    </button>
+                  </div>
+                } @else if (!authService.user()) {
+                  <div class="review-login-prompt">
+                    <p>Sign in to share your experience.</p>
+                    <a routerLink="/account" class="btn-review-cta">SIGN IN</a>
+                  </div>
+                } @else if (hasReviewed()) {
+                  <p class="already-reviewed">You've reviewed this product. Thank you!</p>
+                }
+
+                <!-- Loading -->
+                @if (reviewsLoading()) {
+                  <div class="reviews-loading"><div class="spinner-sm"></div></div>
+                }
+
+                <!-- Reviews list -->
+                @if (!reviewsLoading()) {
+                  @if (reviews().length === 0) {
+                    <div class="reviews-empty">
+                      <i class="fa-regular fa-star reviews-empty-icon"></i>
+                      <h4>No reviews yet</h4>
+                      <p>Be the first to share your experience.</p>
+                    </div>
+                  } @else {
+                    <div class="reviews-list">
+                      @for (review of reviews(); track review.id) {
+                        <div class="review-card">
+                          <div class="review-header">
+                            <div class="review-meta">
+                              <span class="reviewer-name">{{ review.userName }}</span>
+                              <span class="review-date">{{ review.createdAt | date:'mediumDate' }}</span>
+                            </div>
+                            <div class="review-stars">
+                              @for (s of [1,2,3,4,5]; track s) {
+                                <span class="star" [class.filled]="s <= review.rating">★</span>
+                              }
+                            </div>
+                          </div>
+                          <p class="review-comment">{{ review.comment }}</p>
+                        </div>
+                      }
+                    </div>
+                  }
+                }
+
               </div>
             }
           </div>
@@ -218,6 +299,21 @@
         </div>
         <div class="related-grid">
           @for (p of relatedProducts(); track p.id) {
+            <app-product-card [product]="p" />
+          }
+        </div>
+      </section>
+    }
+
+    <!-- RECENTLY VIEWED -->
+    @if (recentlyViewed().length > 0) {
+      <section class="related-section recently-viewed-section">
+        <div class="related-header">
+          <span class="section-tag">RECENTLY VIEWED</span>
+          <h2>PICK UP WHERE YOU LEFT OFF</h2>
+        </div>
+        <div class="related-grid">
+          @for (p of recentlyViewed(); track p.id) {
             <app-product-card [product]="p" />
           }
         </div>

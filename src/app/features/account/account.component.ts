@@ -1,8 +1,11 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
+import { FirestoreService } from '../../core/services/firestore.service';
+import { AnalyticsService } from '../../core/services/analytics.service';
+import { SavedAddress } from '../../core/models/product.model';
 
 type View = 'login' | 'register' | 'forgot';
 
@@ -15,6 +18,8 @@ type View = 'login' | 'register' | 'forgot';
 })
 export class AccountComponent {
   authService = inject(AuthService);
+  private firestoreService = inject(FirestoreService);
+  private analyticsService = inject(AnalyticsService);
 
   view = signal<View>('login');
   email = signal('');
@@ -23,7 +28,33 @@ export class AccountComponent {
   errorMsg = signal('');
   successMsg = signal('');
   submitting = signal(false);
-  activeTab = signal<'orders' | 'profile'>('orders');
+  activeTab = signal<'orders' | 'profile' | 'addresses'>('orders');
+
+  // Addresses
+  addresses = signal<SavedAddress[]>([]);
+  addressesLoading = signal(false);
+  showAddressForm = signal(false);
+  addressSaving = signal(false);
+  addressForm = {
+    label: 'Home', firstName: '', lastName: '', phone: '',
+    address: '', city: '', state: '', pincode: '', isDefault: false
+  };
+  states = [
+    'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
+    'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka',
+    'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram',
+    'Nagaland', 'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana',
+    'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal',
+    'Delhi', 'Chandigarh', 'Puducherry', 'Jammu & Kashmir', 'Ladakh'
+  ];
+
+  constructor() {
+    effect(() => {
+      if (this.authService.isLoggedIn() && this.activeTab() === 'addresses') {
+        this.loadAddresses();
+      }
+    });
+  }
 
   setView(v: View): void {
     this.view.set(v);
@@ -34,11 +65,56 @@ export class AccountComponent {
     this.confirmPassword.set('');
   }
 
+  async loadAddresses(): Promise<void> {
+    this.addressesLoading.set(true);
+    try {
+      const addrs = await this.firestoreService.getAddresses();
+      this.addresses.set(addrs.sort((a, b) => (b.isDefault ? 1 : 0) - (a.isDefault ? 1 : 0)));
+    } catch {}
+    this.addressesLoading.set(false);
+  }
+
+  openAddressForm(): void {
+    this.addressForm = { label: 'Home', firstName: '', lastName: '', phone: '', address: '', city: '', state: '', pincode: '', isDefault: false };
+    this.showAddressForm.set(true);
+  }
+
+  async saveAddress(): Promise<void> {
+    if (!this.addressForm.address || !this.addressForm.city || !this.addressForm.pincode) return;
+    this.addressSaving.set(true);
+    try {
+      await this.firestoreService.saveAddress({ ...this.addressForm });
+      this.showAddressForm.set(false);
+      await this.loadAddresses();
+    } catch {}
+    this.addressSaving.set(false);
+  }
+
+  async deleteAddress(id: string): Promise<void> {
+    if (!id) return;
+    await this.firestoreService.deleteAddress(id);
+    await this.loadAddresses();
+  }
+
+  async setDefault(id: string): Promise<void> {
+    if (!id) return;
+    await this.firestoreService.setDefaultAddress(id);
+    await this.loadAddresses();
+  }
+
+  onTabChange(tab: 'orders' | 'profile' | 'addresses'): void {
+    this.activeTab.set(tab);
+    if (tab === 'addresses' && !this.addresses().length) {
+      this.loadAddresses();
+    }
+  }
+
   async loginWithGoogle(): Promise<void> {
     this.errorMsg.set('');
     this.submitting.set(true);
     try {
       await this.authService.loginWithGoogle();
+      this.analyticsService.trackLogin('google');
     } catch (e: any) {
       this.errorMsg.set(this.friendlyError(e.code));
     } finally {
@@ -55,6 +131,7 @@ export class AccountComponent {
     this.submitting.set(true);
     try {
       await this.authService.loginWithEmail(this.email(), this.password());
+      this.analyticsService.trackLogin('email');
     } catch (e: any) {
       this.errorMsg.set(this.friendlyError(e.code));
     } finally {
@@ -79,6 +156,7 @@ export class AccountComponent {
     this.submitting.set(true);
     try {
       await this.authService.registerWithEmail(this.email(), this.password());
+      this.analyticsService.trackSignUp('email');
     } catch (e: any) {
       this.errorMsg.set(this.friendlyError(e.code));
     } finally {

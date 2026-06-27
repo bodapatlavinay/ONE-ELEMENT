@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../../core/services/cart.service';
 import { WishlistService } from '../../../core/services/wishlist.service';
+import { AnalyticsService } from '../../../core/services/analytics.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +16,7 @@ import { WishlistService } from '../../../core/services/wishlist.service';
 export class NavbarComponent {
   cartService = inject(CartService);
   wishlistService = inject(WishlistService);
+  analyticsService = inject(AnalyticsService);
   router = inject(Router);
 
   isScrolled = signal(false);
@@ -37,6 +39,7 @@ export class NavbarComponent {
 
   onSearch(): void {
     if (this.searchQuery().trim()) {
+      this.analyticsService.trackSearch(this.searchQuery().trim());
       this.router.navigate(['/shop'], { queryParams: { search: this.searchQuery() } });
       this.isSearchOpen.set(false);
       this.searchQuery.set('');

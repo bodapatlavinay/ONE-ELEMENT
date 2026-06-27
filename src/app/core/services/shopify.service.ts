@@ -58,8 +58,8 @@ const PRODUCTS_QUERY = `
 `;
 
 const CART_CREATE_MUTATION = `
-  mutation CartCreate($lines: [CartLineInput!]!, $buyerIdentity: CartBuyerIdentityInput) {
-    cartCreate(input: { lines: $lines, buyerIdentity: $buyerIdentity }) {
+  mutation CartCreate($lines: [CartLineInput!]!, $buyerIdentity: CartBuyerIdentityInput, $discountCodes: [String!]) {
+    cartCreate(input: { lines: $lines, buyerIdentity: $buyerIdentity, discountCodes: $discountCodes }) {
       cart {
         id
         checkoutUrl
@@ -97,7 +97,8 @@ export class ShopifyService {
 
   createCheckout(
     items: { variantId: string; quantity: number }[],
-    buyer?: BuyerInfo
+    buyer?: BuyerInfo,
+    discountCode?: string
   ): Observable<string | null> {
     const lines = items.map(i => ({ merchandiseId: i.variantId, quantity: i.quantity }));
 
@@ -120,7 +121,8 @@ export class ShopifyService {
       query: CART_CREATE_MUTATION,
       variables: {
         lines,
-        buyerIdentity: Object.keys(buyerIdentity).length ? buyerIdentity : undefined
+        buyerIdentity: Object.keys(buyerIdentity).length ? buyerIdentity : undefined,
+        discountCodes: discountCode ? [discountCode] : undefined
       }
     }, { headers: HEADERS }).pipe(
       map(res => {

@@ -6,6 +6,7 @@ import { CartService } from '../../core/services/cart.service';
 import { ToastService } from '../../core/services/toast.service';
 import { ShopifyService } from '../../core/services/shopify.service';
 import { AuthService } from '../../core/services/auth.service';
+import { AnalyticsService } from '../../core/services/analytics.service';
 
 @Component({
   selector: 'app-checkout',
@@ -19,6 +20,7 @@ export class CheckoutComponent {
   toastService = inject(ToastService);
   shopifyService = inject(ShopifyService);
   authService = inject(AuthService);
+  analyticsService = inject(AnalyticsService);
   router = inject(Router);
 
   step = signal<1 | 2 | 3>(1);
@@ -26,6 +28,8 @@ export class CheckoutComponent {
   orderPlaced = signal(false);
   orderId = signal('');
   checkoutError = signal('');
+  discountCode = signal('');
+  discountInput = signal('');
 
   form = (() => {
     const user = this.authService.user();
@@ -54,8 +58,27 @@ export class CheckoutComponent {
   get shipping(): number { return this.cartService.subtotal() >= 2999 ? 0 : 199; }
   get total(): number { return this.cartService.subtotal() + this.shipping; }
 
-  nextStep(): void { if (this.step() < 3) this.step.set((this.step() + 1) as 1 | 2 | 3); }
+  nextStep(): void {
+    if (this.step() === 2) {
+      // Track begin_checkout when moving to review step
+      this.analyticsService.trackBeginCheckout(this.total, this.cartService.totalItems());
+    }
+    if (this.step() < 3) this.step.set((this.step() + 1) as 1 | 2 | 3);
+  }
   prevStep(): void { if (this.step() > 1) this.step.set((this.step() - 1) as 1 | 2 | 3); }
+
+  applyDiscount(): void {
+    const code = this.discountInput().trim().toUpperCase();
+    if (!code) return;
+    this.discountCode.set(code);
+    this.analyticsService.trackApplyCoupon(code);
+    this.toastService.show(`Discount code "${code}" applied. Discount will reflect at Shopify checkout.`, 'success');
+  }
+
+  removeDiscount(): void {
+    this.discountCode.set('');
+    this.discountInput.set('');
+  }
 
   placeOrder(): void {
     this.checkoutError.set('');
@@ -81,7 +104,7 @@ export class CheckoutComponent {
       province: this.form.state,
       zip: this.form.pincode,
       countryCode: 'IN'
-    }).subscribe(checkoutUrl => {
+    }, this.discountCode() || undefined).subscribe(checkoutUrl => {
       this.isPlacing.set(false);
       if (checkoutUrl) {
         // Redirect to Shopify's hosted checkout (handles payment, order confirmation, emails)
