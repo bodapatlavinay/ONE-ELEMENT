@@ -1,104 +1,140 @@
 <div class="account-page">
 
-  @if (customerService.loading()) {
+  <!-- Loading -->
+  @if (authService.loading()) {
     <div class="account-loading">
       <div class="spinner"></div>
-      <p>Signing you in…</p>
+      <p>Loading…</p>
     </div>
-  } @else if (!customerService.isLoggedIn()) {
+  } @else if (!authService.isLoggedIn()) {
+  <!-- Auth forms -->
     <div class="login-wrap">
       <div class="login-card">
+
+        <!-- Header -->
         <div class="login-header">
           <span class="login-eyebrow">MY ACCOUNT</span>
-          <h1>SIGN IN</h1>
-          <p>Access your orders, wishlist and profile.</p>
+          @if (view() === 'login')    { <h1>SIGN IN</h1> }
+          @if (view() === 'register') { <h1>CREATE ACCOUNT</h1> }
+          @if (view() === 'forgot')   { <h1>RESET PASSWORD</h1> }
         </div>
 
-        <form class="login-form" (ngSubmit)="login()">
-          <div class="field">
-            <label>EMAIL</label>
-            <input type="email" [ngModel]="email()" (ngModelChange)="email.set($event)"
-              name="email" placeholder="you@example.com" autocomplete="email" required />
+        <!-- Google button (login + register only) -->
+        @if (view() !== 'forgot') {
+          <button class="btn-google" (click)="loginWithGoogle()" [disabled]="submitting()">
+            <svg width="18" height="18" viewBox="0 0 48 48">
+              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            </svg>
+            Continue with Google
+          </button>
+
+          <div class="divider"><span>or</span></div>
+        }
+
+        <!-- Email/Password form -->
+        @if (view() === 'login') {
+          <form class="login-form" (ngSubmit)="loginWithEmail()">
+            <div class="field">
+              <label>EMAIL</label>
+              <input type="email" [ngModel]="email()" (ngModelChange)="email.set($event)"
+                name="email" placeholder="you@example.com" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label>PASSWORD</label>
+              <input type="password" [ngModel]="password()" (ngModelChange)="password.set($event)"
+                name="password" placeholder="••••••••" autocomplete="current-password" required />
+            </div>
+            @if (errorMsg()) { <p class="error-msg">{{ errorMsg() }}</p> }
+            <button type="submit" class="btn-login" [disabled]="submitting()">
+              {{ submitting() ? 'SIGNING IN…' : 'SIGN IN →' }}
+            </button>
+          </form>
+          <div class="login-footer">
+            <p><button class="link-btn" (click)="setView('forgot')">Forgot password?</button></p>
+            <p>No account? <button class="link-btn" (click)="setView('register')">Create one</button></p>
           </div>
-          <div class="field">
-            <label>PASSWORD</label>
-            <input type="password" [ngModel]="password()" (ngModelChange)="password.set($event)"
-              name="password" placeholder="••••••••" autocomplete="current-password" required />
+        }
+
+        @if (view() === 'register') {
+          <form class="login-form" (ngSubmit)="register()">
+            <div class="field">
+              <label>EMAIL</label>
+              <input type="email" [ngModel]="email()" (ngModelChange)="email.set($event)"
+                name="email" placeholder="you@example.com" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label>PASSWORD</label>
+              <input type="password" [ngModel]="password()" (ngModelChange)="password.set($event)"
+                name="password" placeholder="Min 6 characters" autocomplete="new-password" required />
+            </div>
+            <div class="field">
+              <label>CONFIRM PASSWORD</label>
+              <input type="password" [ngModel]="confirmPassword()" (ngModelChange)="confirmPassword.set($event)"
+                name="confirmPassword" placeholder="••••••••" autocomplete="new-password" required />
+            </div>
+            @if (errorMsg()) { <p class="error-msg">{{ errorMsg() }}</p> }
+            <button type="submit" class="btn-login" [disabled]="submitting()">
+              {{ submitting() ? 'CREATING…' : 'CREATE ACCOUNT →' }}
+            </button>
+          </form>
+          <div class="login-footer">
+            <p>Already have an account? <button class="link-btn" (click)="setView('login')">Sign in</button></p>
           </div>
+        }
 
-          @if (errorMsg()) {
-            <p class="error-msg">{{ errorMsg() }}</p>
-          }
+        @if (view() === 'forgot') {
+          <form class="login-form" (ngSubmit)="forgotPassword()">
+            <div class="field">
+              <label>EMAIL</label>
+              <input type="email" [ngModel]="email()" (ngModelChange)="email.set($event)"
+                name="email" placeholder="you@example.com" autocomplete="email" required />
+            </div>
+            @if (errorMsg()) { <p class="error-msg">{{ errorMsg() }}</p> }
+            @if (successMsg()) { <p class="success-msg">{{ successMsg() }}</p> }
+            <button type="submit" class="btn-login" [disabled]="submitting()">
+              {{ submitting() ? 'SENDING…' : 'SEND RESET LINK →' }}
+            </button>
+          </form>
+          <div class="login-footer">
+            <p><button class="link-btn" (click)="setView('login')">← Back to sign in</button></p>
+          </div>
+        }
 
-          <button type="submit" class="btn-login">SIGN IN →</button>
-        </form>
-
-        <div class="login-footer">
-          <p>Don't have an account?
-            <a href="https://elements-10037.myshopify.com/account/register" target="_blank">Create one</a>
-          </p>
-          <p>
-            <a href="https://elements-10037.myshopify.com/account/login#recover" target="_blank">Forgot password?</a>
-          </p>
-        </div>
       </div>
     </div>
   } @else {
+  <!-- Dashboard -->
     <div class="dashboard">
       <div class="dashboard-header">
         <div class="dashboard-welcome">
           <span class="eyebrow">MY ACCOUNT</span>
-          <h1>WELCOME BACK,<br><span class="name">{{ customerService.customer()?.firstName | uppercase }}.</span></h1>
+          <div class="welcome-row">
+            @if (avatarUrl) {
+              <img class="avatar" [src]="avatarUrl" [alt]="displayName" />
+            } @else {
+              <div class="avatar-placeholder">{{ displayName[0] | uppercase }}</div>
+            }
+            <h1>WELCOME,<br><span class="name">{{ displayName | uppercase }}.</span></h1>
+          </div>
+          <p class="user-email">{{ userEmail }}</p>
         </div>
         <button class="btn-logout" (click)="logout()">Sign Out</button>
       </div>
 
       <div class="tabs">
-        <button class="tab-btn" [class.active]="activeTab() === 'orders'" (click)="activeTab.set('orders')">
-          ORDERS <span class="tab-count">{{ customerService.customer()?.orders?.length || 0 }}</span>
-        </button>
-        <button class="tab-btn" [class.active]="activeTab() === 'profile'" (click)="activeTab.set('profile')">
-          PROFILE
-        </button>
+        <button class="tab-btn" [class.active]="activeTab() === 'orders'" (click)="activeTab.set('orders')">ORDERS</button>
+        <button class="tab-btn" [class.active]="activeTab() === 'profile'" (click)="activeTab.set('profile')">PROFILE</button>
       </div>
 
       @if (activeTab() === 'orders') {
-        <div class="orders-section">
-          @if (!customerService.customer()?.orders?.length) {
-            <div class="empty-orders">
-              <div class="empty-icon">📦</div>
-              <h3>No orders yet</h3>
-              <p>When you place orders, they'll appear here.</p>
-              <a routerLink="/shop" class="btn-shop">SHOP NOW →</a>
-            </div>
-          } @else {
-            <div class="orders-list">
-              @for (order of customerService.customer()!.orders; track order.id) {
-                <div class="order-card">
-                  <div class="order-top">
-                    <div>
-                      <span class="order-num">#{{ order.orderNumber }}</span>
-                      <span class="order-date">{{ formatDate(order.processedAt) }}</span>
-                    </div>
-                    <span class="order-total">₹{{ +order.totalPrice.amount | number:'1.0-0' }}</span>
-                  </div>
-                  <div class="order-items">
-                    @for (item of order.lineItems; track item.title) {
-                      <span class="order-item">{{ item.title }} × {{ item.quantity }}</span>
-                    }
-                  </div>
-                  <div class="order-bottom">
-                    <span class="status-pill" [class]="statusClass(order.financialStatus)">
-                      {{ formatStatus(order.financialStatus) }}
-                    </span>
-                    <span class="status-pill" [class]="statusClass(order.fulfillmentStatus)">
-                      {{ formatStatus(order.fulfillmentStatus) }}
-                    </span>
-                  </div>
-                </div>
-              }
-            </div>
-          }
+        <div class="empty-orders">
+          <div class="empty-icon">📦</div>
+          <h3>No orders yet</h3>
+          <p>When you place orders, they'll show up here.</p>
+          <a routerLink="/shop" class="btn-shop">SHOP NOW →</a>
         </div>
       }
 
@@ -107,22 +143,19 @@
           <div class="profile-card">
             <div class="profile-row">
               <span class="profile-label">NAME</span>
-              <span class="profile-val">{{ customerService.customer()?.firstName }} {{ customerService.customer()?.lastName }}</span>
+              <span class="profile-val">{{ authService.user()?.displayName || '—' }}</span>
             </div>
             <div class="profile-row">
               <span class="profile-label">EMAIL</span>
-              <span class="profile-val">{{ customerService.customer()?.email }}</span>
+              <span class="profile-val">{{ userEmail }}</span>
             </div>
-            @if (customerService.customer()?.phone) {
-              <div class="profile-row">
-                <span class="profile-label">PHONE</span>
-                <span class="profile-val">{{ customerService.customer()?.phone }}</span>
-              </div>
-            }
+            <div class="profile-row">
+              <span class="profile-label">SIGN-IN</span>
+              <span class="profile-val">
+                {{ authService.user()?.providerData?.[0]?.providerId === 'google.com' ? 'Google' : authService.user()?.providerData?.[0]?.providerId === 'phone' ? 'Phone Number' : 'Email & Password' }}
+              </span>
+            </div>
           </div>
-          <p class="profile-note">To update your details, visit your
-            <a href="https://elements-10037.myshopify.com/account" target="_blank">account portal</a>.
-          </p>
         </div>
       }
     </div>
